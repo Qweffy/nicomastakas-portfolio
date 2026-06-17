@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/*
+ * Design system — dark only (no light mode, no toggle).
+ * Tokens are the ONLY allowed colors. See DESIGN_SYSTEM_BRIEF.md (local, gitignored).
+ * Tailwind v4 is CSS-first: tokens here generate utilities (bg-background, text-foreground, etc.).
+ */
+@theme {
+  --color-background: #0e0f11; /* off-black, not pure black */
+  --color-surface: #16181c; /* cards / raised blocks */
+  --color-border: #26282e; /* hairline borders */
+  --color-foreground: #e6e6e6; /* body text, off-white */
+  --color-muted: #9ba1a8; /* secondary text, captions */
+  --color-accent: #4f8cff; /* links, primary action, active — one accent only */
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+body {
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}

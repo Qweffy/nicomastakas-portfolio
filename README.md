@@ -4,13 +4,34 @@ Personal portfolio of **Nico Mastakas** — Senior Product Engineer building AI-
 
 ## Stack
 
-- Next.js (App Router) + MDX
-- Tailwind CSS
-- Deployed on Vercel
+- **Next.js 16** (App Router, Turbopack, 100% SSG)
+- **TypeScript** (strict)
+- **Tailwind CSS v4** (CSS-first, dark-only design system)
+- **Velite** — type-safe MDX content collections for case studies
+- **Shiki** (via rehype-pretty-code) — build-time code highlighting
+- Deployed on **Vercel**
 
-## Status
+## Development
 
-🚧 In development.
+```bash
+pnpm install
+pnpm dev          # dev server at http://localhost:3000
+pnpm typecheck    # velite build + tsc --noEmit
+pnpm lint         # eslint
+pnpm format       # prettier --write .
+pnpm build        # production build
+```
+
+## Structure
+
+```
+src/
+  app/            # routes (App Router)
+  components/     # UI components (named exports)
+  lib/            # site config + content helpers
+content/
+  work/           # case studies (*.mdx, typed via Velite)
+```
 
 ## Links
 

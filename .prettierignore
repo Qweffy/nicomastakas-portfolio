@@ -1,0 +1,7 @@
+.next
+out
+build
+.velite
+pnpm-lock.yaml
+# don't reflow case-study prose
+content/**/*.mdx
