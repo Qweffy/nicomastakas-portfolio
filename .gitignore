@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+build/
+
+# vercel
+.vercel
+
+# env / secrets — never commit
+.env
+.env.*
+!.env.example
+
+# os
+.DS_Store
+*.log
+
+# internal strategy briefs — KEEP LOCAL, never version (would leak when repo goes public)
+*_BRIEF.md
