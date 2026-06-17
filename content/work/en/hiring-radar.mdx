@@ -1,0 +1,80 @@
+---
+title: "hiring-radar — Hybrid search that doubles recall"
+summary: "Hybrid retrieval (semantic + keyword, fused with RRF) lifts recall@10 to 0.52 — nearly double semantic alone — with a reproducible gold set committed to the repo."
+role: "Solo — design, build, infra"
+company: "hiring-radar"
+badge: "hr"
+stack:
+  - TypeScript
+  - Next.js
+  - Neon
+  - pgvector
+  - Drizzle
+  - local embeddings
+date: "2026-06-17"
+draft: false
+---
+
+## TL;DR
+
+- Hybrid retrieval (semantic + keyword, fused with RRF) lifts recall@10 to 0.52 — nearly double semantic alone at 0.28.
+- MRR 0.74 vs 0.28 semantic vs 0.14 exact, measured on a committed gold set.
+- The gold set and eval scripts ship in the repo — the numbers are reproducible.
+
+## Problem
+
+**Neither search alone finds the job.**
+
+Ranking HN "Who is hiring" postings is a recall problem. Semantic search grasps intent but misses exact terms — company names, framework versions, locations. Keyword search nails those but ignores meaning. Either alone leaves half the right postings off the first page.
+
+## Architecture
+
+```
+ingest HN thread → chunk + local embed → pgvector HNSW + keyword index → RRF fusion → ranked results
+```
+
+## Key decisions
+
+### pgvector HNSW over exact scan
+
+Chose an approximate HNSW index over an exact cosine scan. Trade-off: a sliver of recall for a large latency win — and recall is recovered by the keyword leg of the hybrid anyway.
+
+### RRF fusion over weighted score blending
+
+Chose reciprocal rank fusion over tuning a weighted blend of raw scores. Trade-off: discards score magnitude, but it's robust and needs no per-query tuning across two very different scales.
+
+### A hand-built gold set over synthetic labels
+
+Chose to label a gold set by hand rather than generate relevance judgements with a model. Trade-off — and a real limitation: it's small and single-annotator, so the numbers are directional, not absolute.
+
+> Hybrid didn't just edge out the best single method — it beat both on every query class. The two retrievers fail on different inputs, so fusing them covers each other's blind spots.
+>
+> — what the eval proved
+
+## Harder than expected
+
+Building an eval I could trust. With a small, single-annotator gold set, every metric carries a confidence interval wide enough to mislead. Stating that limitation honestly — and treating the numbers as directional — mattered more than chasing a higher score.
+
+## Results
+
+- **0.52** — recall@10 — vs 0.28 semantic
+- **0.74** — MRR — vs 0.14 exact
+- **Gold set** — + eval scripts committed to the repo
+
+recall@10 by method:
+
+```
+hybrid    ████████████████████  0.52
+semantic  ███████████           0.28
+exact     █████                 0.14
+```
+
+## Demo
+
+An interactive search widget: type a query, watch hybrid beat naive semantic.
+
+[Open the live demo →](https://hiring-radar.demo)
+
+## Repo
+
+[View the full source on GitHub →](https://github.com/nicomastakas/hiring-radar)

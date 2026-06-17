@@ -1,0 +1,101 @@
+{
+  "nav": { "work": "Work", "how": "How I build", "about": "About", "contact": "Contact" },
+  "common": { "email": "Email", "github": "GitHub", "linkedin": "LinkedIn", "resume": "Resume" },
+  "home": {
+    "availability": "Open to AI-native product roles",
+    "positioning": "AI-native product engineer — I ship LLM features 0-to-1.",
+    "bio": "Six-plus years shipping full products solo — frontend, backend, infra, the lot. Now I build AI-native products end to end: from prompt design and eval harnesses to the production app around them.",
+    "resume": "Resume (PDF)",
+    "proof": {
+      "role1": "Senior Engineer",
+      "sub1": "Lace multi-chain wallet",
+      "role2": "Founding Engineer #4",
+      "bolsterHi": "100K+ users",
+      "bolsterPost": "in 7 months",
+      "sub2": "0-to-1 product, solo on core surfaces",
+      "role3": "Earlier",
+      "sub3": "Client product engineering"
+    },
+    "workTitle": "Selected work",
+    "workCount": "04 projects",
+    "moreGitHub": "More on GitHub →",
+    "cards": {
+      "settle": {
+        "title": "AI bill review with a human in the loop",
+        "outcome": "Claude vision extracts and reconciles every line item before a human signs off.",
+        "metricValue": "69",
+        "metricLabel": "tests — 55 unit · 14 e2e"
+      },
+      "hiring-radar": {
+        "title": "Hybrid search that doubles recall",
+        "outcome": "Lexical + vector ranking surfaces strong candidates that pure semantic search misses.",
+        "metricValue": "0.52",
+        "metricLabel": "recall@10 vs 0.28 semantic"
+      },
+      "daily-news": {
+        "title": "RAG inside a production mobile app",
+        "outcome": "Local embeddings + Groq deliver fast, cited answers from within the app.",
+        "metricValue": "Cited",
+        "metricLabel": "answers · local embeddings + Groq"
+      },
+      "how-i-build-with-ai": {
+        "title": "My Claude Code workflow",
+        "outcome": "How I orchestrate agents and MCP tooling to ship production code at IOHK.",
+        "metricValue": "7 agents",
+        "metricLabel": "4 MCP servers at IOHK"
+      }
+    }
+  },
+  "about": {
+    "kicker": "About",
+    "title": "Senior full-stack product engineer, now building AI-native products end to end.",
+    "intro": "For six-plus years I've shipped full products solo — data model, APIs, frontend, infra, tests. The AI direction builds on that; it doesn't replace it. I'm not pivoting away from engineering into prompting — I'm adding the AI layer to work that already had to run in production. The same instincts that kept a fintech app stable at scale are the ones that keep an LLM feature honest.",
+    "experienceKicker": "Experience",
+    "howKicker": "How I work",
+    "how": "I take features from problem to production — data model and APIs, the frontend, the infra, the tests, and now the AI layer: prompts, evals, retrieval, and the product around them. I work best as the technical owner of a surface, deciding where deterministic code ends and a model begins. And I document as I go, so the work and the reasoning behind it outlive me.",
+    "contactKicker": "Contact",
+    "roles": {
+      "iohk": {
+        "name": "Input Output (IOHK)",
+        "meta": "Senior Engineer · Lace wallet",
+        "body": "On Lace, the multi-chain wallet, I architected a contract-module system that lets new chains and dApp integrations slot in without touching the core. Separately, I built the team's Claude Code framework — the agents and tooling other engineers now use day to day.",
+        "metrics": [
+          { "value": "7", "label": "Claude Code agents built" },
+          { "value": "4", "label": "MCP servers wired in" }
+        ],
+        "tags": ["TypeScript", "React", "Cardano", "Claude Code", "MCP"]
+      },
+      "bolster": {
+        "name": "Bolster",
+        "meta": "Founding Engineer #4",
+        "body": "Joined as the fourth engineer and built greenfield fintech surfaces from zero. I owned the core mobile experience as it grew to 100K+ users in seven months, then went back and made it fast and stable — cutting cold-start time and crashes hard.",
+        "metrics": [
+          { "value": "100K+", "label": "users in 7 months" },
+          { "value": "−40%", "label": "cold-start time" },
+          { "value": "−35%", "label": "crash rate" }
+        ],
+        "tags": ["React Native", "TypeScript", "Node", "fintech"]
+      },
+      "globant": {
+        "name": "Globant",
+        "meta": "Full-stack · Lessen (US proptech)",
+        "body": "Full-stack engineer on Lessen, a US proptech platform. I built the shared React Native component library that the product teams built on — standardizing UI and cutting cross-platform effort by roughly a third.",
+        "metrics": [{ "value": "−30%", "label": "cross-platform effort" }],
+        "tags": ["React Native", "TypeScript", "component systems"]
+      },
+      "moony": {
+        "name": "Moony",
+        "meta": "Co-founder",
+        "body": "Co-founded and built the product end to end — every layer, every decision. The crash course in owning a thing from idea to shipped that everything since has built on.",
+        "metrics": [],
+        "tags": ["full-stack", "0-to-1 product"]
+      }
+    }
+  },
+  "work": {
+    "viewIndex": "All work",
+    "back": "← Back",
+    "notTranslated": "Showing the original version of this case study."
+  },
+  "footer": { "positioning": "AI-native product engineer — I ship LLM features 0-to-1." }
+}

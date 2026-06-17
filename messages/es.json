@@ -1,0 +1,101 @@
+{
+  "nav": { "work": "Trabajo", "how": "Cómo construyo", "about": "Sobre mí", "contact": "Contacto" },
+  "common": { "email": "Email", "github": "GitHub", "linkedin": "LinkedIn", "resume": "CV" },
+  "home": {
+    "availability": "Disponible para roles de producto AI-native",
+    "positioning": "Ingeniero de producto AI-native — llevo features con LLM de 0 a 1.",
+    "bio": "Más de seis años entregando productos completos en solitario — frontend, backend, infra, todo. Ahora construyo productos AI-native de punta a punta: desde el diseño de prompts y los harnesses de evaluación hasta la app de producción que los rodea.",
+    "resume": "CV (PDF)",
+    "proof": {
+      "role1": "Ingeniero Senior",
+      "sub1": "Wallet multi-chain Lace",
+      "role2": "Ingeniero fundador #4",
+      "bolsterHi": "100K+ usuarios",
+      "bolsterPost": "en 7 meses",
+      "sub2": "Producto 0-a-1, en solitario en las superficies clave",
+      "role3": "Antes",
+      "sub3": "Ingeniería de producto para clientes"
+    },
+    "workTitle": "Trabajo destacado",
+    "workCount": "04 proyectos",
+    "moreGitHub": "Más en GitHub →",
+    "cards": {
+      "settle": {
+        "title": "Revisión de facturas con IA y un humano en el loop",
+        "outcome": "Claude vision extrae y concilia cada ítem antes de que un humano lo apruebe.",
+        "metricValue": "69",
+        "metricLabel": "tests — 55 unit · 14 e2e"
+      },
+      "hiring-radar": {
+        "title": "Búsqueda híbrida que duplica el recall",
+        "outcome": "El ranking léxico + vectorial encuentra buenos candidatos que la búsqueda semántica pura se pierde.",
+        "metricValue": "0.52",
+        "metricLabel": "recall@10 vs 0.28 semántica"
+      },
+      "daily-news": {
+        "title": "RAG dentro de una app móvil en producción",
+        "outcome": "Embeddings locales + Groq dan respuestas rápidas y citadas desde la app.",
+        "metricValue": "Citadas",
+        "metricLabel": "respuestas · embeddings locales + Groq"
+      },
+      "how-i-build-with-ai": {
+        "title": "Mi flujo de trabajo con Claude Code",
+        "outcome": "Cómo orquesto agentes y tooling MCP para enviar código a producción en IOHK.",
+        "metricValue": "7 agentes",
+        "metricLabel": "4 servidores MCP en IOHK"
+      }
+    }
+  },
+  "about": {
+    "kicker": "Sobre mí",
+    "title": "Ingeniero de producto full-stack senior, ahora construyendo productos AI-native de punta a punta.",
+    "intro": "Durante más de seis años entregué productos completos en solitario — modelo de datos, APIs, frontend, infra, tests. La dirección hacia la IA se apoya en eso; no lo reemplaza. No estoy abandonando la ingeniería para dedicarme a escribir prompts — le estoy sumando la capa de IA a un trabajo que ya tenía que correr en producción. Los mismos instintos que mantuvieron estable una app fintech a escala son los que mantienen honesta una feature con LLM.",
+    "experienceKicker": "Experiencia",
+    "howKicker": "Cómo trabajo",
+    "how": "Llevo las features de problema a producción — modelo de datos y APIs, el frontend, la infra, los tests, y ahora la capa de IA: prompts, evals, retrieval y el producto que los rodea. Trabajo mejor como dueño técnico de una superficie, decidiendo dónde termina el código determinista y dónde empieza un modelo. Y documento sobre la marcha, para que el trabajo y el razonamiento detrás me sobrevivan.",
+    "contactKicker": "Contacto",
+    "roles": {
+      "iohk": {
+        "name": "Input Output (IOHK)",
+        "meta": "Ingeniero Senior · Wallet Lace",
+        "body": "En Lace, la wallet multi-chain, diseñé un sistema de módulos por contrato que permite sumar nuevas cadenas e integraciones de dApps sin tocar el core. Aparte, construí el framework de Claude Code del equipo — los agentes y el tooling que otros ingenieros usan a diario.",
+        "metrics": [
+          { "value": "7", "label": "agentes de Claude Code" },
+          { "value": "4", "label": "servidores MCP integrados" }
+        ],
+        "tags": ["TypeScript", "React", "Cardano", "Claude Code", "MCP"]
+      },
+      "bolster": {
+        "name": "Bolster",
+        "meta": "Ingeniero fundador #4",
+        "body": "Entré como el cuarto ingeniero y construí superficies fintech greenfield desde cero. Fui dueño de la experiencia mobile central mientras crecía a 100K+ usuarios en siete meses, y después volví a hacerla rápida y estable — recortando fuerte el tiempo de cold-start y los crashes.",
+        "metrics": [
+          { "value": "100K+", "label": "usuarios en 7 meses" },
+          { "value": "−40%", "label": "tiempo de cold-start" },
+          { "value": "−35%", "label": "tasa de crashes" }
+        ],
+        "tags": ["React Native", "TypeScript", "Node", "fintech"]
+      },
+      "globant": {
+        "name": "Globant",
+        "meta": "Full-stack · Lessen (proptech US)",
+        "body": "Ingeniero full-stack en Lessen, una plataforma proptech de EE.UU. Construí la librería de componentes React Native compartida sobre la que los equipos de producto construían — estandarizando la UI y recortando el esfuerzo cross-platform en torno a un tercio.",
+        "metrics": [{ "value": "−30%", "label": "esfuerzo cross-platform" }],
+        "tags": ["React Native", "TypeScript", "sistemas de componentes"]
+      },
+      "moony": {
+        "name": "Moony",
+        "meta": "Co-fundador",
+        "body": "Co-fundé y construí el producto de punta a punta — cada capa, cada decisión. El curso intensivo de ser dueño de algo desde la idea hasta producción sobre el que todo lo demás se construyó.",
+        "metrics": [],
+        "tags": ["full-stack", "producto 0-a-1"]
+      }
+    }
+  },
+  "work": {
+    "viewIndex": "Todo el trabajo",
+    "back": "← Volver",
+    "notTranslated": "Este case study todavía no está en español — mostramos el original en inglés."
+  },
+  "footer": { "positioning": "Ingeniero de producto AI-native — llevo features con LLM de 0 a 1." }
+}

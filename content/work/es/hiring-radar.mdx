@@ -1,0 +1,80 @@
+---
+title: "hiring-radar — Búsqueda híbrida que duplica el recall"
+summary: "La recuperación híbrida (semántica + keyword, fusionadas con RRF) lleva el recall@10 a 0.52 — casi el doble que la semántica sola — con un gold set reproducible incluido en el repo."
+role: "Solo — diseño, desarrollo, infra"
+company: "hiring-radar"
+badge: "hr"
+stack:
+  - TypeScript
+  - Next.js
+  - Neon
+  - pgvector
+  - Drizzle
+  - local embeddings
+date: "2026-06-17"
+draft: false
+---
+
+## TL;DR
+
+- La recuperación híbrida (semántica + keyword, fusionadas con RRF) lleva el recall@10 a 0.52 — casi el doble que la semántica sola, que llega a 0.28.
+- MRR 0.74 vs 0.28 semántica vs 0.14 exacta, medido sobre un gold set incluido en el repo.
+- El gold set y los scripts de evaluación están en el repo — los números son reproducibles.
+
+## Problema
+
+**Ninguna búsqueda sola encuentra el aviso.**
+
+Rankear los avisos del hilo "Who is hiring" de HN es un problema de recall. La búsqueda semántica capta la intención pero se pierde términos exactos — nombres de empresas, versiones de frameworks, ubicaciones. La búsqueda por keyword acierta en eso pero ignora el significado. Cualquiera de las dos por separado deja la mitad de los avisos correctos fuera de la primera página.
+
+## Arquitectura
+
+```
+ingest del hilo de HN → chunk + embed local → pgvector HNSW + índice de keywords → fusión RRF → resultados rankeados
+```
+
+## Decisiones clave
+
+### pgvector HNSW en lugar de scan exacto
+
+Elegí un índice HNSW aproximado en lugar de un scan coseno exacto. Trade-off: una pizca de recall a cambio de una gran ganancia de latencia — y de todos modos el recall se recupera por la rama de keyword del híbrido.
+
+### Fusión RRF en lugar de mezcla ponderada de scores
+
+Elegí reciprocal rank fusion en lugar de ajustar una mezcla ponderada de scores crudos. Trade-off: descarta la magnitud del score, pero es robusta y no necesita tuning por query entre dos escalas muy distintas.
+
+### Un gold set hecho a mano en lugar de etiquetas sintéticas
+
+Elegí etiquetar un gold set a mano en lugar de generar juicios de relevancia con un modelo. Trade-off — y una limitación real: es chico y de un solo anotador, así que los números son direccionales, no absolutos.
+
+> El híbrido no solo superó por poco al mejor método individual — les ganó a ambos en cada clase de query. Los dos recuperadores fallan con inputs distintos, así que fusionarlos cubre los puntos ciegos del otro.
+>
+> — lo que demostró la evaluación
+
+## Más difícil de lo esperado
+
+Construir una evaluación en la que pudiera confiar. Con un gold set chico y de un solo anotador, cada métrica carga un intervalo de confianza lo bastante amplio como para engañar. Plantear esa limitación con honestidad — y tratar los números como direccionales — importó más que perseguir un score más alto.
+
+## Resultados
+
+- **0.52** — recall@10 — vs 0.28 semántica
+- **0.74** — MRR — vs 0.14 exacta
+- **Gold set** — + scripts de evaluación incluidos en el repo
+
+recall@10 por método:
+
+```
+hybrid    ████████████████████  0.52
+semantic  ███████████           0.28
+exact     █████                 0.14
+```
+
+## Demo
+
+Un widget de búsqueda interactivo: escribís una query y mirás cómo el híbrido le gana a la semántica naive.
+
+[Abrir la demo en vivo →](https://hiring-radar.demo)
+
+## Repo
+
+[Ver el código completo en GitHub →](https://github.com/nicomastakas/hiring-radar)

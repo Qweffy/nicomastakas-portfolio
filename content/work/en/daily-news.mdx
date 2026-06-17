@@ -1,0 +1,69 @@
+---
+title: "daily-news — RAG inside a production mobile app"
+summary: "An Ask-the-News RAG assistant with cosine top-k retrieval and tappable source citations — local MiniLM embeddings + Groq (Llama 3.3), grounded answers, no vector database."
+role: "Solo — design, build, infra"
+company: "daily-news"
+badge: "dn"
+stack:
+  - "Flutter"
+  - "Dart"
+  - "Firebase"
+  - "local embeddings (MiniLM)"
+  - "Groq (Llama 3.3)"
+date: "2026-06-17"
+draft: false
+---
+
+## TL;DR
+
+1. An "Ask the News" RAG assistant with cosine top-k retrieval and tappable source citations.
+2. Local MiniLM embeddings + Groq (Llama 3.3) — grounded answers with no vector database.
+3. Clean Architecture + BLoC, with CI-tested Firebase security rules.
+
+## Problem
+
+**A news assistant you can trust.**
+
+A chat assistant over the news is only useful if every claim is traceable to a real article. Ungrounded models confidently invent quotes and dates. The bar here was zero hallucinated facts on a phone — limited compute, intermittent network, and a small backend budget.
+
+## Architecture
+
+```
+article ingest → MiniLM local embed → Firestore store → cosine top-k retrieve → Groq grounded answer → cited sources
+```
+
+## Key decisions
+
+### Local embeddings + brute-force cosine over a vector DB
+
+Chose MiniLM on-device plus a plain cosine scan in Firestore over standing up a vector database. Trade-off: it won't scale past a few thousand articles — but at this corpus size a vector DB is cost and ops I don't need yet.
+
+### Grounding + refusal over free generation
+
+Chose to force every answer to cite retrieved sources and refuse when nothing matches. Trade-off: more "I don't have that" replies, but zero confident hallucinations — the right call for news.
+
+### Clean Architecture + BLoC over quick widgets
+
+Chose layered architecture and BLoC over wiring logic straight into widgets. Trade-off: more boilerplate up front, but the LLM and retrieval layers stay swappable and the security rules stay testable.
+
+> For a news assistant, "I don't know" is a feature. A refusal is recoverable; a confidently wrong fact is not. Grounding and refusal did more for trust than any model upgrade.
+>
+> — the design principle
+
+## Harder than expected
+
+Making on-device embeddings fast enough on low-end phones. Running MiniLM per query without freezing the UI meant moving inference off the main isolate and caching aggressively — more work than the retrieval and prompting combined.
+
+## Results
+
+- **Top-k** — cosine retrieval with tappable citations
+- **0** — vector DBs — runs inside Firestore
+- **CI-tested** — Firebase security rules
+
+## Demo
+
+The Ask-the-News flow — question → grounded answer → tap a citation.
+
+## Repo
+
+[View the full source on GitHub →](https://github.com/nicomastakas/daily-news)
