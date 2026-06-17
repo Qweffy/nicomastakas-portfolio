@@ -32,11 +32,13 @@ export async function generateMetadata({
       siteName: siteConfig.name,
       type: "website",
       locale,
+      images: ["/opengraph-image"],
     },
     twitter: {
       card: "summary_large_image",
       title: siteConfig.title,
       description: siteConfig.description,
+      images: ["/opengraph-image"],
     },
   };
 }

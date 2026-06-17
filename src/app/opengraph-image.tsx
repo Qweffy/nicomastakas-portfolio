@@ -4,7 +4,8 @@ export const alt = "Nico Mastakas — AI-native product engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Social share card. On-brand: dark, sober, one accent. Prerendered at build.
+// Social share card. On-brand: dark, sober, one accent. Served at /opengraph-image
+// (excluded from the i18n middleware matcher) and referenced explicitly in metadata.
 export default function OpengraphImage() {
   return new ImageResponse(
     <div
