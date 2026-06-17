@@ -43,7 +43,7 @@ const linkStyle: CSSProperties = {
 /** Top bar: logotype left, links + locale switcher right. One variant, no hamburger. */
 export function Nav({ name = "Nico Mastakas", links }: { name?: string; links: NavLink[] }) {
   return (
-    <nav style={bar}>
+    <nav className="nm-nav" style={bar}>
       <Link href="/" style={logo}>
         {name}
       </Link>

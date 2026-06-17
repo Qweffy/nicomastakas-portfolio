@@ -110,7 +110,7 @@ export default async function WorkPage({
     <div style={wrap}>
       <Nav links={navLinks} />
 
-      <article style={article}>
+      <article className="nm-container" style={article}>
         <div style={companyLine}>{study.company}</div>
         <h1 style={title}>{study.title}</h1>
         <p style={summary}>{study.summary}</p>

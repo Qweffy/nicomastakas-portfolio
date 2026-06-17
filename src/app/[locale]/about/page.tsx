@@ -113,16 +113,18 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
     <div style={wrap}>
       <Nav links={navLinks(await getTranslations("nav"))} />
 
-      <article style={article}>
-        <section style={intro}>
+      <article className="nm-container" style={article}>
+        <section className="nm-sect" style={intro}>
           <div style={kicker}>
             <span style={dot}>·</span> {t("kicker")}
           </div>
           <h1 style={introTitle}>{t("title")}</h1>
-          <p style={body}>{t("intro")}</p>
+          <p className="nm-full" style={body}>
+            {t("intro")}
+          </p>
         </section>
 
-        <section style={section}>
+        <section className="nm-sect" style={section}>
           <div style={{ ...kicker, marginBottom: "var(--space-8)" }}>
             <span style={dot}>·</span> {t("experienceKicker")}
           </div>
@@ -132,13 +134,13 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               const tags = t.raw(`roles.${role}.tags`) as string[];
               return (
                 <div key={role}>
-                  <div style={roleHead}>
+                  <div className="nm-entry-head" style={roleHead}>
                     <h2 style={roleName}>{t(`roles.${role}.name`)}</h2>
                     <span style={roleMeta}>{t(`roles.${role}.meta`)}</span>
                   </div>
                   <p style={roleBody}>{t(`roles.${role}.body`)}</p>
                   {metrics.length > 0 ? (
-                    <div style={metricRow}>
+                    <div className="nm-metric-row" style={metricRow}>
                       {metrics.map((m) => (
                         <Metric key={m.label} value={m.value} label={m.label} />
                       ))}
@@ -155,18 +157,20 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           </div>
         </section>
 
-        <section style={{ ...section, padding: "var(--space-12) 0" }}>
+        <section className="nm-sect" style={{ ...section, padding: "var(--space-12) 0" }}>
           <div style={kicker}>
             <span style={dot}>·</span> {t("howKicker")}
           </div>
-          <p style={howText}>{t("how")}</p>
+          <p className="nm-full" style={howText}>
+            {t("how")}
+          </p>
         </section>
 
-        <section style={contactSection}>
+        <section className="nm-sect" style={contactSection}>
           <div style={kicker}>
             <span style={dot}>·</span> {t("contactKicker")}
           </div>
-          <div style={actions}>
+          <div className="nm-actions" style={actions}>
             <Button variant="primary" href={`mailto:${siteConfig.email}`}>
               Email
             </Button>

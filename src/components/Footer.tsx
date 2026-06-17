@@ -60,7 +60,7 @@ export function Footer({
   year?: number;
 }) {
   return (
-    <footer style={foot}>
+    <footer className="nm-footer" style={foot}>
       <div style={left}>
         <span style={nameStyle}>{name}</span>
         <span style={pos}>{positioning}</span>

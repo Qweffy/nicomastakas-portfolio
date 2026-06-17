@@ -163,18 +163,22 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <div style={wrap}>
       <Nav links={navLinks} />
 
-      <main style={main}>
-        <section style={hero}>
+      <main className="nm-container" style={main}>
+        <section className="nm-sect" style={hero}>
           <div style={pill}>
             <span style={dot} />
             <span style={pillText}>{t("availability")}</span>
           </div>
 
           <h1 style={h1}>Nico Mastakas</h1>
-          <p style={positioning}>{t("positioning")}</p>
-          <p style={bio}>{t("bio")}</p>
+          <p className="nm-full" style={positioning}>
+            {t("positioning")}
+          </p>
+          <p className="nm-full" style={bio}>
+            {t("bio")}
+          </p>
 
-          <div style={actions}>
+          <div className="nm-actions" style={actions}>
             <Button variant="primary" href={`mailto:${siteConfig.email}`}>
               {nav("contact")}
             </Button>
@@ -190,7 +194,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
         </section>
 
-        <section style={proofGrid}>
+        <section className="nm-proof" style={proofGrid}>
           <div style={proofColDivided}>
             <div style={proofKicker}>{t("proof.role1")}</div>
             <div style={proofName}>Input Output (IOHK)</div>
@@ -214,13 +218,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
         </section>
 
-        <section id="work" style={workSection}>
+        <section id="work" className="nm-sect" style={workSection}>
           <div style={workHead}>
             <h2 style={h2}>{t("workTitle")}</h2>
             <span style={workCount}>{t("workCount")}</span>
           </div>
 
-          <div style={cardGrid}>
+          <div className="nm-grid-2" style={cardGrid}>
             {CARDS.map((card) => (
               <CaseStudyCard
                 key={card.slug}
