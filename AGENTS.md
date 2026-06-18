@@ -33,6 +33,7 @@ pnpm velite       # regenerate the .velite content layer
 ## Workflow
 
 - After changes, run in order: **`pnpm typecheck` → `pnpm lint` → `pnpm build`.**
-- Branch off `main`; Conventional Commits.
+- **Trunk-based: commit straight to `main`** (solo private repo, no PR review). Conventional Commits, small and focused. Feature branches are optional — use one only when you want a preview deploy before promoting.
+- **Deploy is automatic — never run `vercel deploy` by hand.** The Vercel project (`nicomastakas-portfolio`, team `qweffys-projects`) is connected to `Qweffy/nicomastakas-portfolio` with production branch `main`: **push to `main` → Vercel builds & deploys to production** (the live `nicomastakas.com`); any other branch → a preview URL. So shipping = `git push origin main`. (CLI token deploys are redundant duplicates — don't.)
 - **`*_BRIEF.md` are internal strategy docs — gitignored. Never commit them and never make this repo public with them in history.**
 - Secrets: only in `.env.local` or the Vercel dashboard. `.env.example` documents the keys.
