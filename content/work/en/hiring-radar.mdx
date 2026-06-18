@@ -18,8 +18,10 @@ draft: false
 ## TL;DR
 
 - Hybrid retrieval (semantic + keyword, fused with RRF) lifts recall@10 to 0.52 — nearly double semantic alone at 0.28.
-- MRR 0.74 vs 0.28 semantic vs 0.14 exact, measured on a committed gold set.
-- The gold set and eval scripts ship in the repo — the numbers are reproducible.
+- MRR 0.74 vs 0.28 semantic vs 0.14 exact, measured on a committed gold set — reproducible.
+- Beyond search: an agentic matcher with a bounded tool-use loop, run-to-run memory, and an MCP server.
+
+![hiring-radar — the Radar dashboard: live scope, monthly stats, and the latest agent run](/images/hiring-radar/dashboard.png)
 
 ## Problem
 
@@ -30,8 +32,12 @@ Ranking HN "Who is hiring" postings is a recall problem. Semantic search grasps 
 ## Architecture
 
 ```
-ingest HN thread → chunk + local embed → pgvector HNSW + keyword index → RRF fusion → ranked results
+ingest HN thread → LLM-extract fields → chunk + local embed → pgvector HNSW + tsvector → RRF fusion → ranked results
 ```
+
+Browse the whole corpus by exact, semantic, or hybrid — the mode toggle is the thesis in one control:
+
+![Browse: 294 postings with the Exact / Semantic / Hybrid mode toggle](/images/hiring-radar/browse.png)
 
 ## Key decisions
 
@@ -51,30 +57,29 @@ Chose to label a gold set by hand rather than generate relevance judgements with
 >
 > — what the eval proved
 
+## Results
+
+Measured on a hand-labelled gold set (12 queries · 294 postings), committed alongside the eval script:
+
+```
+mode               recall@10    MRR      avg latency
+exact (keyword)    0.140        0.156    ~199 ms
+semantic (vector)  0.276        0.283    ~351 ms
+hybrid (RRF)       0.521        0.737    ~348 ms
+```
+
+Hybrid roughly doubles semantic recall and lifts MRR to 0.74 — RRF recovers the literal term hits (a "Rust" or "Kubernetes") that pure vectors miss, while keeping the semantic matches that keyword can't reach.
+
+## Beyond search: a matching agent
+
+A bounded tool-use loop ranks postings against your profile: it calls `search_jobs`, `read_posting`, and `recall_memory` (it remembers verdicts from past runs), shortlists, and stops the instant it trips a hard cap — 24 steps, 600k tokens, or $1.00, checked before every model call. Untrusted posting text is spotlighted as data, never instructions. The same tools ship as an **MCP server**, callable from Claude.
+
+![The agent's tool-use trace — search, read, recall memory, shortlist — with the live step and cost budget](/images/hiring-radar/agent.png)
+
 ## Harder than expected
 
 Building an eval I could trust. With a small, single-annotator gold set, every metric carries a confidence interval wide enough to mislead. Stating that limitation honestly — and treating the numbers as directional — mattered more than chasing a higher score.
 
-## Results
+## Live + source
 
-- **0.52** — recall@10 — vs 0.28 semantic
-- **0.74** — MRR — vs 0.14 exact
-- **Gold set** — + eval scripts committed to the repo
-
-recall@10 by method:
-
-```
-hybrid    ████████████████████  0.52
-semantic  ███████████           0.28
-exact     █████                 0.14
-```
-
-## Demo
-
-An interactive search widget: type a query, watch hybrid beat naive semantic.
-
-[Open the live demo →](https://hiring-radar.demo)
-
-## Repo
-
-[View the full source on GitHub →](https://github.com/nicomastakas/hiring-radar)
+[Browse the live app →](https://hiring-radar.nicomastakas.com) · [Source on GitHub →](https://github.com/Qweffy/hiring-radar)
