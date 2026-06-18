@@ -406,6 +406,51 @@ a {
   }
 }
 
+/* ── "More work" — compact hairline rows (not full cards) ── */
+.nm-morework {
+  display: flex;
+  flex-direction: column;
+  border-top: var(--elevation-hairline);
+}
+.nm-morework__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-4) 0;
+  border-bottom: var(--elevation-hairline);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--motion-base) var(--ease-out);
+}
+.nm-morework__row:hover {
+  border-bottom-color: var(--accent);
+}
+.nm-morework__main {
+  min-width: 0;
+}
+.nm-morework__title {
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  color: var(--text);
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.nm-morework__row:hover .nm-morework__title {
+  color: var(--accent);
+}
+.nm-morework__sub {
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  margin-top: var(--space-1);
+}
+.nm-morework__meta {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
 /* ──────────────────────────────────────────────────────────────────────────
    MOBILE — single breakpoint at ≤ 640px → everything single-column.
    Token type overrides cascade into the inline-styled components (they read
@@ -481,6 +526,13 @@ a {
   }
   .nm-metric-row {
     gap: var(--space-6) !important;
+  }
+
+  /* More-work rows stack title over meta */
+  .nm-morework__row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: var(--space-1) !important;
   }
 
   /* Nav (no hamburger): logotype + links wrap, ≥44px targets, no overflow */

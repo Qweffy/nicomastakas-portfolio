@@ -2,9 +2,9 @@
   "nav": { "work": "Trabajo", "how": "Cómo construyo", "about": "Sobre mí", "contact": "Contacto" },
   "common": { "email": "Email", "github": "GitHub", "linkedin": "LinkedIn", "resume": "CV" },
   "home": {
-    "availability": "Disponible para roles de producto AI-native",
-    "positioning": "Ingeniero de producto AI-native — llevo features con LLM de 0 a 1.",
-    "bio": "Más de seis años entregando productos completos en solitario — frontend, backend, infra, todo. Ahora construyo productos AI-native de punta a punta: desde el diseño de prompts y los harnesses de evaluación hasta la app de producción que los rodea.",
+    "availability": "Disponible para roles de producto con IA",
+    "positioning": "Ingeniero de producto, no de features — agarro problemas ambiguos y los llevo a producción, ahora con IA en el stack.",
+    "bio": "Mi fuerte no es 'hacer apps' — es encontrar dónde se rompen en la práctica los productos complejos y convertir problemas ambiguos en algo que aguante producción. Más de seis años haciendo eso en solitario; ahora también construyo la capa de IA — prompts, evals, retrieval y el producto que los rodea.",
     "resume": "CV (PDF)",
     "proof": {
       "role1": "Ingeniero Senior",
@@ -17,26 +17,39 @@
       "sub3": "Ingeniería de producto para clientes"
     },
     "workTitle": "Trabajo destacado",
-    "workCount": "04 proyectos",
+    "workCount": "06 proyectos",
+    "moreTitle": "Más trabajo",
     "moreGitHub": "Más en GitHub →",
     "cards": {
-      "settle": {
-        "title": "Revisión de facturas con IA y un humano en el loop",
-        "outcome": "Claude vision extrae y concilia cada ítem antes de que un humano lo apruebe.",
-        "metricValue": "69",
-        "metricLabel": "tests — 55 unit · 14 e2e"
-      },
       "hiring-radar": {
         "title": "Búsqueda híbrida que duplica el recall",
         "outcome": "El ranking léxico + vectorial encuentra buenos candidatos que la búsqueda semántica pura se pierde.",
         "metricValue": "0.52",
         "metricLabel": "recall@10 vs 0.28 semántica"
       },
-      "daily-news": {
-        "title": "RAG dentro de una app móvil en producción",
-        "outcome": "Embeddings locales + Groq dan respuestas rápidas y citadas desde la app.",
-        "metricValue": "Citadas",
-        "metricLabel": "respuestas · embeddings locales + Groq"
+      "shoebox": {
+        "title": "OCR de tickets on-device al 90% de la nube",
+        "outcome": "OCR local + un LLM cuantizado llegan a ~90% de la visión cloud de frontera — offline y a $0.",
+        "metricValue": "~90%",
+        "metricLabel": "de la precisión cloud · $0 offline"
+      },
+      "rubric": {
+        "title": "CI para prompts",
+        "outcome": "Golden sets + un juez LLM calibrado frenan el PR cuando la calidad del prompt baja.",
+        "metricValue": "κ 0.81",
+        "metricLabel": "juez-vs-humano, calibrado"
+      },
+      "settle": {
+        "title": "Revisión de facturas con IA y un humano en el loop",
+        "outcome": "Claude vision extrae y concilia cada ítem antes de que un humano lo apruebe.",
+        "metricValue": "69",
+        "metricLabel": "tests — 55 unit · 14 e2e"
+      },
+      "today-only": {
+        "title": "Una app de tareas que solo maneja el hoy",
+        "outcome": "Sin backlog, sin arrastre — Must Do vs Bonus, y 'hacelo ahora' si lleva menos de cinco minutos.",
+        "metricValue": "Diario",
+        "metricLabel": "la app que uso de verdad"
       },
       "how-i-build-with-ai": {
         "title": "Mi flujo de trabajo con Claude Code",
@@ -44,15 +57,55 @@
         "metricValue": "7 agentes",
         "metricLabel": "4 servidores MCP en IOHK"
       }
+    },
+    "more": {
+      "daily-news": {
+        "title": "daily-news — RAG dentro de una app móvil",
+        "sub": "Ask-the-News con embeddings locales + Groq — respuestas fundamentadas y citadas en una app Flutter.",
+        "meta": "Flutter · case study"
+      },
+      "tether": {
+        "title": "Tether WDK wallet challenge",
+        "sub": "Wallet móvil no custodial — desbloqueo biométrico, claves guardadas en el Secure Enclave.",
+        "meta": "React Native · GitHub"
+      },
+      "offline": {
+        "title": "App de posts offline-first",
+        "sub": "Acciones offline encoladas que se sincronizan solas apenas vuelve la conexión.",
+        "meta": "React Native · GitHub"
+      }
     }
   },
   "about": {
     "kicker": "Sobre mí",
-    "title": "Ingeniero de producto full-stack senior, ahora construyendo productos AI-native de punta a punta.",
-    "intro": "Durante más de seis años entregué productos completos en solitario — modelo de datos, APIs, frontend, infra, tests. La dirección hacia la IA se apoya en eso; no lo reemplaza. No estoy abandonando la ingeniería para dedicarme a escribir prompts — le estoy sumando la capa de IA a un trabajo que ya tenía que correr en producción. Los mismos instintos que mantuvieron estable una app fintech a escala son los que mantienen honesta una feature con LLM.",
+    "title": "Ingeniero de producto, no de features — ahora llevando la capa de IA de punta a punta.",
+    "intro": "Soy ingeniero de producto, no de features. La mayoría cierra el ticket y sigue de largo; yo me quedo con cómo se siente la cosa — el timing, el caso borde, la línea que nadie lee. Esa fijación no es estética porque sí: es respeto por quien va a usar lo que hago. Llevo los problemas de ambiguos a producción, de punta a punta — modelo de datos y APIs, el frontend, la infra, los tests, y ahora la capa de IA: prompts, evals, retrieval y el producto que los rodea.",
     "experienceKicker": "Experiencia",
     "howKicker": "Cómo trabajo",
-    "how": "Llevo las features de problema a producción — modelo de datos y APIs, el frontend, la infra, los tests, y ahora la capa de IA: prompts, evals, retrieval y el producto que los rodea. Trabajo mejor como dueño técnico de una superficie, decidiendo dónde termina el código determinista y dónde empieza un modelo. Y documento sobre la marcha, para que el trabajo y el razonamiento detrás me sobrevivan.",
+    "howIntro": "Construyo la maquinaria que produce las features, no solo las features. Trabajo mejor como dueño técnico de una superficie, decidiendo dónde termina el código determinista y dónde empieza un modelo.",
+    "practice": [
+      {
+        "title": "Monorepos, un solo sistema de tipos",
+        "body": "mobile, web y backend comparten tipos, así un contrato cambia en un solo lugar."
+      },
+      {
+        "title": "Gates deterministas",
+        "body": "typecheck → lint → test → build, innegociable, antes de que algo salga."
+      },
+      {
+        "title": "Observabilidad desde el día uno",
+        "body": "tablas de errores y estados de UI honestos, no un 'desconocido' caja negra pegado después."
+      },
+      {
+        "title": "IA agnóstica de proveedor",
+        "body": "gratis y local por defecto, frontera cuando se lo gana — y el trade-off medido (shoebox: ~90% de la nube a $0)."
+      },
+      {
+        "title": "Humano en el loop por diseño",
+        "body": "el modelo muestra probabilidad; una persona decide donde la confianza importa de verdad."
+      }
+    ],
+    "howHonest": "Casi todo esto me lo enseñé solo — sin título, sin nadie marcándome el camino. Eso me volvió autosuficiente hasta el hueso y alérgico al 'no se puede'. También es lo que tengo que cuidar: tiendo a cargar todo el peso en vez de confiar en que el equipo lo sostenga, y la misma franqueza que es una virtud, con gente que no está lista para escucharla, a veces aterriza más dura de lo que quería. No son defectos a corregir — son el reverso de las mismas cosas que me hacen bueno en esto.",
     "contactKicker": "Contacto",
     "roles": {
       "iohk": {
@@ -68,7 +121,7 @@
       "bolster": {
         "name": "Bolster",
         "meta": "Ingeniero fundador #4",
-        "body": "Entré como el cuarto ingeniero y construí superficies fintech greenfield desde cero. Fui dueño de la experiencia mobile central mientras crecía a 100K+ usuarios en siete meses, y después volví a hacerla rápida y estable — recortando fuerte el tiempo de cold-start y los crashes.",
+        "body": "Entré como el cuarto ingeniero y construí superficies fintech greenfield desde cero. Fui dueño de la experiencia mobile central mientras crecía a 100K+ usuarios en siete meses, y después volví a hacerla rápida y estable — recortando fuerte el cold-start y los crashes.",
         "metrics": [
           { "value": "100K+", "label": "usuarios en 7 meses" },
           { "value": "−40%", "label": "tiempo de cold-start" },
@@ -79,14 +132,14 @@
       "globant": {
         "name": "Globant",
         "meta": "Full-stack · Lessen (proptech US)",
-        "body": "Ingeniero full-stack en Lessen, una plataforma proptech de EE.UU. Construí la librería de componentes React Native compartida sobre la que los equipos de producto construían — estandarizando la UI y recortando el esfuerzo cross-platform en torno a un tercio.",
+        "body": "Ingeniero full-stack en Lessen, una plataforma proptech de EE.UU. Construí la librería de componentes React Native compartida sobre la que construían los equipos de producto — estandarizando la UI y recortando el esfuerzo cross-platform en torno a un tercio.",
         "metrics": [{ "value": "−30%", "label": "esfuerzo cross-platform" }],
         "tags": ["React Native", "TypeScript", "sistemas de componentes"]
       },
       "moony": {
         "name": "Moony",
         "meta": "Co-fundador",
-        "body": "Co-fundé y construí el producto de punta a punta — cada capa, cada decisión. El curso intensivo de ser dueño de algo desde la idea hasta producción sobre el que todo lo demás se construyó.",
+        "body": "Co-fundé y construí el producto de punta a punta — cada capa, cada decisión. El curso intensivo de ser dueño de algo desde la idea hasta producción sobre el que se construyó todo lo demás.",
         "metrics": [],
         "tags": ["full-stack", "producto 0-a-1"]
       }
@@ -97,5 +150,5 @@
     "back": "← Volver",
     "notTranslated": "Este case study todavía no está en español — mostramos el original en inglés."
   },
-  "footer": { "positioning": "Ingeniero de producto AI-native — llevo features con LLM de 0 a 1." }
+  "footer": { "positioning": "Ingeniero de producto que lleva features con IA de punta a punta." }
 }

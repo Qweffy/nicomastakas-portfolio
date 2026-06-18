@@ -4,23 +4,39 @@ import { Button } from "@/components/Button";
 import { CaseStudyCard } from "@/components/CaseStudyCard";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
+import { Link } from "@/i18n/navigation";
 import { siteConfig } from "@/lib/site";
 
 const CARDS = [
-  { slug: "settle", company: "settle", badge: "se", tags: ["Next.js", "TypeScript", "Claude API"] },
   {
     slug: "hiring-radar",
     company: "hiring-radar",
     badge: "hr",
     tags: ["pgvector", "RAG", "Next.js"],
   },
-  { slug: "daily-news", company: "daily-news", badge: "dn", tags: ["Flutter", "Firebase", "RAG"] },
+  { slug: "shoebox", company: "shoebox", badge: "sb", tags: ["PaddleOCR", "Qwen-3B", "QLoRA"] },
+  { slug: "rubric", company: "rubric", badge: "ru", tags: ["TypeScript", "LLM-judge", "CI"] },
+  { slug: "settle", company: "settle", badge: "se", tags: ["Next.js", "Claude API", "Playwright"] },
+  {
+    slug: "today-only",
+    company: "personal product",
+    badge: "to",
+    tags: ["SwiftUI", "Tauri", "product"],
+  },
   {
     slug: "how-i-build-with-ai",
     company: "writeup · IOHK",
     badge: "AI",
     tags: ["Claude Code", "MCP"],
   },
+] as const;
+
+// Compact "More work" rows — not full cards. Internal slugs link to a case study;
+// external entries link straight to the repo.
+const MORE = [
+  { key: "daily-news", href: "/work/daily-news", external: false },
+  { key: "tether", href: "https://github.com/Qweffy/tether-wdk-challenge", external: true },
+  { key: "offline", href: "https://github.com/Qweffy/JSONPlaceholderApp", external: true },
 ] as const;
 
 const wrap: CSSProperties = {
@@ -145,6 +161,14 @@ const cardGrid: CSSProperties = {
   gridTemplateColumns: "repeat(2, 1fr)",
   gap: "var(--space-6)",
 };
+const moreHead: CSSProperties = {
+  fontSize: "var(--text-card-title)",
+  lineHeight: "var(--leading-title)",
+  fontWeight: "var(--weight-semibold)",
+  letterSpacing: "-0.01em",
+  margin: "0 0 var(--space-4)",
+  color: "var(--text)",
+};
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -242,6 +266,37 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 tags={[...card.tags]}
               />
             ))}
+          </div>
+
+          <div style={{ marginTop: "var(--space-16)" }}>
+            <h3 style={moreHead}>{t("moreTitle")}</h3>
+            <div className="nm-morework">
+              {MORE.map((m) =>
+                m.external ? (
+                  <a
+                    key={m.key}
+                    href={m.href}
+                    className="nm-morework__row"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <div className="nm-morework__main">
+                      <div className="nm-morework__title">{t(`more.${m.key}.title`)}</div>
+                      <div className="nm-morework__sub">{t(`more.${m.key}.sub`)}</div>
+                    </div>
+                    <span className="nm-morework__meta">{t(`more.${m.key}.meta`)}</span>
+                  </a>
+                ) : (
+                  <Link key={m.key} href={m.href} className="nm-morework__row">
+                    <div className="nm-morework__main">
+                      <div className="nm-morework__title">{t(`more.${m.key}.title`)}</div>
+                      <div className="nm-morework__sub">{t(`more.${m.key}.sub`)}</div>
+                    </div>
+                    <span className="nm-morework__meta">{t(`more.${m.key}.meta`)}</span>
+                  </Link>
+                ),
+              )}
+            </div>
           </div>
 
           <div style={{ marginTop: "var(--space-8)" }}>

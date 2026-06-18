@@ -91,6 +91,23 @@ const tagRow: CSSProperties = {
   marginTop: "var(--space-6)",
 };
 const howText: CSSProperties = { ...body, color: "var(--text)", margin: 0 };
+const practiceList: CSSProperties = {
+  listStyle: "none",
+  margin: "var(--space-6) 0 0",
+  padding: 0,
+  display: "flex",
+  flexDirection: "column",
+  gap: "var(--space-3)",
+  maxWidth: "var(--measure)",
+};
+const practiceItem: CSSProperties = {
+  fontSize: "var(--text-body)",
+  lineHeight: "var(--leading-body)",
+  color: "var(--text-muted)",
+  paddingLeft: "var(--space-4)",
+  borderLeft: "2px solid var(--border)",
+};
+const practiceTitle: CSSProperties = { color: "var(--text)", fontWeight: "var(--weight-semibold)" };
 const contactSection: CSSProperties = {
   padding: "var(--space-12) 0 var(--space-16)",
   borderTop: "var(--elevation-hairline)",
@@ -162,7 +179,17 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <span style={dot}>·</span> {t("howKicker")}
           </div>
           <p className="nm-full" style={howText}>
-            {t("how")}
+            {t("howIntro")}
+          </p>
+          <ul style={practiceList}>
+            {(t.raw("practice") as { title: string; body: string }[]).map((p) => (
+              <li key={p.title} style={practiceItem}>
+                <span style={practiceTitle}>{p.title}</span> — {p.body}
+              </li>
+            ))}
+          </ul>
+          <p className="nm-full" style={{ ...howText, marginTop: "var(--space-8)" }}>
+            {t("howHonest")}
           </p>
         </section>
 
