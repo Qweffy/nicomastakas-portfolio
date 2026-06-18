@@ -3,8 +3,8 @@
   "common": { "email": "Email", "github": "GitHub", "linkedin": "LinkedIn", "resume": "Resume" },
   "home": {
     "availability": "Open to AI-native product roles",
-    "positioning": "Product engineer, not a feature engineer — I take ambiguous problems to production, now with AI in the stack.",
-    "bio": "My edge isn't 'building apps' — it's finding where complex products break in practice and turning ambiguous problems into things that survive production. Six-plus years doing that solo; now I build the AI layer too — prompts, evals, retrieval, and the product around them.",
+    "positioning": "Product engineer, not a feature engineer. I take ambiguous problems to production, now with AI in the stack.",
+    "bio": "My edge isn't 'building apps.' It's finding where complex products break in practice and turning ambiguous problems into things that survive production. Six-plus years doing that solo; now I build the AI layer too: prompts, evals, retrieval, and the product around them.",
     "resume": "Resume (PDF)",
     "proof": {
       "role1": "Senior Engineer",
@@ -29,7 +29,7 @@
       },
       "shoebox": {
         "title": "On-device receipt OCR at 90% of cloud",
-        "outcome": "Local OCR + a quantized LLM reach ~90% of frontier cloud vision — offline, at $0.",
+        "outcome": "Local OCR + a quantized LLM reach ~90% of frontier cloud vision, offline and at $0.",
         "metricValue": "~90%",
         "metricLabel": "of cloud accuracy · $0 offline"
       },
@@ -43,11 +43,11 @@
         "title": "AI bill review with a human in the loop",
         "outcome": "Claude vision extracts and reconciles every line item before a human signs off.",
         "metricValue": "69",
-        "metricLabel": "tests — 55 unit · 14 e2e"
+        "metricLabel": "tests · 55 unit · 14 e2e"
       },
       "today-only": {
         "title": "A to-do app that only manages today",
-        "outcome": "No backlog, no carry-over — Must Do vs Bonus, and 'do it now' under five minutes.",
+        "outcome": "No backlog, no carry-over. Just Must Do vs Bonus, and 'do it now' under five minutes.",
         "metricValue": "Daily",
         "metricLabel": "the app I actually use"
       },
@@ -60,13 +60,13 @@
     },
     "more": {
       "daily-news": {
-        "title": "daily-news — RAG inside a mobile app",
-        "sub": "Ask-the-News with local embeddings + Groq — grounded, cited answers in a Flutter app.",
+        "title": "daily-news · RAG inside a mobile app",
+        "sub": "Ask-the-News with local embeddings + Groq: grounded, cited answers in a Flutter app.",
         "meta": "Flutter · case study"
       },
       "tether": {
         "title": "Tether WDK wallet challenge",
-        "sub": "Non-custodial mobile wallet — biometric unlock, Secure-Enclave key storage.",
+        "sub": "Non-custodial mobile wallet with biometric unlock and Secure-Enclave key storage.",
         "meta": "React Native · GitHub"
       },
       "offline": {
@@ -78,8 +78,8 @@
   },
   "about": {
     "kicker": "About",
-    "title": "Product engineer, not a feature engineer — now shipping the AI layer end to end.",
-    "intro": "I'm a product engineer, not a feature engineer. Most devs close the ticket and move on; I stay with how the thing actually feels — the timing, the edge case, the line nobody reads. That fixation isn't decoration; it's respect for whoever has to use what I ship. I take problems from ambiguous to in-production end to end — data model and APIs, the frontend, the infra, the tests, and now the AI layer: prompts, evals, retrieval, and the product around them.",
+    "title": "Product engineer, not a feature engineer, now shipping the AI layer end to end.",
+    "intro": "I'm a product engineer, not a feature engineer. Most devs close the ticket and move on; I stay with how the thing actually feels: the timing, the edge case, the line nobody reads. That fixation isn't decoration. It's respect for whoever has to use what I ship. I take problems from ambiguous to in-production end to end: data model and APIs, the frontend, the infra, the tests, and now the AI layer (prompts, evals, retrieval, and the product around them).",
     "experienceKicker": "Experience",
     "howKicker": "How I work",
     "howIntro": "I build the machinery that produces features, not just the features. I work best as the technical owner of a surface, deciding where deterministic code ends and a model begins.",
@@ -90,7 +90,7 @@
       },
       {
         "title": "Deterministic gates",
-        "body": "typecheck → lint → test → build, non-negotiable, before anything ships."
+        "body": "typecheck, lint, test, build. Non-negotiable, before anything ships."
       },
       {
         "title": "Observability from day one",
@@ -98,20 +98,19 @@
       },
       {
         "title": "Provider-agnostic AI",
-        "body": "free and local by default, frontier when it earns it — and the trade-off measured (shoebox: ~90% of cloud at $0)."
+        "body": "free and local by default, frontier when it earns it, with the trade-off measured (shoebox: ~90% of cloud at $0)."
       },
       {
         "title": "Humans in the loop by design",
         "body": "the model surfaces probability; a person decides where trust actually matters."
       }
     ],
-    "howHonest": "Most of this I taught myself — no degree, no one handing me the path. That made me self-sufficient to the bone and allergic to 'that can't be done.' It's also what I have to watch: I tend to carry the whole weight instead of trusting the team to hold it, and the same directness that's an asset can land harder than I meant. Those aren't bugs to fix — they're the flip side of the same engine.",
     "contactKicker": "Contact",
     "roles": {
       "iohk": {
         "name": "Input Output (IOHK)",
         "meta": "Senior Engineer · Lace wallet",
-        "body": "On Lace, the multi-chain wallet, I architected a contract-module system that lets new chains and dApp integrations slot in without touching the core. Separately, I built the team's Claude Code framework — the agents and tooling other engineers now use day to day.",
+        "body": "On Lace, the multi-chain wallet, I architected a contract-module system that lets new chains and dApp integrations slot in without touching the core. Separately, I built the team's Claude Code framework: the agents and tooling other engineers now use day to day.",
         "metrics": [
           { "value": "7", "label": "Claude Code agents built" },
           { "value": "4", "label": "MCP servers wired in" }
@@ -121,7 +120,7 @@
       "bolster": {
         "name": "Bolster",
         "meta": "Founding Engineer #4",
-        "body": "Joined as the fourth engineer and built greenfield fintech surfaces from zero. I owned the core mobile experience as it grew to 100K+ users in seven months, then went back and made it fast and stable — cutting cold-start time and crashes hard.",
+        "body": "Joined as the fourth engineer and built greenfield fintech surfaces from zero. I owned the core mobile experience as it grew to 100K+ users in seven months, then went back and made it fast and stable, cutting cold-start time and crashes hard.",
         "metrics": [
           { "value": "100K+", "label": "users in 7 months" },
           { "value": "−40%", "label": "cold-start time" },
@@ -132,14 +131,14 @@
       "globant": {
         "name": "Globant",
         "meta": "Full-stack · Lessen (US proptech)",
-        "body": "Full-stack engineer on Lessen, a US proptech platform. I built the shared React Native component library that the product teams built on — standardizing UI and cutting cross-platform effort by roughly a third.",
+        "body": "Full-stack engineer on Lessen, a US proptech platform. I built the shared React Native component library that the product teams built on, standardizing the UI and cutting cross-platform effort by roughly a third.",
         "metrics": [{ "value": "−30%", "label": "cross-platform effort" }],
         "tags": ["React Native", "TypeScript", "component systems"]
       },
       "moony": {
         "name": "Moony",
         "meta": "Co-founder",
-        "body": "Co-founded and built the product end to end — every layer, every decision. The crash course in owning a thing from idea to shipped that everything since has built on.",
+        "body": "Co-founded and built the product end to end: every layer, every decision. The crash course in owning a thing from idea to shipped that everything since has built on.",
         "metrics": [],
         "tags": ["full-stack", "0-to-1 product"]
       }

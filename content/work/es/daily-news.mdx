@@ -1,7 +1,7 @@
 ---
-title: "daily-news — RAG dentro de una app móvil en producción"
-summary: "Un asistente RAG Ask-the-News con recuperación cosine top-k y citas de fuentes tocables — embeddings locales MiniLM + Groq (Llama 3.3), respuestas fundamentadas, sin base de datos vectorial."
-role: "Solo — diseño, desarrollo, infraestructura"
+title: "daily-news: RAG dentro de una app móvil en producción"
+summary: "Un asistente RAG Ask-the-News con recuperación cosine top-k y citas de fuentes tocables: embeddings locales MiniLM + Groq (Llama 3.3), respuestas fundamentadas, sin base de datos vectorial."
+role: "Solo: diseño, desarrollo, infraestructura"
 company: "daily-news"
 badge: "dn"
 stack:
@@ -17,14 +17,14 @@ draft: false
 ## TL;DR
 
 1. Un asistente RAG "Ask the News" con recuperación cosine top-k y citas de fuentes tocables.
-2. Embeddings locales MiniLM + Groq (Llama 3.3) — respuestas fundamentadas, sin base de datos vectorial.
+2. Embeddings locales MiniLM + Groq (Llama 3.3): respuestas fundamentadas, sin base de datos vectorial.
 3. Clean Architecture + BLoC, con reglas de seguridad de Firebase probadas en CI.
 
 ## Problema
 
 **Un asistente de noticias en el que puedas confiar.**
 
-Un asistente de chat sobre las noticias solo es útil si cada afirmación puede rastrearse hasta un artículo real. Los modelos sin fundamento inventan citas y fechas con total seguridad. La vara acá era cero datos alucinados en un teléfono — cómputo limitado, red intermitente y un presupuesto de backend chico.
+Un asistente de chat sobre las noticias solo es útil si cada afirmación puede rastrearse hasta un artículo real. Los modelos sin fundamento inventan citas y fechas con total seguridad. La vara acá era cero datos alucinados en un teléfono: cómputo limitado, red intermitente y un presupuesto de backend chico.
 
 ## Arquitectura
 
@@ -36,11 +36,11 @@ ingesta de artículos → embed local con MiniLM → almacenamiento en Firestore
 
 ### Embeddings locales + cosine por fuerza bruta en vez de una base vectorial
 
-Elegí MiniLM en el dispositivo más un barrido cosine simple en Firestore en lugar de montar una base de datos vectorial. Compensación: no va a escalar más allá de unos pocos miles de artículos — pero con este tamaño de corpus, una base vectorial es costo y operación que todavía no necesito.
+Elegí MiniLM en el dispositivo más un barrido cosine simple en Firestore en lugar de montar una base de datos vectorial. Compensación: no va a escalar más allá de unos pocos miles de artículos, pero con este tamaño de corpus, una base vectorial es costo y operación que todavía no necesito.
 
 ### Fundamento + rechazo en vez de generación libre
 
-Elegí forzar que cada respuesta cite las fuentes recuperadas y rechazar cuando nada coincide. Compensación: más respuestas del tipo "no tengo eso", pero cero alucinaciones seguras — la decisión correcta para noticias.
+Elegí forzar que cada respuesta cite las fuentes recuperadas y rechazar cuando nada coincide. Compensación: más respuestas del tipo "no tengo eso", pero cero alucinaciones seguras, la decisión correcta para noticias.
 
 ### Clean Architecture + BLoC en vez de widgets rápidos
 
@@ -48,21 +48,21 @@ Elegí arquitectura por capas y BLoC en lugar de cablear la lógica directo en l
 
 > Para un asistente de noticias, "no lo sé" es una funcionalidad. Un rechazo es recuperable; un dato erróneo dicho con seguridad no lo es. El fundamento y el rechazo hicieron más por la confianza que cualquier actualización de modelo.
 >
-> — el principio de diseño
+> *el principio de diseño*
 
 ## Más difícil de lo esperado
 
-Lograr que los embeddings en el dispositivo fueran lo bastante rápidos en teléfonos de gama baja. Correr MiniLM por consulta sin congelar la UI implicó mover la inferencia fuera del isolate principal y cachear de forma agresiva — más trabajo que la recuperación y el prompting juntos.
+Lograr que los embeddings en el dispositivo fueran lo bastante rápidos en teléfonos de gama baja. Correr MiniLM por consulta sin congelar la UI implicó mover la inferencia fuera del isolate principal y cachear de forma agresiva: más trabajo que la recuperación y el prompting juntos.
 
 ## Resultados
 
-- **Top-k** — recuperación cosine con citas tocables
-- **0** — bases de datos vectoriales — corre dentro de Firestore
-- **Probadas en CI** — reglas de seguridad de Firebase
+- **Top-k**: recuperación cosine con citas tocables
+- **0** bases de datos vectoriales: corre dentro de Firestore
+- **Probadas en CI**: reglas de seguridad de Firebase
 
 ## Demo
 
-El flujo Ask-the-News — pregunta → respuesta fundamentada → tocás una cita.
+El flujo Ask-the-News: pregunta → respuesta fundamentada → tocás una cita.
 
 ## Repositorio
 

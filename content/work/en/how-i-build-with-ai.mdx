@@ -1,7 +1,7 @@
 ---
 title: How I build with AI
-summary: A custom Claude Code framework at IOHK — 7 specialized agents, 4 MCP servers, and automated PR review in the loop, documented in a public PROMPT_HISTORY.md.
-role: Solo — design, build, infra
+summary: A custom Claude Code framework at IOHK with 7 specialized agents, 4 MCP servers, and automated PR review in the loop, documented in a public PROMPT_HISTORY.md.
+role: "Solo: design, build, infra"
 company: writeup · IOHK
 badge: AI
 stack:
@@ -18,13 +18,13 @@ draft: false
 
 - A custom Claude Code framework at IOHK: 7 specialized agents and 4 MCP servers.
 - GitHub Actions runs automated PR review inside the loop.
-- A documented PROMPT_HISTORY.md is the evidence — practices, not proprietary code.
+- A documented PROMPT_HISTORY.md is the evidence: practices, not proprietary code.
 
 ## Problem
 
 **AI coding, made repeatable.**
 
-Most AI-assisted coding is ad hoc — a good prompt one day, a hallucinated refactor the next. Inside a real engineering org that's not good enough. The goal was a workflow reliable enough to trust on production code, and legible enough that other engineers could adopt it.
+Most AI-assisted coding is ad hoc: a good prompt one day, a hallucinated refactor the next. Inside a real engineering org that's not good enough. The goal was a workflow reliable enough to trust on production code, and legible enough that other engineers could adopt it.
 
 ## Architecture
 
@@ -40,25 +40,25 @@ Chose to feed the model curated, versioned docs as context rather than pile more
 
 ### Deterministic checks in code over fuzzy reasoning
 
-Chose to push everything verifiable — lint, types, tests, schema — into code, and let the model reason only where ambiguity is real. Trade-off: less "magic", but the loop is reliable and the failures are legible.
+Chose to push everything verifiable (lint, types, tests, schema) into code, and let the model reason only where ambiguity is real. Trade-off: less "magic", but the loop is reliable and the failures are legible.
 
 ### Employer-safe by design
 
 Chose to share the practices, never the proprietary code. Trade-off: fewer concrete internals on display, but everything here is publicly shippable and honest about that boundary.
 
-> The workflow is only credible if it's documented. PROMPT_HISTORY.md is the receipt — a running log of what I asked, what the agents did, and where I overrode them. The process is the artifact.
+> The workflow is only credible if it's documented. PROMPT_HISTORY.md is the receipt: a running log of what I asked, what the agents did, and where I overrode them. The process is the artifact.
 >
-> — why PROMPT_HISTORY.md exists
+> *why PROMPT_HISTORY.md exists*
 
 ## Harder than expected
 
-Keeping 7 agents from stepping on each other. Without strict context boundaries and a clear router, agents duplicated work and contradicted one another. Most of the design effort went into context discipline — who sees what, and who is allowed to decide.
+Keeping 7 agents from stepping on each other. Without strict context boundaries and a clear router, agents duplicated work and contradicted one another. Most of the design effort went into context discipline: who sees what, and who is allowed to decide.
 
 ## Results
 
-- **7 agents** — specialized Claude Code agents
-- **4 MCP** — servers wired into the workflow
-- **PR review** — automated via GitHub Actions
+- **7 agents** specialized Claude Code agents
+- **4 MCP** servers wired into the workflow
+- **PR review** automated via GitHub Actions
 
 ## Excerpts
 
@@ -68,7 +68,7 @@ role: PR reviewer
 context: [docs/architecture.md, docs/conventions.md]
 rules:
   - block on failing types or tests (deterministic gate)
-  - comment, never push — a human merges
+  - comment, never push; a human merges
   - cite the convention you are enforcing
 ```
 
@@ -84,6 +84,6 @@ rules:
 
 ## Where to see it
 
-The IOHK framework itself stays private — employer-safe by design. The same discipline is public across my own repos: a versioned `PROMPT_HISTORY.md` logging the prompts and overrides, and an `AGENTS.md` house-style doc that grounds every agent.
+The IOHK framework itself stays private, employer-safe by design. The same discipline is public across my own repos: a versioned `PROMPT_HISTORY.md` logging the prompts and overrides, and an `AGENTS.md` house-style doc that grounds every agent.
 
 [Read a PROMPT_HISTORY.md from my own builds →](https://github.com/Qweffy/TicTacToe/blob/master/PROMPT_HISTORY.md) · [My GitHub →](https://github.com/Qweffy)

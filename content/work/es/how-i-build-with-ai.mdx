@@ -1,7 +1,7 @@
 ---
 title: Cómo construyo con IA
-summary: Un framework propio de Claude Code en IOHK — 7 agentes especializados, 4 servidores MCP y revisión de PR automatizada dentro del loop, documentado en un PROMPT_HISTORY.md público.
-role: Solo — diseño, desarrollo, infra
+summary: Un framework propio de Claude Code en IOHK con 7 agentes especializados, 4 servidores MCP y revisión de PR automatizada dentro del loop, documentado en un PROMPT_HISTORY.md público.
+role: "Solo: diseño, desarrollo, infra"
 company: writeup · IOHK
 badge: AI
 stack:
@@ -18,13 +18,13 @@ draft: false
 
 - Un framework propio de Claude Code en IOHK: 7 agentes especializados y 4 servidores MCP.
 - GitHub Actions corre la revisión de PR automatizada dentro del loop.
-- Un PROMPT_HISTORY.md documentado es la evidencia — prácticas, no código propietario.
+- Un PROMPT_HISTORY.md documentado es la evidencia: prácticas, no código propietario.
 
 ## Problema
 
 **Programar con IA, de forma repetible.**
 
-La mayor parte de la programación asistida por IA es improvisada — un buen prompt un día, un refactor alucinado al siguiente. Dentro de una organización de ingeniería real eso no alcanza. El objetivo era un flujo de trabajo lo bastante confiable como para usarlo en código de producción, y lo bastante legible como para que otros ingenieros pudieran adoptarlo.
+La mayor parte de la programación asistida por IA es improvisada: un buen prompt un día, un refactor alucinado al siguiente. Dentro de una organización de ingeniería real eso no alcanza. El objetivo era un flujo de trabajo lo bastante confiable como para usarlo en código de producción, y lo bastante legible como para que otros ingenieros pudieran adoptarlo.
 
 ## Arquitectura
 
@@ -40,25 +40,25 @@ Opté por darle al modelo docs curadas y versionadas como contexto, en lugar de 
 
 ### Chequeos deterministas en código antes que razonamiento difuso
 
-Opté por mover todo lo verificable — lint, tipos, tests, schema — al código, y dejar que el modelo razone solo donde la ambigüedad es real. Trade-off: menos "magia", pero el loop es confiable y las fallas son legibles.
+Opté por mover todo lo verificable (lint, tipos, tests, schema) al código, y dejar que el modelo razone solo donde la ambigüedad es real. Trade-off: menos "magia", pero el loop es confiable y las fallas son legibles.
 
 ### Seguro para el empleador por diseño
 
 Opté por compartir las prácticas, nunca el código propietario. Trade-off: menos internals concretos a la vista, pero todo lo que está acá es publicable y honesto sobre ese límite.
 
-> El flujo de trabajo solo es creíble si está documentado. PROMPT_HISTORY.md es el comprobante — un registro continuo de qué pedí, qué hicieron los agentes y dónde los corregí. El proceso es el artefacto.
+> El flujo de trabajo solo es creíble si está documentado. PROMPT_HISTORY.md es el comprobante: un registro continuo de qué pedí, qué hicieron los agentes y dónde los corregí. El proceso es el artefacto.
 >
-> — por qué existe PROMPT_HISTORY.md
+> *por qué existe PROMPT_HISTORY.md*
 
 ## Más difícil de lo esperado
 
-Evitar que los 7 agentes se pisen entre sí. Sin límites de contexto estrictos y un router claro, los agentes duplicaban trabajo y se contradecían entre ellos. La mayor parte del esfuerzo de diseño se fue en disciplina de contexto — quién ve qué, y quién tiene permitido decidir.
+Evitar que los 7 agentes se pisen entre sí. Sin límites de contexto estrictos y un router claro, los agentes duplicaban trabajo y se contradecían entre ellos. La mayor parte del esfuerzo de diseño se fue en disciplina de contexto: quién ve qué, y quién tiene permitido decidir.
 
 ## Resultados
 
-- **7 agentes** — agentes especializados de Claude Code
-- **4 MCP** — servidores integrados al flujo de trabajo
-- **Revisión de PR** — automatizada con GitHub Actions
+- **7 agentes**: agentes especializados de Claude Code
+- **4 MCP**: servidores integrados al flujo de trabajo
+- **Revisión de PR**: automatizada con GitHub Actions
 
 ## Extractos
 
@@ -68,7 +68,7 @@ role: PR reviewer
 context: [docs/architecture.md, docs/conventions.md]
 rules:
   - block on failing types or tests (deterministic gate)
-  - comment, never push — a human merges
+  - comment, never push; a human merges
   - cite the convention you are enforcing
 ```
 
@@ -84,6 +84,6 @@ rules:
 
 ## Dónde verlo
 
-El framework de IOHK es privado — employer-safe a propósito. La misma disciplina está pública en mis propios repos: un `PROMPT_HISTORY.md` versionado con los prompts y las correcciones, y un `AGENTS.md` con la convención de la casa que ancla a cada agente.
+El framework de IOHK es privado, employer-safe a propósito. La misma disciplina está pública en mis propios repos: un `PROMPT_HISTORY.md` versionado con los prompts y las correcciones, y un `AGENTS.md` con la convención de la casa que ancla a cada agente.
 
 [Leé un PROMPT_HISTORY.md de mis propios builds →](https://github.com/Qweffy/TicTacToe/blob/master/PROMPT_HISTORY.md) · [Mi GitHub →](https://github.com/Qweffy)

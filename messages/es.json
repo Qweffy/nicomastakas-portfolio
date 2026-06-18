@@ -3,8 +3,8 @@
   "common": { "email": "Email", "github": "GitHub", "linkedin": "LinkedIn", "resume": "CV" },
   "home": {
     "availability": "Disponible para roles de producto con IA",
-    "positioning": "Ingeniero de producto, no de features — agarro problemas ambiguos y los llevo a producción, ahora con IA en el stack.",
-    "bio": "Mi fuerte no es 'hacer apps' — es encontrar dónde se rompen en la práctica los productos complejos y convertir problemas ambiguos en algo que aguante producción. Más de seis años haciendo eso en solitario; ahora también construyo la capa de IA — prompts, evals, retrieval y el producto que los rodea.",
+    "positioning": "Ingeniero de producto, no de features. Agarro problemas ambiguos y los llevo a producción, ahora con IA en el stack.",
+    "bio": "Mi fuerte no es 'hacer apps'. Es encontrar dónde se rompen en la práctica los productos complejos y convertir problemas ambiguos en algo que aguante producción. Más de seis años haciendo eso en solitario; ahora también construyo la capa de IA: prompts, evals, retrieval y el producto que los rodea.",
     "resume": "CV (PDF)",
     "proof": {
       "role1": "Ingeniero Senior",
@@ -29,7 +29,7 @@
       },
       "shoebox": {
         "title": "OCR de tickets on-device al 90% de la nube",
-        "outcome": "OCR local + un LLM cuantizado llegan a ~90% de la visión cloud de frontera — offline y a $0.",
+        "outcome": "OCR local + un LLM cuantizado llegan a ~90% de la visión cloud de frontera, offline y a $0.",
         "metricValue": "~90%",
         "metricLabel": "de la precisión cloud · $0 offline"
       },
@@ -43,11 +43,11 @@
         "title": "Revisión de facturas con IA y un humano en el loop",
         "outcome": "Claude vision extrae y concilia cada ítem antes de que un humano lo apruebe.",
         "metricValue": "69",
-        "metricLabel": "tests — 55 unit · 14 e2e"
+        "metricLabel": "tests · 55 unit · 14 e2e"
       },
       "today-only": {
         "title": "Una app de tareas que solo maneja el hoy",
-        "outcome": "Sin backlog, sin arrastre — Must Do vs Bonus, y 'hacelo ahora' si lleva menos de cinco minutos.",
+        "outcome": "Sin backlog, sin arrastre. Solo Must Do vs Bonus, y 'hacelo ahora' si lleva menos de cinco minutos.",
         "metricValue": "Diario",
         "metricLabel": "la app que uso de verdad"
       },
@@ -60,13 +60,13 @@
     },
     "more": {
       "daily-news": {
-        "title": "daily-news — RAG dentro de una app móvil",
-        "sub": "Ask-the-News con embeddings locales + Groq — respuestas fundamentadas y citadas en una app Flutter.",
+        "title": "daily-news · RAG dentro de una app móvil",
+        "sub": "Ask-the-News con embeddings locales + Groq: respuestas fundamentadas y citadas en una app Flutter.",
         "meta": "Flutter · case study"
       },
       "tether": {
         "title": "Tether WDK wallet challenge",
-        "sub": "Wallet móvil no custodial — desbloqueo biométrico, claves guardadas en el Secure Enclave.",
+        "sub": "Wallet móvil no custodial con desbloqueo biométrico y claves guardadas en el Secure Enclave.",
         "meta": "React Native · GitHub"
       },
       "offline": {
@@ -78,8 +78,8 @@
   },
   "about": {
     "kicker": "Sobre mí",
-    "title": "Ingeniero de producto, no de features — ahora llevando la capa de IA de punta a punta.",
-    "intro": "Soy ingeniero de producto, no de features. La mayoría cierra el ticket y sigue de largo; yo me quedo con cómo se siente la cosa — el timing, el caso borde, la línea que nadie lee. Esa fijación no es estética porque sí: es respeto por quien va a usar lo que hago. Llevo los problemas de ambiguos a producción, de punta a punta — modelo de datos y APIs, el frontend, la infra, los tests, y ahora la capa de IA: prompts, evals, retrieval y el producto que los rodea.",
+    "title": "Ingeniero de producto, no de features, ahora llevando la capa de IA de punta a punta.",
+    "intro": "Soy ingeniero de producto, no de features. La mayoría cierra el ticket y sigue de largo; yo me quedo con cómo se siente la cosa: el timing, el caso borde, la línea que nadie lee. Esa fijación no es estética porque sí; es respeto por quien va a usar lo que hago. Llevo los problemas de ambiguos a producción, de punta a punta: modelo de datos y APIs, el frontend, la infra, los tests, y ahora la capa de IA (prompts, evals, retrieval y el producto que los rodea).",
     "experienceKicker": "Experiencia",
     "howKicker": "Cómo trabajo",
     "howIntro": "Construyo la maquinaria que produce las features, no solo las features. Trabajo mejor como dueño técnico de una superficie, decidiendo dónde termina el código determinista y dónde empieza un modelo.",
@@ -90,7 +90,7 @@
       },
       {
         "title": "Gates deterministas",
-        "body": "typecheck → lint → test → build, innegociable, antes de que algo salga."
+        "body": "typecheck, lint, test, build. Innegociable, antes de que algo salga."
       },
       {
         "title": "Observabilidad desde el día uno",
@@ -98,20 +98,19 @@
       },
       {
         "title": "IA agnóstica de proveedor",
-        "body": "gratis y local por defecto, frontera cuando se lo gana — y el trade-off medido (shoebox: ~90% de la nube a $0)."
+        "body": "gratis y local por defecto, frontera cuando se lo gana, con el trade-off medido (shoebox: ~90% de la nube a $0)."
       },
       {
         "title": "Humano en el loop por diseño",
         "body": "el modelo muestra probabilidad; una persona decide donde la confianza importa de verdad."
       }
     ],
-    "howHonest": "Casi todo esto me lo enseñé solo — sin título, sin nadie marcándome el camino. Eso me volvió autosuficiente hasta el hueso y alérgico al 'no se puede'. También es lo que tengo que cuidar: tiendo a cargar todo el peso en vez de confiar en que el equipo lo sostenga, y la misma franqueza que es una virtud, con gente que no está lista para escucharla, a veces aterriza más dura de lo que quería. No son defectos a corregir — son el reverso de las mismas cosas que me hacen bueno en esto.",
     "contactKicker": "Contacto",
     "roles": {
       "iohk": {
         "name": "Input Output (IOHK)",
         "meta": "Ingeniero Senior · Wallet Lace",
-        "body": "En Lace, la wallet multi-chain, diseñé un sistema de módulos por contrato que permite sumar nuevas cadenas e integraciones de dApps sin tocar el core. Aparte, construí el framework de Claude Code del equipo — los agentes y el tooling que otros ingenieros usan a diario.",
+        "body": "En Lace, la wallet multi-chain, diseñé un sistema de módulos por contrato que permite sumar nuevas cadenas e integraciones de dApps sin tocar el core. Aparte, construí el framework de Claude Code del equipo: los agentes y el tooling que otros ingenieros usan a diario.",
         "metrics": [
           { "value": "7", "label": "agentes de Claude Code" },
           { "value": "4", "label": "servidores MCP integrados" }
@@ -121,7 +120,7 @@
       "bolster": {
         "name": "Bolster",
         "meta": "Ingeniero fundador #4",
-        "body": "Entré como el cuarto ingeniero y construí superficies fintech greenfield desde cero. Fui dueño de la experiencia mobile central mientras crecía a 100K+ usuarios en siete meses, y después volví a hacerla rápida y estable — recortando fuerte el cold-start y los crashes.",
+        "body": "Entré como el cuarto ingeniero y construí superficies fintech greenfield desde cero. Fui dueño de la experiencia mobile central mientras crecía a 100K+ usuarios en siete meses, y después volví a hacerla rápida y estable, recortando fuerte el cold-start y los crashes.",
         "metrics": [
           { "value": "100K+", "label": "usuarios en 7 meses" },
           { "value": "−40%", "label": "tiempo de cold-start" },
@@ -132,14 +131,14 @@
       "globant": {
         "name": "Globant",
         "meta": "Full-stack · Lessen (proptech US)",
-        "body": "Ingeniero full-stack en Lessen, una plataforma proptech de EE.UU. Construí la librería de componentes React Native compartida sobre la que construían los equipos de producto — estandarizando la UI y recortando el esfuerzo cross-platform en torno a un tercio.",
+        "body": "Ingeniero full-stack en Lessen, una plataforma proptech de EE.UU. Construí la librería de componentes React Native compartida sobre la que construían los equipos de producto, estandarizando la UI y recortando el esfuerzo cross-platform en torno a un tercio.",
         "metrics": [{ "value": "−30%", "label": "esfuerzo cross-platform" }],
         "tags": ["React Native", "TypeScript", "sistemas de componentes"]
       },
       "moony": {
         "name": "Moony",
         "meta": "Co-fundador",
-        "body": "Co-fundé y construí el producto de punta a punta — cada capa, cada decisión. El curso intensivo de ser dueño de algo desde la idea hasta producción sobre el que se construyó todo lo demás.",
+        "body": "Co-fundé y construí el producto de punta a punta: cada capa, cada decisión. El curso intensivo de ser dueño de algo desde la idea hasta producción sobre el que se construyó todo lo demás.",
         "metrics": [],
         "tags": ["full-stack", "producto 0-a-1"]
       }
@@ -148,7 +147,7 @@
   "work": {
     "viewIndex": "Todo el trabajo",
     "back": "← Volver",
-    "notTranslated": "Este case study todavía no está en español — mostramos el original en inglés."
+    "notTranslated": "Este case study todavía no está en español; mostramos el original en inglés."
   },
   "footer": { "positioning": "Ingeniero de producto que lleva features con IA de punta a punta." }
 }

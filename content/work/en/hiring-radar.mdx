@@ -1,7 +1,7 @@
 ---
-title: "hiring-radar — Hybrid search that doubles recall"
-summary: "Hybrid retrieval (semantic + keyword, fused with RRF) lifts recall@10 to 0.52 — nearly double semantic alone — with a reproducible gold set committed to the repo."
-role: "Solo — design, build, infra"
+title: "hiring-radar: Hybrid search that doubles recall"
+summary: "Hybrid retrieval (semantic + keyword, fused with RRF) lifts recall@10 to 0.52, nearly double semantic alone, with a reproducible gold set committed to the repo."
+role: "Solo: design, build, infra"
 company: "hiring-radar"
 badge: "hr"
 stack:
@@ -17,17 +17,17 @@ draft: false
 
 ## TL;DR
 
-- Hybrid retrieval (semantic + keyword, fused with RRF) lifts recall@10 to 0.52 — nearly double semantic alone at 0.28.
-- MRR 0.74 vs 0.28 semantic vs 0.14 exact, measured on a committed gold set — reproducible.
+- Hybrid retrieval (semantic + keyword, fused with RRF) lifts recall@10 to 0.52, nearly double semantic alone at 0.28.
+- MRR 0.74 vs 0.28 semantic vs 0.14 exact, measured on a committed gold set, so it's reproducible.
 - Beyond search: an agentic matcher with a bounded tool-use loop, run-to-run memory, and an MCP server.
 
-![hiring-radar — the Radar dashboard: live scope, monthly stats, and the latest agent run](/images/hiring-radar/dashboard.png)
+![hiring-radar, the Radar dashboard: live scope, monthly stats, and the latest agent run](/images/hiring-radar/dashboard.png)
 
 ## Problem
 
 **Neither search alone finds the job.**
 
-Ranking HN "Who is hiring" postings is a recall problem. Semantic search grasps intent but misses exact terms — company names, framework versions, locations. Keyword search nails those but ignores meaning. Either alone leaves half the right postings off the first page.
+Ranking HN "Who is hiring" postings is a recall problem. Semantic search grasps intent but misses exact terms: company names, framework versions, locations. Keyword search nails those but ignores meaning. Either alone leaves half the right postings off the first page.
 
 ## Architecture
 
@@ -35,7 +35,7 @@ Ranking HN "Who is hiring" postings is a recall problem. Semantic search grasps 
 ingest HN thread → LLM-extract fields → chunk + local embed → pgvector HNSW + tsvector → RRF fusion → ranked results
 ```
 
-Browse the whole corpus by exact, semantic, or hybrid — the mode toggle is the thesis in one control:
+Browse the whole corpus by exact, semantic, or hybrid. The mode toggle is the thesis in one control:
 
 ![Browse: 294 postings with the Exact / Semantic / Hybrid mode toggle](/images/hiring-radar/browse.png)
 
@@ -43,7 +43,7 @@ Browse the whole corpus by exact, semantic, or hybrid — the mode toggle is the
 
 ### pgvector HNSW over exact scan
 
-Chose an approximate HNSW index over an exact cosine scan. Trade-off: a sliver of recall for a large latency win — and recall is recovered by the keyword leg of the hybrid anyway.
+Chose an approximate HNSW index over an exact cosine scan. Trade-off: a sliver of recall for a large latency win, and recall is recovered by the keyword leg of the hybrid anyway.
 
 ### RRF fusion over weighted score blending
 
@@ -51,11 +51,11 @@ Chose reciprocal rank fusion over tuning a weighted blend of raw scores. Trade-o
 
 ### A hand-built gold set over synthetic labels
 
-Chose to label a gold set by hand rather than generate relevance judgements with a model. Trade-off — and a real limitation: it's small and single-annotator, so the numbers are directional, not absolute.
+Chose to label a gold set by hand rather than generate relevance judgements with a model. Trade-off, and a real limitation: it's small and single-annotator, so the numbers are directional, not absolute.
 
-> Hybrid didn't just edge out the best single method — it beat both on every query class. The two retrievers fail on different inputs, so fusing them covers each other's blind spots.
+> Hybrid didn't just edge out the best single method. It beat both on every query class. The two retrievers fail on different inputs, so fusing them covers each other's blind spots.
 >
-> — what the eval proved
+> *what the eval proved*
 
 ## Results
 
@@ -68,17 +68,17 @@ semantic (vector)  0.276        0.283    ~351 ms
 hybrid (RRF)       0.521        0.737    ~348 ms
 ```
 
-Hybrid roughly doubles semantic recall and lifts MRR to 0.74 — RRF recovers the literal term hits (a "Rust" or "Kubernetes") that pure vectors miss, while keeping the semantic matches that keyword can't reach.
+Hybrid roughly doubles semantic recall and lifts MRR to 0.74. RRF recovers the literal term hits (a "Rust" or "Kubernetes") that pure vectors miss, while keeping the semantic matches that keyword can't reach.
 
 ## Beyond search: a matching agent
 
-A bounded tool-use loop ranks postings against your profile: it calls `search_jobs`, `read_posting`, and `recall_memory` (it remembers verdicts from past runs), shortlists, and stops the instant it trips a hard cap — 24 steps, 600k tokens, or $1.00, checked before every model call. Untrusted posting text is spotlighted as data, never instructions. The same tools ship as an **MCP server**, callable from Claude.
+A bounded tool-use loop ranks postings against your profile: it calls `search_jobs`, `read_posting`, and `recall_memory` (it remembers verdicts from past runs), shortlists, and stops the instant it trips a hard cap (24 steps, 600k tokens, or $1.00), checked before every model call. Untrusted posting text is spotlighted as data, never instructions. The same tools ship as an **MCP server**, callable from Claude.
 
-![The agent's tool-use trace — search, read, recall memory, shortlist — with the live step and cost budget](/images/hiring-radar/agent.png)
+![The agent's tool-use trace (search, read, recall memory, shortlist) with the live step and cost budget](/images/hiring-radar/agent.png)
 
 ## Harder than expected
 
-Building an eval I could trust. With a small, single-annotator gold set, every metric carries a confidence interval wide enough to mislead. Stating that limitation honestly — and treating the numbers as directional — mattered more than chasing a higher score.
+Building an eval I could trust. With a small, single-annotator gold set, every metric carries a confidence interval wide enough to mislead. Stating that limitation honestly, and treating the numbers as directional, mattered more than chasing a higher score.
 
 ## Live + source
 

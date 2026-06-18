@@ -227,7 +227,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <div style={proofColDivided}>
             <div style={proofKicker}>{t("proof.role2")}</div>
             <div style={proofName}>
-              Bolster —{" "}
+              Bolster,{" "}
               <span style={{ fontWeight: "var(--weight-bold)", color: "var(--accent)" }}>
                 {t("proof.bolsterHi")}
               </span>{" "}

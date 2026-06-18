@@ -1,7 +1,7 @@
 ---
-title: "rubric — CI para prompts"
+title: "rubric: CI para prompts"
 summary: "Trata a los prompts y agentes como código: golden sets, scorers deterministas, un juez LLM calibrado contra labels humanos (κ de Cohen 0.81), y un gate que frena el PR cuando un cambio de prompt empeora la salida sin avisar."
-role: "Solo — diseño, desarrollo, infra"
+role: "Solo: diseño, desarrollo, infra"
 company: "rubric"
 badge: "ru"
 stack:
@@ -17,16 +17,16 @@ draft: false
 ## TL;DR
 
 - Una suite de tests para prompts y agentes: golden sets, puntuados en cada corrida, diffeados contra la última corrida verde, frenando el PR ante regresiones.
-- Un juez LLM **calibrado contra labels humanos** — κ de Cohen 0.81, una matriz de confusión juez-vs-humano, chequeos de sesgo por posición/longitud — así el juez es un instrumento medido, no una caja negra.
+- Un juez LLM **calibrado contra labels humanos** (κ de Cohen 0.81, una matriz de confusión juez-vs-humano, chequeos de sesgo por posición/longitud), así el juez es un instrumento medido, no una caja negra.
 - Nació de auditar dos productos ya enviados y encontrar el mismo agujero: prompts cambiados a ojo, calidad medida con fe.
 
-![rubric — Suites overview: KPIs de pass-rate, un banner de gate de regresión, una fila por golden set](/images/rubric/suites-overview.png)
+![rubric, Suites overview: KPIs de pass-rate, un banner de gate de regresión, una fila por golden set](/images/rubric/suites-overview.png)
 
 ## Problema
 
 **No podés enviar lo que no podés medir.**
 
-Una suite de tests te frena un regreso en la *lógica*. Nada te frena un regreso en la *calidad* — un system prompt reescrito que baja la precisión sin que te enteres, un cambio de modelo que hunde la fidelidad, un agente que empieza a elegir la tool equivocada. Lo había visto exacto en dos productos enviados: un número de confianza hardcodeado tapando una medición que nunca existió. rubric cierra ese agujero.
+Una suite de tests te frena un regreso en la *lógica*. Nada te frena un regreso en la *calidad*: un system prompt reescrito que baja la precisión sin que te enteres, un cambio de modelo que hunde la fidelidad, un agente que empieza a elegir la tool equivocada. Lo había visto exacto en dos productos enviados: un número de confianza hardcodeado tapando una medición que nunca existió. rubric cierra ese agujero.
 
 ## Arquitectura
 
@@ -41,39 +41,39 @@ Una suite de tests te frena un regreso en la *lógica*. Nada te frena un regreso
 
 La CLI es el producto; el dashboard es una lente de solo lectura sobre lo que escribe. Las dos superficies se tocan únicamente en el store.
 
-![Run detail — cada caso puntuado por cada scorer, con los pass-rates por scorer que mueven el gate](/images/rubric/run-detail.png)
+![Run detail: cada caso puntuado por cada scorer, con los pass-rates por scorer que mueven el gate](/images/rubric/run-detail.png)
 
 ## Decisiones clave
 
 ### Scorers deterministas primero, el juez solo cuando hace falta
 
-Elegí exact-match, json-schema y field-accuracy con un piso de aprobación como default — sin llamada a modelo, sin flake, sin costo — y dejé al juez LLM solo para lo genuinamente subjetivo. Trade-off: menos cobertura de salidas abiertas por defecto, pero el gate es rápido, gratis y nunca flakea.
+Elegí exact-match, json-schema y field-accuracy con un piso de aprobación como default (sin llamada a modelo, sin flake, sin costo) y dejé al juez LLM solo para lo genuinamente subjetivo. Trade-off: menos cobertura de salidas abiertas por defecto, pero el gate es rápido, gratis y nunca flakea.
 
 ### Un juez calibrado en lugar de uno en el que confiás
 
-Elegí medir al juez contra labels humanos en vez de asumir que coincide conmigo. Trade-off: un paso de etiquetado (`rubric label`), pero saca a la luz el sesgo peligroso — la leniencia, el falso-positivo — y convierte "el juez dijo que está bien" en un número que podés defender.
+Elegí medir al juez contra labels humanos en vez de asumir que coincide conmigo. Trade-off: un paso de etiquetado (`rubric label`), pero saca a la luz el sesgo peligroso (la leniencia, el falso-positivo) y convierte "el juez dijo que está bien" en un número que podés defender.
 
-![Calibración del juez — κ de Cohen, la matriz de confusión juez-vs-humano y chequeos de sesgo](/images/rubric/judge-calibration.png)
+![Calibración del juez: κ de Cohen, la matriz de confusión juez-vs-humano y chequeos de sesgo](/images/rubric/judge-calibration.png)
 
 ### Gatear sobre un diff, no sobre un score
 
-Elegí persistir cada corrida y diffearla contra la última verde para el mismo suite + versión de prompt, saliendo con código distinto de cero al pasar el piso de una métrica. Trade-off: necesitás un baseline antes de que el gate signifique algo, pero muestra causa y efecto — el diff del prompt al lado de los casos que pasaron de pass→fail.
+Elegí persistir cada corrida y diffearla contra la última verde para el mismo suite + versión de prompt, saliendo con código distinto de cero al pasar el piso de una métrica. Trade-off: necesitás un baseline antes de que el gate signifique algo, pero muestra causa y efecto: el diff del prompt al lado de los casos que pasaron de pass→fail.
 
-> Un juez que no calibraste es apenas una segunda opinión que decidiste creer. El κ y la matriz de confusión son lo que lo vuelven evidencia — el conteo de falsos-positivos es el número que de verdad importa.
+> Un juez que no calibraste es apenas una segunda opinión que decidiste creer. El κ y la matriz de confusión son lo que lo vuelven evidencia: el conteo de falsos-positivos es el número que de verdad importa.
 >
-> — por qué la calibración es innegociable
+> *por qué la calibración es innegociable*
 
 ## Más difícil de lo esperado
 
-Hacer al juez confiable como para gatear un PR. Un juez LLM sin calibrar es indulgente con confianza — aprueba cosas que un humano reprobaría, y esos falsos-positivos son justo las regresiones que querés cazar. Casi todo el laburo fue la matemática de calibración y el flujo de etiquetado, no el juzgar en sí.
+Hacer al juez confiable como para gatear un PR. Un juez LLM sin calibrar es indulgente con confianza: aprueba cosas que un humano reprobaría, y esos falsos-positivos son justo las regresiones que querés cazar. Casi todo el laburo fue la matemática de calibración y el flujo de etiquetado, no el juzgar en sí.
 
 ## Resultados
 
-- **κ 0.81** — acuerdo juez-vs-humano, calibrado
-- **126/142** — pasando en el suite demo, una regresión cazada
-- **PR en rojo** — el gate bloquea el merge, no solo lo loguea
+- **κ 0.81**: acuerdo juez-vs-humano, calibrado
+- **126/142**: pasando en el suite demo, una regresión cazada
+- **PR en rojo**: el gate bloquea el merge, no solo lo loguea
 
-![Regression diff — el cambio de prompt (causa) al lado de los casos que se dieron vuelta (efecto)](/images/rubric/regression-diff.png)
+![Regression diff: el cambio de prompt (causa) al lado de los casos que se dieron vuelta (efecto)](/images/rubric/regression-diff.png)
 
 ## Live + código
 

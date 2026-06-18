@@ -1,7 +1,7 @@
 ---
-title: "TodayOnly — una app de tareas que solo maneja el hoy"
-summary: "La app de tareas que uso de verdad todos los días. Sin backlog, sin arrastre, sin notificaciones — solo Must Do vs Bonus para hoy, y un empujón de 'hacelo ahora' para todo lo que lleve menos de cinco minutos. SwiftUI nativo en macOS, Tauri en Windows."
-role: "Solo — diseño, desarrollo, envío"
+title: "TodayOnly: una app de tareas que solo maneja el hoy"
+summary: "La app de tareas que uso de verdad todos los días. Sin backlog, sin arrastre, sin notificaciones: solo Must Do vs Bonus para hoy, y un empujón de 'hacelo ahora' para todo lo que lleve menos de cinco minutos. SwiftUI nativo en macOS, Tauri en Windows."
+role: "Solo: diseño, desarrollo, envío"
 company: "producto propio"
 badge: "to"
 stack:
@@ -15,7 +15,7 @@ draft: false
 
 ## TL;DR
 
-- Un planificador diario deliberadamente diminuto — dos listas, **Must Do** y **Bonus**, y nada más.
+- Un planificador diario deliberadamente diminuto: dos listas, **Must Do** y **Bonus**, y nada más.
 - Las tareas no se arrastran: cada día nuevo revisás lo que quedó y decidís, así la lista nunca se vuelve un backlog de culpa.
 - El producto son las restricciones. Lo uso todos los días; es SwiftUI nativo en macOS y Tauri en Windows.
 
@@ -23,13 +23,13 @@ draft: false
 
 **Toda app de tareas termina siendo un backlog que evitás abrir.**
 
-Las probé todas. Todas derivan igual: las tareas se apilan, los "algún día" se pudren abajo, y abrir la app empieza a sentirse como un pequeño fracaso. No quería un mejor backlog — quería algo que se negara a tener uno. Así que construí la herramienta que deseaba que existiera y la usé hasta que el diseño fue honesto.
+Las probé todas. Todas derivan igual: las tareas se apilan, los "algún día" se pudren abajo, y abrir la app empieza a sentirse como un pequeño fracaso. No quería un mejor backlog; quería algo que se negara a tener uno. Así que construí la herramienta que deseaba que existiera y la usé hasta que el diseño fue honesto.
 
 ## Decisiones de diseño
 
 ### Solo el hoy, por diseño
 
-Elegí acotar toda la app a un único día. Trade-off: no podés planificar una semana — pero ese es el punto. Lo que no podés accionar hoy no está en pantalla, así la lista sigue siendo un plan, no un archivo.
+Elegí acotar toda la app a un único día. Trade-off: no podés planificar una semana, pero ese es el punto. Lo que no podés accionar hoy no está en pantalla, así la lista sigue siendo un plan, no un archivo.
 
 ### Sin arrastre automático
 
@@ -41,11 +41,11 @@ Elegí interceptar la creación de la tarea: si lleva menos de cinco minutos, la
 
 ### Must Do vs Bonus, nada más
 
-Elegí exactamente dos cajones — sin prioridades, sin tags, sin proyectos. Trade-off: menos poder, pero cero overhead. La taxonomía entra en tu cabeza, que es el único lugar donde una lista diaria necesita vivir.
+Elegí exactamente dos cajones: sin prioridades, sin tags, sin proyectos. Trade-off: menos poder, pero cero overhead. La taxonomía entra en tu cabeza, que es el único lugar donde una lista diaria necesita vivir.
 
-> Lo más difícil no fue el código — fue borrar features. Cada agregado "útil" (recordatorios, sync, una vista de backlog) reintroduce sin querer el problema exacto que la app existe para resolver. La contención era la feature.
+> Lo más difícil no fue el código; fue borrar features. Cada agregado "útil" (recordatorios, sync, una vista de backlog) reintroduce sin querer el problema exacto que la app existe para resolver. La contención era la feature.
 >
-> — lo que me enseñó construirla
+> *lo que me enseñó construirla*
 
 ## Por qué está acá
 
@@ -53,9 +53,9 @@ Es el tipo de pieza de portafolio más honesto: un producto que uso todos los d�
 
 ## Resultados
 
-- **Diario** — lo uso todos los días; la prueba más honesta que una herramienta puede pasar.
-- **Dos listas** — toda la arquitectura de información, a propósito.
-- **Cero** — backlog, recordatorios, notificaciones, sync.
+- **Diario**: lo uso todos los días; la prueba más honesta que una herramienta puede pasar.
+- **Dos listas**: toda la arquitectura de información, a propósito.
+- **Cero**: backlog, recordatorios, notificaciones, sync.
 
 ## Código
 

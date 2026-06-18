@@ -23,7 +23,7 @@ export async function generateMetadata({
   const { locale } = await params;
   return {
     metadataBase: new URL(siteConfig.url),
-    title: { default: siteConfig.title, template: `%s — ${siteConfig.name}` },
+    title: { default: siteConfig.title, template: `%s · ${siteConfig.name}` },
     description: siteConfig.description,
     openGraph: {
       title: siteConfig.title,

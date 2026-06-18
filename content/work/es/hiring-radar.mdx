@@ -1,7 +1,7 @@
 ---
-title: "hiring-radar — Búsqueda híbrida que duplica el recall"
-summary: "La recuperación híbrida (semántica + keyword, fusionadas con RRF) lleva el recall@10 a 0.52 — casi el doble que la semántica sola — con un gold set reproducible incluido en el repo."
-role: "Solo — diseño, desarrollo, infra"
+title: "hiring-radar: búsqueda híbrida que duplica el recall"
+summary: "La recuperación híbrida (semántica + keyword, fusionadas con RRF) lleva el recall@10 a 0.52, casi el doble que la semántica sola, con un gold set reproducible incluido en el repo."
+role: "Solo: diseño, desarrollo, infra"
 company: "hiring-radar"
 badge: "hr"
 stack:
@@ -17,17 +17,17 @@ draft: false
 
 ## TL;DR
 
-- La recuperación híbrida (semántica + keyword, fusionadas con RRF) lleva el recall@10 a 0.52 — casi el doble que la semántica sola (0.28).
-- MRR 0.74 vs 0.28 semántica vs 0.14 exact, medido sobre un gold set incluido en el repo — reproducible.
-- Más allá del search: un matcher con agente — loop de tool-use acotado, memoria entre corridas y un servidor MCP.
+- La recuperación híbrida (semántica + keyword, fusionadas con RRF) lleva el recall@10 a 0.52, casi el doble que la semántica sola (0.28).
+- MRR 0.74 vs 0.28 semántica vs 0.14 exact, medido sobre un gold set incluido en el repo y reproducible.
+- Más allá del search: un matcher con agente, con loop de tool-use acotado, memoria entre corridas y un servidor MCP.
 
-![hiring-radar — el dashboard Radar: live scope, métricas del mes y la última corrida del agente](/images/hiring-radar/dashboard.png)
+![hiring-radar: el dashboard Radar con live scope, métricas del mes y la última corrida del agente](/images/hiring-radar/dashboard.png)
 
 ## Problema
 
 **Ningún search por sí solo encuentra el laburo.**
 
-Rankear los posteos de "Who is hiring" de HN es un problema de recall. La búsqueda semántica capta la intención pero se pierde términos exactos — nombres de empresas, versiones de frameworks, ubicaciones. La de keyword clava esos pero ignora el significado. Cualquiera de las dos sola deja la mitad de los posteos correctos fuera de la primera página.
+Rankear los posteos de "Who is hiring" de HN es un problema de recall. La búsqueda semántica capta la intención pero se pierde términos exactos: nombres de empresas, versiones de frameworks, ubicaciones. La de keyword clava esos pero ignora el significado. Cualquiera de las dos sola deja la mitad de los posteos correctos fuera de la primera página.
 
 ## Arquitectura
 
@@ -35,7 +35,7 @@ Rankear los posteos de "Who is hiring" de HN es un problema de recall. La búsqu
 ingesta del thread HN → extracción de campos con LLM → chunk + embed local → pgvector HNSW + tsvector → fusión RRF → resultados rankeados
 ```
 
-Browseá todo el corpus por exact, semantic o hybrid — el toggle de modo es la tesis en un solo control:
+Browseá todo el corpus por exact, semantic o hybrid: el toggle de modo es la tesis en un solo control.
 
 ![Browse: 294 posteos con el toggle de modo Exact / Semantic / Hybrid](/images/hiring-radar/browse.png)
 
@@ -43,7 +43,7 @@ Browseá todo el corpus por exact, semantic o hybrid — el toggle de modo es la
 
 ### pgvector HNSW en lugar de exact scan
 
-Elegí un índice HNSW aproximado sobre un scan coseno exacto. Trade-off: un poco de recall a cambio de una gran mejora de latencia — y ese recall lo recupera igual la pata de keyword del híbrido.
+Elegí un índice HNSW aproximado sobre un scan coseno exacto. Trade-off: un poco de recall a cambio de una gran mejora de latencia, y ese recall lo recupera igual la pata de keyword del híbrido.
 
 ### Fusión RRF en lugar de mezclar scores ponderados
 
@@ -51,11 +51,11 @@ Elegí reciprocal rank fusion en vez de tunear una mezcla ponderada de scores cr
 
 ### Un gold set hecho a mano en lugar de labels sintéticos
 
-Elegí etiquetar un gold set a mano en vez de generar los juicios de relevancia con un modelo. Trade-off — y una limitación real: es chico y de un solo anotador, así que los números son direccionales, no absolutos.
+Elegí etiquetar un gold set a mano en vez de generar los juicios de relevancia con un modelo. Trade-off, y una limitación real: es chico y de un solo anotador, así que los números son direccionales, no absolutos.
 
-> El híbrido no solo le ganó por poco al mejor método individual — les ganó a los dos en cada clase de query. Los dos retrievers fallan en inputs distintos, así que fusionarlos cubre los puntos ciegos del otro.
+> El híbrido no solo le ganó por poco al mejor método individual: les ganó a los dos en cada clase de query. Los dos retrievers fallan en inputs distintos, así que fusionarlos cubre los puntos ciegos del otro.
 >
-> — lo que demostró el eval
+> *lo que demostró el eval*
 
 ## Resultados
 
@@ -68,17 +68,17 @@ semantic (vector)  0.276        0.283    ~351 ms
 hybrid (RRF)       0.521        0.737    ~348 ms
 ```
 
-El híbrido aproximadamente duplica el recall de la semántica y lleva el MRR a 0.74 — RRF recupera los hits de términos literales (un "Rust" o "Kubernetes") que los vectores se pierden, manteniendo las coincidencias semánticas que el keyword no alcanza.
+El híbrido aproximadamente duplica el recall de la semántica y lleva el MRR a 0.74. RRF recupera los hits de términos literales (un "Rust" o "Kubernetes") que los vectores se pierden, manteniendo las coincidencias semánticas que el keyword no alcanza.
 
 ## Más allá del search: un agente de matching
 
-Un loop de tool-use acotado rankea los posteos contra tu perfil: llama a `search_jobs`, `read_posting` y `recall_memory` (recuerda veredictos de corridas anteriores), arma un shortlist y corta apenas toca un límite duro — 24 pasos, 600k tokens o $1.00, chequeado antes de cada llamada al modelo. El texto no confiable de los posteos se spotlightea como dato, nunca como instrucciones. Las mismas tools se exponen como **servidor MCP**, invocables desde Claude.
+Un loop de tool-use acotado rankea los posteos contra tu perfil: llama a `search_jobs`, `read_posting` y `recall_memory` (recuerda veredictos de corridas anteriores), arma un shortlist y corta apenas toca un límite duro (24 pasos, 600k tokens o $1.00, chequeado antes de cada llamada al modelo). El texto no confiable de los posteos se spotlightea como dato, nunca como instrucciones. Las mismas tools se exponen como **servidor MCP**, invocables desde Claude.
 
-![La traza de tool-use del agente — search, read, recall memory, shortlist — con el budget de pasos y costo en vivo](/images/hiring-radar/agent.png)
+![La traza de tool-use del agente (search, read, recall memory, shortlist) con el budget de pasos y costo en vivo](/images/hiring-radar/agent.png)
 
 ## Más difícil de lo esperado
 
-Construir un eval en el que pudiera confiar. Con un gold set chico y de un solo anotador, cada métrica carga un intervalo de confianza lo bastante ancho como para engañar. Decir esa limitación con honestidad — y tratar los números como direccionales — importó más que perseguir un score más alto.
+Construir un eval en el que pudiera confiar. Con un gold set chico y de un solo anotador, cada métrica carga un intervalo de confianza lo bastante ancho como para engañar. Decir esa limitación con honestidad, y tratar los números como direccionales, importó más que perseguir un score más alto.
 
 ## Live + código
 

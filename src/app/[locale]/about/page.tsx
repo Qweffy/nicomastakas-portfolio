@@ -184,13 +184,10 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           <ul style={practiceList}>
             {(t.raw("practice") as { title: string; body: string }[]).map((p) => (
               <li key={p.title} style={practiceItem}>
-                <span style={practiceTitle}>{p.title}</span> — {p.body}
+                <span style={practiceTitle}>{p.title}</span>: {p.body}
               </li>
             ))}
           </ul>
-          <p className="nm-full" style={{ ...howText, marginTop: "var(--space-8)" }}>
-            {t("howHonest")}
-          </p>
         </section>
 
         <section className="nm-sect" style={contactSection}>

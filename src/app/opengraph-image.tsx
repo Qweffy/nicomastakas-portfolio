@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Nico Mastakas — AI-native product engineer";
+export const alt = "Nico Mastakas · AI-native product engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -40,7 +40,7 @@ export default function OpengraphImage() {
             lineHeight: 1.3,
           }}
         >
-          AI-native product engineer — I ship LLM features 0-to-1.
+          Product engineer who ships AI features end to end.
         </div>
       </div>
 
@@ -57,7 +57,7 @@ export default function OpengraphImage() {
       >
         <div>Input Output (IOHK)</div>
         <div style={{ color: "#3a3d44" }}>·</div>
-        <div>Bolster — 100K+ users</div>
+        <div>Bolster, 100K+ users</div>
         <div style={{ color: "#3a3d44" }}>·</div>
         <div>Globant</div>
       </div>

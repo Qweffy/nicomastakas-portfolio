@@ -1,7 +1,7 @@
 ---
-title: "settle — Revisión de facturas con IA y un humano en el circuito"
+title: "settle: revisión de facturas con IA y un humano en el circuito"
 summary: "Claude vision lee las facturas y marca anomalías contra el propio historial de cada proveedor, con cada alerta sujeta a aprobación humana antes del pago."
-role: "Solo — diseño, desarrollo, infraestructura"
+role: "Solo: diseño, desarrollo, infraestructura"
 company: "settle"
 badge: "se"
 stack:
@@ -19,13 +19,13 @@ draft: false
 
 - Claude vision lee las facturas y marca anomalías contra el propio historial de cada proveedor.
 - 55 tests unitarios + 14 e2e corren contra una base de datos real, no contra mocks.
-- Una separación deliberada entre IA y lógica determinista — la automatización total era la decisión equivocada.
+- Una separación deliberada entre IA y lógica determinista. La automatización total era la decisión equivocada.
 
 ## Problema
 
 **Los sobreprecios se esconden en los renglones.**
 
-Las facturas de cuentas por pagar entierran sobrecargos en comisiones, SKUs cambiados y precios unitarios que suben de a poco. Quienes revisan ojean decenas por día y aprueban por confianza — el renglón malo es justo el que nadie lee. settle lee cada renglón para que el humano solo mire donde importa.
+Las facturas de cuentas por pagar entierran sobrecargos en comisiones, SKUs cambiados y precios unitarios que suben de a poco. Quienes revisan ojean decenas por día y aprueban por confianza: el renglón malo es justo el que nadie lee. settle lee cada renglón para que el humano solo mire donde importa.
 
 ## Arquitectura
 
@@ -51,19 +51,19 @@ Elegí comparar cada cargo contra las facturas pasadas del propio proveedor en l
 
 Elegí Playwright contra una rama real de Neon en lugar de datos mockeados. Trade-off: CI más lento, pero detectó bugs de migración de Drizzle que los mocks habrían ocultado hasta producción.
 
-> El trabajo del modelo no es decidir — es hacer que la decisión del humano sea rápida. Una vez que optimicé para velocidad de triage en lugar de precisión automatizada, la arquitectura correcta se volvió obvia.
+> El trabajo del modelo no es decidir; es hacer que la decisión del humano sea rápida. Una vez que optimicé para velocidad de triage en lugar de precisión automatizada, la arquitectura correcta se volvió obvia.
 >
-> — la idea que reformuló el producto
+> *la idea que reformuló el producto*
 
 ## Más difícil de lo esperado
 
-Lograr que el camino de IA y el determinista coincidieran en una sola forma de los datos. El modelo devuelve confianza difusa; el ledger necesita centavos exactos. Reconciliar ambos — y decidir dónde vive el redondeo — llevó más tiempo que el propio pipeline de visión.
+Lograr que el camino de IA y el determinista coincidieran en una sola forma de los datos. El modelo devuelve confianza difusa; el ledger necesita centavos exactos. Reconciliar ambos (y decidir dónde vive el redondeo) llevó más tiempo que el propio pipeline de visión.
 
 ## Resultados
 
-- **55 + 14** — tests unitarios + e2e, base de datos real
-- **Cada alerta** — sujeta a aprobación humana antes del pago
-- **0** — rechazos automáticos — deciden los humanos
+- **55 + 14**: tests unitarios + e2e, base de datos real
+- **Cada alerta**: sujeta a aprobación humana antes del pago
+- **0** rechazos automáticos: deciden los humanos
 
 ## Demo
 
