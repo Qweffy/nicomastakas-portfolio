@@ -36,11 +36,6 @@ const right: CSSProperties = {
   gap: "var(--space-4)",
 };
 const linkRow: CSSProperties = { display: "flex", gap: "var(--space-6)" };
-const linkStyle: CSSProperties = {
-  fontSize: "var(--text-body)",
-  color: "var(--text-muted)",
-  textDecoration: "none",
-};
 const copy: CSSProperties = {
   fontFamily: "var(--font-mono)",
   fontSize: "var(--text-caption)",
@@ -68,7 +63,7 @@ export function Footer({
       <div style={right}>
         <div style={linkRow}>
           {links.map((l) => (
-            <a key={l.href} href={l.href} style={linkStyle}>
+            <a key={l.href} href={l.href} className="nm-footlink nm-focusable">
               {l.label}
             </a>
           ))}

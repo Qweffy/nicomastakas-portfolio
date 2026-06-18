@@ -133,7 +133,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               const metrics = t.raw(`roles.${role}.metrics`) as RoleMetric[];
               const tags = t.raw(`roles.${role}.tags`) as string[];
               return (
-                <div key={role}>
+                <div key={role} className="nm-exp">
                   <div className="nm-entry-head" style={roleHead}>
                     <h2 style={roleName}>{t(`roles.${role}.name`)}</h2>
                     <span style={roleMeta}>{t(`roles.${role}.meta`)}</span>

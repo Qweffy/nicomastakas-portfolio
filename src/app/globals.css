@@ -54,6 +54,11 @@
   --radius-sm: 4px;
   --radius-md: 8px;
   --elevation-hairline: 1px solid var(--border);
+
+  /* Motion — only color/border/background/opacity/transform transition, never > 180ms */
+  --motion-fast: 120ms;
+  --motion-base: 180ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
 }
 
 html {
@@ -112,6 +117,15 @@ a {
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition:
+    color var(--motion-fast) var(--ease-out),
+    text-decoration-thickness var(--motion-fast) var(--ease-out),
+    text-underline-offset var(--motion-fast) var(--ease-out);
+}
+.mdx a:hover {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 .mdx h2 a,
 .mdx h3 a {
@@ -164,9 +178,232 @@ a {
 .mdx img {
   max-width: 100%;
   height: auto;
+  border: var(--elevation-hairline);
+  border-radius: var(--radius-md);
+  transition: border-color var(--motion-base) var(--ease-out);
+}
+.mdx img:hover {
+  border-color: var(--accent);
 }
 .mdx pre {
   max-width: 100%;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   INTERACTIONS — hover / focus-visible / pressed states + motion.
+   Class-based skins (ported from the design-system handoff tokens/interactions.css)
+   because inline styles can't express :hover and would out-specificity these rules.
+   Elegant, not overdone: only color/border/background/opacity/transform animate,
+   ≤ 180ms, and everything degrades under prefers-reduced-motion.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Visible focus ring for keyboard users (mouse clicks don't trigger it). */
+.nm-focusable:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Buttons ── */
+.nm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+}
+.nm-btn.is-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.nm-btn--primary {
+  padding: var(--space-3) var(--space-6);
+  background: var(--accent);
+  color: var(--bg);
+  border: 1px solid var(--accent);
+}
+.nm-btn--primary:hover {
+  background: color-mix(in oklab, var(--accent) 90%, white);
+  border-color: color-mix(in oklab, var(--accent) 90%, white);
+  transform: translateY(-1px);
+}
+.nm-btn--primary:active {
+  transform: translateY(0);
+}
+
+.nm-btn--ghost {
+  padding: var(--space-3) var(--space-6);
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.nm-btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.nm-btn--ghost:active {
+  transform: translateY(1px);
+}
+
+.nm-btn--link {
+  padding: 0;
+  background: transparent;
+  color: var(--accent);
+  border: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition:
+    color var(--motion-fast) var(--ease-out),
+    text-decoration-thickness var(--motion-fast) var(--ease-out),
+    text-underline-offset var(--motion-fast) var(--ease-out);
+}
+.nm-btn--link:hover {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
+/* ── Case-study card ── */
+.nm-case {
+  background: var(--surface);
+  border: var(--elevation-hairline);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color var(--motion-base) var(--ease-out),
+    background-color var(--motion-base) var(--ease-out),
+    transform var(--motion-base) var(--ease-out);
+}
+.nm-case:hover {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--surface) 94%, white);
+  transform: translateY(-2px);
+}
+.nm-case__arrow {
+  margin-left: auto;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-2px);
+  transition:
+    opacity var(--motion-base) var(--ease-out),
+    transform var(--motion-base) var(--ease-out);
+}
+.nm-case:hover .nm-case__arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* ── Tag ── */
+.nm-tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  background: var(--surface);
+  border: var(--elevation-hairline);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  white-space: nowrap;
+  transition:
+    border-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+}
+.nm-tag:hover {
+  border-color: color-mix(in oklab, var(--border) 50%, white);
+  color: var(--text);
+}
+
+/* ── Nav links — underline grows from the left; aria-current marks the page ── */
+.nm-navlink {
+  position: relative;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.nm-navlink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--motion-base) var(--ease-out);
+}
+.nm-navlink:hover {
+  color: var(--text);
+}
+.nm-navlink:hover::after {
+  transform: scaleX(1);
+}
+.nm-navlink[aria-current="page"] {
+  color: var(--text);
+}
+.nm-navlink[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+/* ── Footer links ── */
+.nm-footlink {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.nm-footlink:hover {
+  color: var(--accent);
+}
+
+/* ── Availability dot — gentle pulse, only when motion is welcome ── */
+@media (prefers-reduced-motion: no-preference) {
+  .nm-dot {
+    animation: nm-dot-pulse 2.6s var(--ease-out) infinite;
+  }
+}
+@keyframes nm-dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.9);
+  }
+}
+
+/* ── About experience row — the meta turns accent when you hover the row ── */
+.nm-exp .nm-entry-head span {
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.nm-exp:hover .nm-entry-head span {
+  color: var(--accent) !important; /* beats the span's inline color */
+}
+
+/* Respect the OS "reduce motion" setting — kill transitions/animations. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ──────────────────────────────────────────────────────────────────────────

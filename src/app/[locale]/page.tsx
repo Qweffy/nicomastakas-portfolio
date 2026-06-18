@@ -166,7 +166,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <main className="nm-container" style={main}>
         <section className="nm-sect" style={hero}>
           <div style={pill}>
-            <span style={dot} />
+            <span className="nm-dot" style={dot} />
             <span style={pillText}>{t("availability")}</span>
           </div>
 

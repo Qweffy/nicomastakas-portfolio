@@ -32,6 +32,7 @@ export function LocaleSwitcher() {
           <button
             key={locale}
             type="button"
+            className="nm-focusable"
             aria-current={isActive ? "true" : undefined}
             onClick={() => router.replace(pathname, { locale })}
             style={{ ...baseLink, color: isActive ? "var(--accent)" : "var(--text-muted)" }}

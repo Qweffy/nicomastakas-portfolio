@@ -1,5 +1,7 @@
+"use client";
+
 import type { CSSProperties } from "react";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 
 export interface NavLink {
@@ -34,33 +36,39 @@ const list: CSSProperties = {
   margin: 0,
   padding: 0,
 };
-const linkStyle: CSSProperties = {
-  fontSize: "var(--text-body)",
-  color: "var(--text-muted)",
-  textDecoration: "none",
-};
+
+/** Path part of an href (drops hash/query) so `/#work` matches the home route. */
+function pathOf(href: string) {
+  return href.split(/[#?]/)[0] || "/";
+}
 
 /** Top bar: logotype left, links + locale switcher right. One variant, no hamburger. */
 export function Nav({ name = "Nico Mastakas", links }: { name?: string; links: NavLink[] }) {
+  const pathname = usePathname();
+
   return (
     <nav className="nm-nav" style={bar}>
-      <Link href="/" style={logo}>
+      <Link href="/" className="nm-focusable" style={logo}>
         {name}
       </Link>
       <ul style={list}>
-        {links.map((l) => (
-          <li key={l.href}>
-            {l.external ? (
-              <a href={l.href} style={linkStyle}>
-                {l.label}
-              </a>
-            ) : (
-              <Link href={l.href} style={linkStyle}>
-                {l.label}
-              </Link>
-            )}
-          </li>
-        ))}
+        {links.map((l) => {
+          const active = !l.external && pathOf(l.href) === pathname;
+          const current = active ? "page" : undefined;
+          return (
+            <li key={l.href}>
+              {l.external ? (
+                <a href={l.href} className="nm-navlink nm-focusable">
+                  {l.label}
+                </a>
+              ) : (
+                <Link href={l.href} className="nm-navlink nm-focusable" aria-current={current}>
+                  {l.label}
+                </Link>
+              )}
+            </li>
+          );
+        })}
         <li>
           <LocaleSwitcher />
         </li>

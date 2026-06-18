@@ -19,17 +19,13 @@ export interface CaseStudyCardProps {
   href?: string;
 }
 
+/* Layout only — the skin (background, border, radius, hover) lives in `.nm-case`. */
 const card: CSSProperties = {
   fontFamily: "var(--font-sans)",
-  background: "var(--surface)",
-  border: "var(--elevation-hairline)",
-  borderRadius: "var(--radius-md)",
   padding: "var(--space-8)",
   display: "flex",
   flexDirection: "column",
   gap: "var(--space-6)",
-  textDecoration: "none",
-  color: "inherit",
   boxSizing: "border-box",
 };
 const badgeRow: CSSProperties = { display: "flex", alignItems: "center", gap: "var(--space-3)" };
@@ -97,6 +93,11 @@ export function CaseStudyCard({
       <div style={badgeRow}>
         <span style={badgeMark}>{badge}</span>
         <span style={companyName}>{company}</span>
+        {href ? (
+          <span className="nm-case__arrow" aria-hidden>
+            →
+          </span>
+        ) : null}
       </div>
 
       <div>
@@ -127,10 +128,14 @@ export function CaseStudyCard({
 
   if (href) {
     return (
-      <Link href={href} style={card}>
+      <Link href={href} className="nm-case nm-focusable" style={card}>
         {body}
       </Link>
     );
   }
-  return <div style={card}>{body}</div>;
+  return (
+    <div className="nm-case" style={card}>
+      {body}
+    </div>
+  );
 }
