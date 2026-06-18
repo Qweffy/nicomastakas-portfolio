@@ -1,0 +1,62 @@
+---
+title: "TodayOnly — a to-do app that only manages today"
+summary: "The to-do app I actually use every day. No backlog, no carry-over, no notifications — just Must Do vs Bonus for today, and a 'do it now' nudge for anything under five minutes. Native SwiftUI on macOS, Tauri on Windows."
+role: "Solo — design, build, ship"
+company: "personal product"
+badge: "to"
+stack:
+  - SwiftUI
+  - SwiftData
+  - Tauri
+  - Rust
+date: "2026-06-16"
+draft: false
+---
+
+## TL;DR
+
+- A deliberately tiny daily planner — two lists, **Must Do** and **Bonus**, and nothing else.
+- Tasks don't carry over: each new day you review what's left and decide, so the list never becomes a guilt backlog.
+- The product is the constraints. I dogfood it every day; it's native SwiftUI on macOS and Tauri on Windows.
+
+## Problem
+
+**Every to-do app eventually becomes a backlog you avoid.**
+
+I'd tried them all. They all drift the same way: tasks pile up, "someday" items rot at the bottom, and opening the app starts to feel like a small failure. I didn't want a better backlog — I wanted something that refused to have one. So I built the tool I wished existed and used it until the design was honest.
+
+## Design decisions
+
+### Only today, by design
+
+Chose to scope the entire app to a single day. Trade-off: you can't plan a week — but that's the point. Anything you can't act on today isn't on the screen, so the list stays a plan, not an archive.
+
+### No automatic carry-over
+
+Chose to make unfinished tasks expire at midnight; the next morning you explicitly review and decide what to keep. Trade-off: a little daily friction, but it forces a real decision instead of letting yesterday's guilt accumulate silently.
+
+### "Do it now" under five minutes
+
+Chose to intercept task creation: if it takes less than five minutes, the app says **"Do it now"** rather than letting you file it. Trade-off: slightly opinionated UX, but it kills the busywork of tracking things that are faster to just do.
+
+### Must Do vs Bonus, nothing else
+
+Chose exactly two buckets — no priorities, no tags, no projects. Trade-off: less power, but zero overhead. The taxonomy fits in your head, which is the only place a daily list needs to live.
+
+> The hardest part wasn't the code — it was deleting features. Every "useful" addition (reminders, sync, a backlog view) quietly reintroduces the exact problem the app exists to solve. Restraint was the feature.
+>
+> — what building it taught me
+
+## Why it's here
+
+It's the most honest kind of portfolio piece: a product I use every single day, where the value is entirely in the product judgement, not the line count. Native on two platforms (SwiftUI + SwiftData on macOS, a lightweight Tauri build on Windows), shipped and lived-in.
+
+## Results
+
+- **Daily** — I use it every day; the truest test a tool can pass.
+- **Two lists** — the entire information architecture, on purpose.
+- **Zero** — backlog, reminders, notifications, sync.
+
+## Source
+
+[View the source on GitHub →](https://github.com/Qweffy/TodayOnly)

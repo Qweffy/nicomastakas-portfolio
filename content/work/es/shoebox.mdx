@@ -1,0 +1,77 @@
+---
+title: "shoebox — OCR de tickets on-device al 90% de la nube"
+summary: "Un digitalizador de tickets que nunca sale de tu laptop — OCR local + un LLM cuantizado llegan a ~90% de la precisión de la visión cloud de frontera en extracción de campos, offline y a costo cero, medido cara a cara."
+role: "Solo — diseño, desarrollo, infra"
+company: "shoebox"
+badge: "sb"
+stack:
+  - Python
+  - PaddleOCR
+  - Qwen-3B
+  - Ollama
+  - MLX (QLoRA)
+  - FastAPI
+date: "2026-06-18"
+draft: false
+---
+
+## TL;DR
+
+- Un digitalizador de tickets 100% on-device — ninguna imagen sale de la laptop — medido cara a cara contra la visión cloud de frontera.
+- El stack local (PaddleOCR + Qwen-3B q8) llega a **74.0%** de precisión a nivel de campo vs **82.7%** de la nube (Groq Llama-4-Scout): **~90% de la frontera, a $0 y totalmente offline.**
+- Un fine-tune QLoRA (MLX) sube el modelo local de **72% → 80%** en SROIE, publicado en el HF Hub.
+
+![shoebox — el dashboard local Overview: resumen del ledger y confianza por ticket](/images/shoebox/overview.png)
+
+## Problema
+
+**La privacidad es el producto, no una opción de configuración.**
+
+shoebox es la contranarrativa deliberada a un lector de facturas en la nube: mismo dominio de documentos, filosofía de deployment opuesta. Los tickets son de los datos más personales que tenés — dónde estuviste, qué compraste, cuándo. La pregunta que quería responder con números, no con intuición: ¿cuánta precisión resignás de verdad por mantener todo en tu propia máquina?
+
+## Arquitectura
+
+```
+foto del ticket → preprocesado OpenCV (crop · deskew) → PaddleOCR → extracción LLM local → ledger CSV
+                                                                     ↑ Extractor intercambiable (Ollama · Gemini · Groq)
+```
+
+Cada etapa es un módulo casi puro que habla un único contrato tipado de pydantic — la salida cruda de OpenCV/PaddleOCR se parsea a un modelo en el borde y nada sin tipar escapa de ahí.
+
+## Decisiones clave
+
+### Un benchmark medido en lugar de una promesa de privacidad
+
+Elegí demostrar el trade-off privacidad-vs-precisión sobre un set etiquetado (SROIE) en vez de afirmarlo. Trade-off: armar un eval honesto — baseline de regex, LLM local y adapters cloud puntuados igual — llevó más que el pipeline, pero "90% de la nube a $0" ahora es un número, no un slogan.
+
+![La vista Benchmark — stack local vs la frontera cloud, campo por campo](/images/shoebox/benchmark.png)
+
+### Un Extractor intercambiable en lugar de un modelo hardcodeado
+
+Elegí un único protocolo `Extractor` con un baseline de regex, un adapter local de Ollama y adapters cloud (Gemini, Groq) detrás. Trade-off: una abstracción de más, pero el proveedor se cambia en una línea y los adapters cloud existen **solo** para comparar — nunca tocan tus tickets reales.
+
+### Un fine-tune QLoRA en lugar de extracción solo por prompt
+
+Elegí tunear Qwen-3B con QLoRA (MLX) sobre campos de tickets en vez de apoyarme más en el prompt. Trade-off: un paso de entrenamiento para mantener, pero llevó la precisión local de 72% a 80% en SROIE — cerrando casi toda la brecha con la nube sin salir de la laptop.
+
+> Lo interesante no fue que lo local perdiera — fue por cuán poco perdió. Cuando la brecha con la visión cloud de frontera quedó en ~10 puntos a $0 y totalmente offline, "mandalo al servidor de otro" dejó de ser el default obvio.
+>
+> — lo que zanjó el benchmark
+
+## Más difícil de lo esperado
+
+Confiar en la salida de un modelo local chico. Un modelo de 3B devuelve JSON confiado pero sutilmente mal — un total transpuesto, una fecha inventada. El arreglo no fue un prompt más grande; fue un parse estricto con pydantic en el borde, un reintento de reparación y después fallar — más un score de confianza por ticket para que el ledger nunca esconda qué tan seguro está en realidad.
+
+## Resultados
+
+- **74% vs 82.7%** — precisión local a nivel de campo vs la frontera cloud (SROIE)
+- **72% → 80%** — modelo local base vs tuneado con QLoRA
+- **$0** — totalmente offline, nada sale de la máquina
+
+![El Ledger — filas extraídas con su confianza, exportadas a CSV](/images/shoebox/ledger.png)
+
+## Local + código
+
+shoebox es local-first por diseño — no hay URL hosteada, porque el punto es justamente que nada salga de tu laptop. El modelo tuneado es público; el código es abierto.
+
+[El modelo tuneado en Hugging Face →](https://huggingface.co/Qweffy/shoebox-receipts-qwen3b) · [Código en GitHub →](https://github.com/Qweffy/shoebox)

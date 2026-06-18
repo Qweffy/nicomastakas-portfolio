@@ -33,11 +33,15 @@ AP invoices bury overcharges in fees, swapped SKUs, and quietly creeping unit pr
 upload → Claude vision extract → vendor-history diff → flag queue → human triage → ledger write
 ```
 
+![settle — the bill cockpit: invoice, line-item coding, and the approval timeline in one view](/images/settle/cockpit.png)
+
 ## Key decisions
 
 ### Claude vision over OCR + rules
 
 Chose a vision model over template OCR because invoice layouts vary too much to template. Trade-off: higher per-page cost and latency, paid down with caching and batching.
+
+![AI bill review — every line item extracted and reconciled, flags raised for the human](/images/settle/capture.png)
 
 ### Human-in-the-loop over full automation
 
@@ -65,12 +69,10 @@ Getting the AI and deterministic paths to agree on one data shape. The model ret
 - **Every flag** — gated for human approval before payment
 - **0** — auto-rejections — humans decide
 
-## Demo
+![AP aging report — where the money is, and how late](/images/settle/aging.png)
 
-`capture → flag triage → cockpit`
+## Live + source
 
-[Open the live demo →](https://settle.demo)
+The live demo runs on seeded data with a role switcher — no login. Walk the flow: capture → flag triage → cockpit.
 
-## Source
-
-[View the full source on GitHub →](https://github.com/nicomastakas/settle)
+[Open the live demo →](https://settle.nicomastakas.com) · [Source on GitHub →](https://github.com/Qweffy/settle)

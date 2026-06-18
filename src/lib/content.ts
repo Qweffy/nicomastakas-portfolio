@@ -29,9 +29,13 @@ export function getWork(
   return null;
 }
 
-/** Every (locale, slug) pair, for generateStaticParams. */
+/**
+ * Every (locale, slug) pair for generateStaticParams — the cross product of all
+ * locales with every published slug, so a slug that lacks a translation still
+ * renders in that locale (falling back to the default-locale content, flagged
+ * `isFallback`) instead of 404-ing under `dynamicParams = false`.
+ */
 export function allWorkParams(): { locale: Locale; slug: string }[] {
-  return work
-    .filter((study) => !study.draft)
-    .map((study) => ({ locale: study.locale as Locale, slug: study.slug }));
+  const slugs = [...new Set(work.filter((study) => !study.draft).map((study) => study.slug))];
+  return routing.locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
 }

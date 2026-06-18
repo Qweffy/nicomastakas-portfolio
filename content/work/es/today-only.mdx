@@ -1,0 +1,62 @@
+---
+title: "TodayOnly — una app de tareas que solo maneja el hoy"
+summary: "La app de tareas que uso de verdad todos los días. Sin backlog, sin arrastre, sin notificaciones — solo Must Do vs Bonus para hoy, y un empujón de 'hacelo ahora' para todo lo que lleve menos de cinco minutos. SwiftUI nativo en macOS, Tauri en Windows."
+role: "Solo — diseño, desarrollo, envío"
+company: "producto propio"
+badge: "to"
+stack:
+  - SwiftUI
+  - SwiftData
+  - Tauri
+  - Rust
+date: "2026-06-16"
+draft: false
+---
+
+## TL;DR
+
+- Un planificador diario deliberadamente diminuto — dos listas, **Must Do** y **Bonus**, y nada más.
+- Las tareas no se arrastran: cada día nuevo revisás lo que quedó y decidís, así la lista nunca se vuelve un backlog de culpa.
+- El producto son las restricciones. Lo uso todos los días; es SwiftUI nativo en macOS y Tauri en Windows.
+
+## Problema
+
+**Toda app de tareas termina siendo un backlog que evitás abrir.**
+
+Las probé todas. Todas derivan igual: las tareas se apilan, los "algún día" se pudren abajo, y abrir la app empieza a sentirse como un pequeño fracaso. No quería un mejor backlog — quería algo que se negara a tener uno. Así que construí la herramienta que deseaba que existiera y la usé hasta que el diseño fue honesto.
+
+## Decisiones de diseño
+
+### Solo el hoy, por diseño
+
+Elegí acotar toda la app a un único día. Trade-off: no podés planificar una semana — pero ese es el punto. Lo que no podés accionar hoy no está en pantalla, así la lista sigue siendo un plan, no un archivo.
+
+### Sin arrastre automático
+
+Elegí que las tareas sin terminar venzan a la medianoche; a la mañana siguiente revisás explícitamente y decidís qué conservar. Trade-off: un poco de fricción diaria, pero te obliga a una decisión real en vez de dejar que la culpa de ayer se acumule en silencio.
+
+### "Hacelo ahora" si lleva menos de cinco minutos
+
+Elegí interceptar la creación de la tarea: si lleva menos de cinco minutos, la app te dice **"hacelo ahora"** en vez de dejarte archivarla. Trade-off: una UX algo opinada, pero mata el laburo de trackear cosas que es más rápido simplemente hacer.
+
+### Must Do vs Bonus, nada más
+
+Elegí exactamente dos cajones — sin prioridades, sin tags, sin proyectos. Trade-off: menos poder, pero cero overhead. La taxonomía entra en tu cabeza, que es el único lugar donde una lista diaria necesita vivir.
+
+> Lo más difícil no fue el código — fue borrar features. Cada agregado "útil" (recordatorios, sync, una vista de backlog) reintroduce sin querer el problema exacto que la app existe para resolver. La contención era la feature.
+>
+> — lo que me enseñó construirla
+
+## Por qué está acá
+
+Es el tipo de pieza de portafolio más honesto: un producto que uso todos los días, donde el valor está enteramente en el criterio de producto, no en las líneas de código. Nativo en dos plataformas (SwiftUI + SwiftData en macOS, un build liviano de Tauri en Windows), enviado y usado a diario.
+
+## Resultados
+
+- **Diario** — lo uso todos los días; la prueba más honesta que una herramienta puede pasar.
+- **Dos listas** — toda la arquitectura de información, a propósito.
+- **Cero** — backlog, recordatorios, notificaciones, sync.
+
+## Código
+
+[Ver el código en GitHub →](https://github.com/Qweffy/TodayOnly)
