@@ -29,7 +29,7 @@
     "workTitle": "Selected work",
     "workCount": "06 projects",
     "moreTitle": "More work",
-    "moreGitHub": "More on GitHub →",
+    "moreGitHub": "More on GitHub",
     "cards": {
       "hiring-radar": {
         "title": "Hybrid search that doubles recall",
@@ -62,10 +62,10 @@
         "metricLabel": "the app I actually use"
       },
       "how-i-build-with-ai": {
-        "title": "My Claude Code workflow",
-        "outcome": "How I orchestrate agents and MCP tooling to ship production code at IOHK.",
-        "metricValue": "7 agents",
-        "metricLabel": "4 MCP servers at IOHK"
+        "title": "How I operate AI, not just use it",
+        "outcome": "Multi-agent orchestration, team-scale governance, and the token economics to run it in production.",
+        "metricValue": "3 layers",
+        "metricLabel": "orchestration · governance · FinOps"
       }
     },
     "more": {
@@ -161,7 +161,7 @@
     "toolchain": "Claude Design → Next.js + Tailwind → production",
     "systemsKicker": "Design systems",
     "systemsNote": "Each product runs on a real system I built in Claude Design, then shipped in code. Open one to see the whole thing: tokens, type, and components.",
-    "viewSystem": "View system →",
+    "viewSystem": "View system",
     "completeKicker": "The complete system",
     "completeNote": "Foundations plus every component, rendered straight from the Claude Design handoff.",
     "foundations": "Foundations",
@@ -174,20 +174,20 @@
       "hiring-radar": {
         "name": "hiring-radar",
         "tagline": "Mission-control system for a job-hunt radar: phosphor on near-black, data-dense, mono numerics.",
-        "liveLabel": "Live demo →",
-        "caseLabel": "Case study →"
+        "liveLabel": "Live demo",
+        "caseLabel": "Case study"
       },
       "settle": {
         "name": "settle",
         "tagline": "Money-dense system for an AP bill-pay product: light, calm, clarity over flash when dollars are on the line.",
-        "liveLabel": "Live demo →",
-        "caseLabel": "Case study →"
+        "liveLabel": "Live demo",
+        "caseLabel": "Case study"
       },
       "portfolio": {
         "name": "Nico Mastakas",
         "tagline": "The system behind this site: six colors, one accent, a 4px scale. Ported token-for-token into the CSS you are reading.",
-        "liveLabel": "Explore the site →",
-        "caseLabel": "How I build →"
+        "liveLabel": "Explore the site",
+        "caseLabel": "How I build"
       }
     }
   },

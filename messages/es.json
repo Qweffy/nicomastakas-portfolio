@@ -29,7 +29,7 @@
     "workTitle": "Trabajo destacado",
     "workCount": "06 proyectos",
     "moreTitle": "Más trabajo",
-    "moreGitHub": "Más en GitHub →",
+    "moreGitHub": "Más en GitHub",
     "cards": {
       "hiring-radar": {
         "title": "Búsqueda híbrida que duplica el recall",
@@ -62,10 +62,10 @@
         "metricLabel": "la app que uso de verdad"
       },
       "how-i-build-with-ai": {
-        "title": "Mi flujo de trabajo con Claude Code",
-        "outcome": "Cómo orquesto agentes y tooling MCP para enviar código a producción en IOHK.",
-        "metricValue": "7 agentes",
-        "metricLabel": "4 servidores MCP en IOHK"
+        "title": "Cómo opero la IA, no solo la uso",
+        "outcome": "Orquestación multiagente, governance a escala de equipo, y la economía de tokens para correrlo en producción.",
+        "metricValue": "3 capas",
+        "metricLabel": "orquestación · governance · FinOps"
       }
     },
     "more": {
@@ -161,7 +161,7 @@
     "toolchain": "Claude Design → Next.js + Tailwind → producción",
     "systemsKicker": "Design systems",
     "systemsNote": "Cada producto corre sobre un sistema real que armé en Claude Design y después shippeé en código. Abrí uno para verlo entero: tokens, tipografía y componentes.",
-    "viewSystem": "Ver el sistema →",
+    "viewSystem": "Ver el sistema",
     "completeKicker": "El sistema completo",
     "completeNote": "Foundations más cada componente, renderizados directo del handoff de Claude Design.",
     "foundations": "Foundations",
@@ -174,20 +174,20 @@
       "hiring-radar": {
         "name": "hiring-radar",
         "tagline": "Sistema mission-control para un radar de búsqueda laboral: fósforo sobre casi-negro, denso en datos, numéricos en mono.",
-        "liveLabel": "Demo en vivo →",
-        "caseLabel": "Case study →"
+        "liveLabel": "Demo en vivo",
+        "caseLabel": "Case study"
       },
       "settle": {
         "name": "settle",
         "tagline": "Sistema denso en plata para un producto de bill-pay: claro, calmo, la claridad por encima del brillo cuando hay dólares en juego.",
-        "liveLabel": "Demo en vivo →",
-        "caseLabel": "Case study →"
+        "liveLabel": "Demo en vivo",
+        "caseLabel": "Case study"
       },
       "portfolio": {
         "name": "Nico Mastakas",
         "tagline": "El sistema detrás de este sitio: seis colores, un acento, una escala de 4px. Portado token por token al CSS que estás leyendo.",
-        "liveLabel": "Explorar el sitio →",
-        "caseLabel": "Cómo construyo →"
+        "liveLabel": "Explorar el sitio",
+        "caseLabel": "Cómo construyo"
       }
     }
   },

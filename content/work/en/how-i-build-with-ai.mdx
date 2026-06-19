@@ -1,14 +1,15 @@
 ---
-title: How I build with AI
-summary: A custom Claude Code framework at IOHK with 7 specialized agents, 4 MCP servers, and automated PR review in the loop, documented in a public PROMPT_HISTORY.md.
-role: "Solo: design, build, infra"
-company: writeup · IOHK
+title: "How I operate AI (not just use it)"
+summary: "Most people treat the model as a black box. I build and govern the system that produces the answers: multi-agent orchestration, team-scale configuration and governance, and the token economics to run it in production without the bill exploding."
+role: "Solo: architecture, agents, governance, cost"
+company: writeup
 badge: AI
 stack:
   - Claude Code
   - MCP
-  - Cursor
-  - custom agents
+  - Cowork
+  - multi-agent
+  - token FinOps
   - GitHub Actions
 date: "2026-06-17"
 draft: false
@@ -16,74 +17,42 @@ draft: false
 
 ## TL;DR
 
-- A custom Claude Code framework at IOHK: 7 specialized agents and 4 MCP servers.
-- GitHub Actions runs automated PR review inside the loop.
-- A documented PROMPT_HISTORY.md is the evidence: practices, not proprietary code.
+- I don't use Claude, I operate it. I build and govern the system that produces the answers, the same way I build the machinery that makes features instead of writing them one by one.
+- Three layers that almost never live in the same person: real multi-agent orchestration, team-scale configuration and governance, and token-cost discipline (FinOps for LLMs).
+- That intersection is exactly what teams are desperate to hire in 2026 and can't find: most "AI engineers" are researchers who can't ship product, or product devs who treat the model as magic.
 
-## Problem
+## The gap
 
-**AI coding, made repeatable.**
+**Most people use the model. Few operate it.**
 
-Most AI-assisted coding is ad hoc: a good prompt one day, a hallucinated refactor the next. Inside a real engineering org that's not good enough. The goal was a workflow reliable enough to trust on production code, and legible enough that other engineers could adopt it.
+A good prompt one day, a hallucinated refactor the next, and a bill nobody is watching. Inside a real engineering org that does not hold. The engineer who can put AI to work in a team _and_ keep it from bleeding money is rare, because it takes three skills that seldom overlap. I work at that intersection.
 
-## Architecture
+## Layer 1: Real orchestration, not demos
 
-```
-task → router agent → 7 specialized agents → 4 MCP servers (repo · docs · CI · tracker) → GitHub Actions PR review
-```
+Multi-agent systems doing real, autonomous work, not a toy in a notebook. The multi-agent system behind **DLUX**, an offline-first taxi ecosystem for rural Alaska, and a separate one that automates GitHub issues end to end: several agents coordinating to resolve actual work on their own. That is my engineering base (monorepos, architecture, offline-first that is not a toy) fused with agent coordination. Few people sustain both at once.
 
-## Key decisions
+## Layer 2: Configuration and governance at team scale
 
-### Docs-as-context over bigger prompts
+I configure Claude for an organization, not just my own setup: permissions, governance, standards a whole team inherits. And I shape agent behavior structurally, building system prompts in **Cowork** from the base, not firing off stray prompts to see what sticks. The IOHK team framework (specialized agents plus MCP servers, wired into PR review) is the same discipline. The practices are public; the proprietary code stays private.
 
-Chose to feed the model curated, versioned docs as context rather than pile more instructions into the prompt. Trade-off: the docs need upkeep, but grounding gets far sharper and the prompts stay short.
+## Layer 3: The token economy (the layer everyone skips)
 
-### Deterministic checks in code over fuzzy reasoning
+Anyone can spin up an agent. Almost nobody thinks about the economics of it: burn rate, optimizing the context window, picking the right model per task (Haiku where it is enough, Opus where it is needed), caching, batching. It is FinOps applied to LLMs, and it is the difference between a pretty prototype and something a company can run in production without the invoice bleeding.
 
-Chose to push everything verifiable (lint, types, tests, schema) into code, and let the model reason only where ambiguity is real. Trade-off: less "magic", but the loop is reliable and the failures are legible.
-
-### Employer-safe by design
-
-Chose to share the practices, never the proprietary code. Trade-off: fewer concrete internals on display, but everything here is publicly shippable and honest about that boundary.
-
-> The workflow is only credible if it's documented. PROMPT_HISTORY.md is the receipt: a running log of what I asked, what the agents did, and where I overrode them. The process is the artifact.
+> Programming and AI are the same move for me: I do not write the feature, I build the machine that produces features; I do not use the model, I build and govern the system that produces the answers.
 >
-> *why PROMPT_HISTORY.md exists*
+> *the throughline*
 
-## Harder than expected
+## Always on the frontier
 
-Keeping 7 agents from stepping on each other. Without strict context boundaries and a clear router, agents duplicated work and contradicted one another. Most of the design effort went into context discipline: who sees what, and who is allowed to decide.
+I did not stop at what I learned a year ago. I took the courses, and I stay at the edge: ultracode, Opus 4.8 in VS Code the day it landed. The same self-taught engine that taught me to code keeps me current in a field that moves every week. I run it on my own life too: Claude Code routines that sweep my inbox, workflows for LinkedIn.
 
-## Results
+## Why it matters
 
-- **7 agents** specialized Claude Code agents
-- **4 MCP** servers wired into the workflow
-- **PR review** automated via GitHub Actions
-
-## Excerpts
-
-```yaml
-# agents/reviewer.md
-role: PR reviewer
-context: [docs/architecture.md, docs/conventions.md]
-rules:
-  - block on failing types or tests (deterministic gate)
-  - comment, never push; a human merges
-  - cite the convention you are enforcing
-```
-
-```json
-// .mcp/servers.json
-{
-  "repo":    { "scope": "read/write", "paths": ["src/**"] },
-  "docs":    { "scope": "read",       "paths": ["docs/**"] },
-  "ci":      { "scope": "read",       "tool": "github-actions" },
-  "tracker": { "scope": "read/write", "tool": "linear" }
-}
-```
+Solid engineering plus AI orchestration plus operational discipline is precisely what teams cannot hire for right now. _I can architect and govern a team's AI tooling, with its economics under control_ is close to a superpower in today's market. For the Staff, Expert, and founding-engineer roles I am after, this is not one more bullet on a CV; it is a pillar of what I bring.
 
 ## Where to see it
 
-The IOHK framework itself stays private, employer-safe by design. The same discipline is public across my own repos: a versioned `PROMPT_HISTORY.md` logging the prompts and overrides, and an `AGENTS.md` house-style doc that grounds every agent.
+The IOHK framework stays private (employer-safe by design). The same discipline is public across my own repos: a versioned `PROMPT_HISTORY.md` logging the prompts and overrides, and an `AGENTS.md` house-style doc that grounds every agent.
 
-[Read a PROMPT_HISTORY.md from my own builds →](https://github.com/Qweffy/TicTacToe/blob/master/PROMPT_HISTORY.md) · [My GitHub →](https://github.com/Qweffy)
+[Read a PROMPT_HISTORY.md from my own builds](https://github.com/Qweffy/TicTacToe/blob/master/PROMPT_HISTORY.md) · [My GitHub](https://github.com/Qweffy)

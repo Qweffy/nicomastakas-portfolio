@@ -1,14 +1,15 @@
 ---
-title: Cómo construyo con IA
-summary: Un framework propio de Claude Code en IOHK con 7 agentes especializados, 4 servidores MCP y revisión de PR automatizada dentro del loop, documentado en un PROMPT_HISTORY.md público.
-role: "Solo: diseño, desarrollo, infra"
-company: writeup · IOHK
+title: "Cómo opero la IA (no solo la uso)"
+summary: "La mayoría trata al modelo como una caja negra. Yo construyo y gobierno el sistema que produce las respuestas: orquestación multiagente, configuración y governance a escala de equipo, y la economía de tokens para correrlo en producción sin que explote la factura."
+role: "Solo: arquitectura, agentes, governance, costo"
+company: writeup
 badge: AI
 stack:
   - Claude Code
   - MCP
-  - Cursor
-  - agentes propios
+  - Cowork
+  - multiagente
+  - token FinOps
   - GitHub Actions
 date: "2026-06-17"
 draft: false
@@ -16,74 +17,42 @@ draft: false
 
 ## TL;DR
 
-- Un framework propio de Claude Code en IOHK: 7 agentes especializados y 4 servidores MCP.
-- GitHub Actions corre la revisión de PR automatizada dentro del loop.
-- Un PROMPT_HISTORY.md documentado es la evidencia: prácticas, no código propietario.
+- No uso Claude, lo opero. Construyo y gobierno el sistema que produce las respuestas, igual que armo la maquinaria que hace features en vez de escribirlas una por una.
+- Tres capas que casi nunca viven en la misma persona: orquestación multiagente de verdad, configuración y governance a escala de equipo, y disciplina de costo de tokens (FinOps para LLMs).
+- Esa intersección es justo lo que las empresas están desesperadas por contratar en 2026 y no consiguen: la mayoría de los "AI engineers" son researchers que no saben shipear producto, o devs de producto que tratan al modelo como magia.
 
-## Problema
+## El gap
 
-**Programar con IA, de forma repetible.**
+**La mayoría usa el modelo. Pocos lo operan.**
 
-La mayor parte de la programación asistida por IA es improvisada: un buen prompt un día, un refactor alucinado al siguiente. Dentro de una organización de ingeniería real eso no alcanza. El objetivo era un flujo de trabajo lo bastante confiable como para usarlo en código de producción, y lo bastante legible como para que otros ingenieros pudieran adoptarlo.
+Un buen prompt un día, un refactor alucinado al siguiente, y una factura que nadie mira. Dentro de una organización de ingeniería real eso no se sostiene. El ingeniero que puede meter IA a funcionar en un equipo _y_ evitar que se desangre en costo es raro, porque pide tres skills que casi nunca se superponen. Yo trabajo en esa intersección.
 
-## Arquitectura
+## Capa 1: Orquestación de verdad, no demos
 
-```
-tarea → agente router → 7 agentes especializados → 4 servidores MCP (repo · docs · CI · tracker) → revisión de PR con GitHub Actions
-```
+Sistemas multiagente haciendo trabajo real y autónomo, no un juguete en un notebook. El sistema multiagente detrás de **DLUX**, un ecosistema de taxis offline-first para la Alaska rural, y otro aparte que automatiza los issues de GitHub de punta a punta: varios agentes coordinados resolviendo trabajo de verdad por su cuenta. Eso es mi base de ingeniería (monorepos, arquitectura, un offline-first que no es ningún juguete) fusionada con coordinación de agentes. Muy poca gente sostiene las dos cosas a la vez.
 
-## Decisiones clave
+## Capa 2: Configuración y governance a escala de equipo
 
-### Docs como contexto antes que prompts más grandes
+Configuro Claude para una organización, no solo mi setup personal: permisos, governance, estándares que hereda un equipo entero. Y moldeo el comportamiento del agente de forma estructural, armando system prompts en **Cowork** desde la base, no tirando prompts sueltos a ver qué pega. El framework del equipo en IOHK (agentes especializados más servidores MCP, enganchados a la revisión de PR) es la misma disciplina. Las prácticas son públicas; el código propietario queda privado.
 
-Opté por darle al modelo docs curadas y versionadas como contexto, en lugar de acumular más instrucciones en el prompt. Trade-off: las docs requieren mantenimiento, pero el grounding se vuelve mucho más preciso y los prompts se mantienen cortos.
+## Capa 3: La economía de tokens (la capa que todos saltean)
 
-### Chequeos deterministas en código antes que razonamiento difuso
+Cualquiera levanta un agente. Casi nadie piensa en la economía de eso: el burn rate, optimizar el context window, elegir el modelo correcto para cada tarea (Haiku donde alcanza, Opus donde hace falta), caching, batching. Es FinOps aplicado a LLMs, y es la diferencia entre un prototipo lindo y algo que una empresa puede correr en producción sin que la factura la desangre.
 
-Opté por mover todo lo verificable (lint, tipos, tests, schema) al código, y dejar que el modelo razone solo donde la ambigüedad es real. Trade-off: menos "magia", pero el loop es confiable y las fallas son legibles.
-
-### Seguro para el empleador por diseño
-
-Opté por compartir las prácticas, nunca el código propietario. Trade-off: menos internals concretos a la vista, pero todo lo que está acá es publicable y honesto sobre ese límite.
-
-> El flujo de trabajo solo es creíble si está documentado. PROMPT_HISTORY.md es el comprobante: un registro continuo de qué pedí, qué hicieron los agentes y dónde los corregí. El proceso es el artefacto.
+> Programar y la IA son el mismo movimiento para mí: no escribo la feature, armo la máquina que produce features; no uso el modelo, construyo y gobierno el sistema que produce las respuestas.
 >
-> *por qué existe PROMPT_HISTORY.md*
+> *el hilo conductor*
 
-## Más difícil de lo esperado
+## Siempre en la frontera
 
-Evitar que los 7 agentes se pisen entre sí. Sin límites de contexto estrictos y un router claro, los agentes duplicaban trabajo y se contradecían entre ellos. La mayor parte del esfuerzo de diseño se fue en disciplina de contexto: quién ve qué, y quién tiene permitido decidir.
+No me quedé con lo que aprendí hace un año. Hice los cursos, y sigo en el borde: ultracode, Opus 4.8 en VS Code apenas salió. El mismo motor autodidacta que me enseñó a programar me mantiene al día en un campo que se mueve cada semana. Lo aplico a mi propia vida también: rutinas de Claude Code que me barren el inbox, workflows para LinkedIn.
 
-## Resultados
+## Por qué importa
 
-- **7 agentes**: agentes especializados de Claude Code
-- **4 MCP**: servidores integrados al flujo de trabajo
-- **Revisión de PR**: automatizada con GitHub Actions
-
-## Extractos
-
-```yaml
-# agents/reviewer.md
-role: PR reviewer
-context: [docs/architecture.md, docs/conventions.md]
-rules:
-  - block on failing types or tests (deterministic gate)
-  - comment, never push; a human merges
-  - cite the convention you are enforcing
-```
-
-```json
-// .mcp/servers.json
-{
-  "repo":    { "scope": "read/write", "paths": ["src/**"] },
-  "docs":    { "scope": "read",       "paths": ["docs/**"] },
-  "ci":      { "scope": "read",       "tool": "github-actions" },
-  "tracker": { "scope": "read/write", "tool": "linear" }
-}
-```
+Ingeniería sólida más orquestación de IA más disciplina operativa es exactamente lo que los equipos no pueden contratar hoy. _Puedo arquitectar y gobernar el tooling de IA de un equipo, con su economía bajo control_ es casi un superpoder en el mercado actual. Para los roles Staff, Expert y de founding engineer que apunto, esto no es un bullet más del CV: es un pilar de lo que traigo.
 
 ## Dónde verlo
 
-El framework de IOHK es privado, employer-safe a propósito. La misma disciplina está pública en mis propios repos: un `PROMPT_HISTORY.md` versionado con los prompts y las correcciones, y un `AGENTS.md` con la convención de la casa que ancla a cada agente.
+El framework de IOHK queda privado (employer-safe a propósito). La misma disciplina está pública en mis propios repos: un `PROMPT_HISTORY.md` versionado con los prompts y las correcciones, y un `AGENTS.md` con la convención de la casa que ancla a cada agente.
 
-[Leé un PROMPT_HISTORY.md de mis propios builds →](https://github.com/Qweffy/TicTacToe/blob/master/PROMPT_HISTORY.md) · [Mi GitHub →](https://github.com/Qweffy)
+[Leé un PROMPT_HISTORY.md de mis propios builds](https://github.com/Qweffy/TicTacToe/blob/master/PROMPT_HISTORY.md) · [Mi GitHub](https://github.com/Qweffy)
