@@ -1032,7 +1032,7 @@ body::after {
 @media (pointer: fine) {
   html,
   body {
-    cursor: url("/cursor-default.svg") 3 2, auto;
+    cursor: url("/cursor-arrow.svg") 3 2, auto;
   }
   a,
   button,
@@ -1050,6 +1050,6 @@ body::after {
   .nm-info__btn,
   input[type="submit"],
   input[type="button"] {
-    cursor: url("/cursor-pointer.svg") 9 2, pointer;
+    cursor: url("/cursor-hand.svg") 9 2, pointer;
   }
 }
