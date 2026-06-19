@@ -29,11 +29,11 @@ A good prompt one day, a hallucinated refactor the next, and a bill nobody is wa
 
 ## Layer 1: Real orchestration, not demos
 
-Multi-agent systems doing real, autonomous work, not a toy in a notebook. The multi-agent system behind **DLUX**, an offline-first taxi ecosystem for rural Alaska, and a separate one that automates GitHub issues end to end: several agents coordinating to resolve actual work on their own. That is my engineering base (monorepos, architecture, offline-first that is not a toy) fused with agent coordination. Few people sustain both at once.
+Multi-agent systems doing real, autonomous work, not a toy in a notebook. One coordinates a fleet of agents over an offline-first product; another automates GitHub issues end to end. Several agents working together to resolve actual work on their own. That is my engineering base (monorepos, architecture, offline-first that is not a toy) fused with agent coordination. Few people sustain both at once.
 
 ## Layer 2: Configuration and governance at team scale
 
-I configure Claude for an organization, not just my own setup: permissions, governance, standards a whole team inherits. And I shape agent behavior structurally, building system prompts in **Cowork** from the base, not firing off stray prompts to see what sticks. The IOHK team framework (specialized agents plus MCP servers, wired into PR review) is the same discipline. The practices are public; the proprietary code stays private.
+I configure Claude for an organization, not just my own setup: permissions, governance, standards a whole team inherits. And I shape agent behavior structurally, building system prompts in **Cowork** from the base, not firing off stray prompts to see what sticks. The agent-and-MCP framework I built for a whole engineering team (specialized agents, MCP servers, PR review in the loop) is the same discipline. The practices are public; the proprietary code stays private.
 
 ## Layer 3: The token economy (the layer everyone skips)
 
@@ -53,6 +53,6 @@ Solid engineering plus AI orchestration plus operational discipline is precisely
 
 ## Where to see it
 
-The IOHK framework stays private (employer-safe by design). The same discipline is public across my own repos: a versioned `PROMPT_HISTORY.md` logging the prompts and overrides, and an `AGENTS.md` house-style doc that grounds every agent.
+The team framework I built stays private (employer-safe by design). The same discipline is public across my own repos: a versioned `PROMPT_HISTORY.md` logging the prompts and overrides, and an `AGENTS.md` house-style doc that grounds every agent.
 
 [Read a PROMPT_HISTORY.md from my own builds](https://github.com/Qweffy/TicTacToe/blob/master/PROMPT_HISTORY.md) · [My GitHub](https://github.com/Qweffy)

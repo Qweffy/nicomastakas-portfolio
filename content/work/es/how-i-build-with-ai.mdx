@@ -29,11 +29,11 @@ Un buen prompt un día, un refactor alucinado al siguiente, y una factura que na
 
 ## Capa 1: Orquestación de verdad, no demos
 
-Sistemas multiagente haciendo trabajo real y autónomo, no un juguete en un notebook. El sistema multiagente detrás de **DLUX**, un ecosistema de taxis offline-first para la Alaska rural, y otro aparte que automatiza los issues de GitHub de punta a punta: varios agentes coordinados resolviendo trabajo de verdad por su cuenta. Eso es mi base de ingeniería (monorepos, arquitectura, un offline-first que no es ningún juguete) fusionada con coordinación de agentes. Muy poca gente sostiene las dos cosas a la vez.
+Sistemas multiagente haciendo trabajo real y autónomo, no un juguete en un notebook. Uno coordina una flota de agentes sobre un producto offline-first; otro automatiza los issues de GitHub de punta a punta. Varios agentes coordinados resolviendo trabajo de verdad por su cuenta. Eso es mi base de ingeniería (monorepos, arquitectura, un offline-first que no es ningún juguete) fusionada con coordinación de agentes. Muy poca gente sostiene las dos cosas a la vez.
 
 ## Capa 2: Configuración y governance a escala de equipo
 
-Configuro Claude para una organización, no solo mi setup personal: permisos, governance, estándares que hereda un equipo entero. Y moldeo el comportamiento del agente de forma estructural, armando system prompts en **Cowork** desde la base, no tirando prompts sueltos a ver qué pega. El framework del equipo en IOHK (agentes especializados más servidores MCP, enganchados a la revisión de PR) es la misma disciplina. Las prácticas son públicas; el código propietario queda privado.
+Configuro Claude para una organización, no solo mi setup personal: permisos, governance, estándares que hereda un equipo entero. Y moldeo el comportamiento del agente de forma estructural, armando system prompts en **Cowork** desde la base, no tirando prompts sueltos a ver qué pega. El framework de agentes y MCP que armé para un equipo entero de ingeniería (agentes especializados, servidores MCP, revisión de PR en el loop) es la misma disciplina. Las prácticas son públicas; el código propietario queda privado.
 
 ## Capa 3: La economía de tokens (la capa que todos saltean)
 
@@ -53,6 +53,6 @@ Ingeniería sólida más orquestación de IA más disciplina operativa es exacta
 
 ## Dónde verlo
 
-El framework de IOHK queda privado (employer-safe a propósito). La misma disciplina está pública en mis propios repos: un `PROMPT_HISTORY.md` versionado con los prompts y las correcciones, y un `AGENTS.md` con la convención de la casa que ancla a cada agente.
+El framework que armé para el equipo queda privado (employer-safe a propósito). La misma disciplina está pública en mis propios repos: un `PROMPT_HISTORY.md` versionado con los prompts y las correcciones, y un `AGENTS.md` con la convención de la casa que ancla a cada agente.
 
 [Leé un PROMPT_HISTORY.md de mis propios builds](https://github.com/Qweffy/TicTacToe/blob/master/PROMPT_HISTORY.md) · [Mi GitHub](https://github.com/Qweffy)
