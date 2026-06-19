@@ -56,6 +56,17 @@ export function CursorTrail() {
           ctx.lineTo(p1.x, p1.y);
           ctx.stroke();
         }
+
+        // soft glow at the head
+        const head = points[points.length - 1]!;
+        ctx.shadowBlur = 0;
+        const g = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 24);
+        g.addColorStop(0, "rgba(79, 140, 255, 0.18)");
+        g.addColorStop(1, "rgba(79, 140, 255, 0)");
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(head.x, head.y, 24, 0, Math.PI * 2);
+        ctx.fill();
       }
 
       if (points.length) {

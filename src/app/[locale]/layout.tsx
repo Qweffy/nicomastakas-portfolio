@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { CursorTrail } from "@/components/CursorTrail";
+import { PointerFX } from "@/components/PointerFX";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/lib/site";
 import "../globals.css";
@@ -59,7 +61,9 @@ export default async function LocaleLayout({
     <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <ScrollProgress />
         <CursorTrail />
+        <PointerFX />
       </body>
     </html>
   );

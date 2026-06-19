@@ -451,6 +451,80 @@ a {
   white-space: nowrap;
 }
 
+/* ── Accent text selection ── */
+::selection {
+  background: rgba(79, 140, 255, 0.3);
+  color: var(--text);
+}
+
+/* ── Subtle film grain overlay ── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Scroll-reveal (zero-JS, scroll-driven; fail-open where unsupported) ── */
+@keyframes nm-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .nm-sect {
+      animation: nm-reveal both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 24%;
+    }
+  }
+}
+
+/* ── Scroll progress bar (top) ── */
+.nm-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--accent);
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ── Cursor glow + click ripple ── */
+.nm-ripple {
+  position: fixed;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(79, 140, 255, 0.5), transparent 70%);
+  pointer-events: none;
+  z-index: 85;
+  transform: translate(-50%, -50%) scale(0);
+  animation: nm-ripple-out 520ms var(--ease-out) forwards;
+}
+@keyframes nm-ripple-out {
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+/* magnetic buttons + card tilt are driven by PointerFX; ease the return */
+.nm-btn,
+.nm-case,
+.nm-syscard {
+  will-change: transform;
+}
+
 /* ── Big CTA button (design-system detail: live demo + case study) ── */
 .nm-btn--lg {
   padding: var(--space-4) var(--space-8);
