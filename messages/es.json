@@ -6,16 +6,20 @@
     "positioning": "Ingeniero de producto, no de features. Agarro problemas ambiguos y los llevo a producción, ahora con IA en el stack.",
     "bio": "Mi fuerte no es 'hacer apps'. Es encontrar dónde se rompen en la práctica los productos complejos y convertir problemas ambiguos en algo que aguante producción. Más de seis años haciendo eso en solitario; ahora también construyo la capa de IA: prompts, evals, retrieval y el producto que los rodea.",
     "resume": "CV (PDF)",
-    "proof": {
-      "role1": "Ingeniero Senior",
-      "sub1": "Wallet multi-chain Lace",
-      "role2": "Ingeniero fundador #4",
-      "bolsterHi": "100K+ usuarios",
-      "bolsterPost": "en 7 meses",
-      "sub2": "Producto 0-a-1, en solitario en las superficies clave",
-      "role3": "Antes",
-      "sub3": "Ingeniería de producto para clientes"
-    },
+    "strengths": [
+      {
+        "title": "Features con IA, 0→1",
+        "body": "Prompts, evals, retrieval y el producto que los rodea. Claude, RAG y modelos locales."
+      },
+      {
+        "title": "Disciplina de producción",
+        "body": "Typecheck→test, observabilidad, CI. Código que aguanta usuarios reales, no solo la demo."
+      },
+      {
+        "title": "Ownership de punta a punta",
+        "body": "Una superficie, de mobile a backend a infra. Construyo la maquinaria, no solo las features."
+      }
+    ],
     "workTitle": "Trabajo destacado",
     "workCount": "06 proyectos",
     "moreTitle": "Más trabajo",

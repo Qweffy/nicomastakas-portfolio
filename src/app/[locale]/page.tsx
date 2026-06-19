@@ -124,16 +124,11 @@ const proofKicker: CSSProperties = {
   textTransform: "uppercase",
   letterSpacing: "0.04em",
 };
-const proofName: CSSProperties = {
+const strengthBody: CSSProperties = {
   fontSize: "var(--text-body)",
-  lineHeight: 1.4,
-  color: "var(--text)",
-  marginTop: "var(--space-3)",
-};
-const proofSub: CSSProperties = {
-  fontSize: "var(--text-caption)",
+  lineHeight: 1.5,
   color: "var(--text-muted)",
-  marginTop: "var(--space-1)",
+  marginTop: "var(--space-3)",
 };
 const workSection: CSSProperties = { padding: "var(--space-16) 0 var(--space-12)" };
 const workHead: CSSProperties = {
@@ -219,27 +214,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </section>
 
         <section className="nm-proof" style={proofGrid}>
-          <div style={proofColDivided}>
-            <div style={proofKicker}>{t("proof.role1")}</div>
-            <div style={proofName}>Input Output (IOHK)</div>
-            <div style={proofSub}>{t("proof.sub1")}</div>
-          </div>
-          <div style={proofColDivided}>
-            <div style={proofKicker}>{t("proof.role2")}</div>
-            <div style={proofName}>
-              Bolster,{" "}
-              <span style={{ fontWeight: "var(--weight-bold)", color: "var(--accent)" }}>
-                {t("proof.bolsterHi")}
-              </span>{" "}
-              {t("proof.bolsterPost")}
+          {(t.raw("strengths") as { title: string; body: string }[]).map((s, i) => (
+            <div key={s.title} style={i < 2 ? proofColDivided : proofCol}>
+              <div style={proofKicker}>{s.title}</div>
+              <div style={strengthBody}>{s.body}</div>
             </div>
-            <div style={proofSub}>{t("proof.sub2")}</div>
-          </div>
-          <div style={proofCol}>
-            <div style={proofKicker}>{t("proof.role3")}</div>
-            <div style={proofName}>Globant</div>
-            <div style={proofSub}>{t("proof.sub3")}</div>
-          </div>
+          ))}
         </section>
 
         <section id="work" className="nm-sect" style={workSection}>

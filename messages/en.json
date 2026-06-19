@@ -6,16 +6,20 @@
     "positioning": "Product engineer, not a feature engineer. I take ambiguous problems to production, now with AI in the stack.",
     "bio": "My edge isn't 'building apps.' It's finding where complex products break in practice and turning ambiguous problems into things that survive production. Six-plus years doing that solo; now I build the AI layer too: prompts, evals, retrieval, and the product around them.",
     "resume": "Resume (PDF)",
-    "proof": {
-      "role1": "Senior Engineer",
-      "sub1": "Lace multi-chain wallet",
-      "role2": "Founding Engineer #4",
-      "bolsterHi": "100K+ users",
-      "bolsterPost": "in 7 months",
-      "sub2": "0-to-1 product, solo on core surfaces",
-      "role3": "Earlier",
-      "sub3": "Client product engineering"
-    },
+    "strengths": [
+      {
+        "title": "AI features, 0→1",
+        "body": "Prompts, evals, retrieval, and the product around them. Claude, RAG, and local models."
+      },
+      {
+        "title": "Production discipline",
+        "body": "Typecheck→test, observability, CI. Code that survives real users, not just the demo."
+      },
+      {
+        "title": "End-to-end ownership",
+        "body": "One surface, mobile to backend to infra. I build the machinery, not just the features."
+      }
+    ],
     "workTitle": "Selected work",
     "workCount": "06 projects",
     "moreTitle": "More work",
