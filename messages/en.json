@@ -174,10 +174,10 @@
     "caseStudy": "Case study →",
     "noDemo": "Local-first, no hosted demo",
     "products": {
-      "hiring-radar": "hiring-radar — hybrid job search",
-      "rubric": "rubric — CI for prompts",
-      "settle": "settle — AI bill review",
-      "shoebox": "shoebox — on-device receipt OCR"
+      "hiring-radar": "hiring-radar: hybrid job search",
+      "rubric": "rubric: CI for prompts",
+      "settle": "settle: AI bill review",
+      "shoebox": "shoebox: on-device receipt OCR"
     }
   },
   "work": {

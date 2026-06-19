@@ -174,10 +174,10 @@
     "caseStudy": "Case study →",
     "noDemo": "Local-first, sin demo hosteada",
     "products": {
-      "hiring-radar": "hiring-radar — búsqueda laboral híbrida",
-      "rubric": "rubric — CI para prompts",
-      "settle": "settle — revisión de facturas con IA",
-      "shoebox": "shoebox — OCR de tickets on-device"
+      "hiring-radar": "hiring-radar: búsqueda laboral híbrida",
+      "rubric": "rubric: CI para prompts",
+      "settle": "settle: revisión de facturas con IA",
+      "shoebox": "shoebox: OCR de tickets on-device"
     }
   },
   "work": {
