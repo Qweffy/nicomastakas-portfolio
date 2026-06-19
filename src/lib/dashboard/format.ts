@@ -22,3 +22,14 @@ export function delta(now: number, prev: number): Delta {
   const pct = Math.round(((now - prev) / prev) * 100);
   return { pct: Math.abs(pct), dir: pct > 0 ? "up" : pct < 0 ? "down" : "flat" };
 }
+
+/** Spanish relative time from a unix epoch (seconds). Computed at render. */
+export function formatRelativeTime(epochSeconds: number): string {
+  const diff = Math.max(0, Date.now() / 1000 - epochSeconds);
+  if (diff < 60) return "recién";
+  const m = Math.floor(diff / 60);
+  if (m < 60) return `hace ${m} min`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `hace ${h} h`;
+  return `hace ${Math.floor(h / 24)} d`;
+}
