@@ -179,8 +179,23 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     { label: nav("contact"), href: `mailto:${siteConfig.email}`, external: true },
   ];
 
+  const personLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    image: `${siteConfig.url}/nico.jpg`,
+    jobTitle: "AI-native Product Engineer",
+    description: siteConfig.description,
+    sameAs: [siteConfig.links.github, siteConfig.links.linkedin],
+  };
+
   return (
     <div style={wrap}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
+      />
       <Nav links={navLinks} />
 
       <main className="nm-container" style={main}>
@@ -205,7 +220,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <Button variant="ghost" href={siteConfig.links.github} dataAnalytics="social:github">
               GitHub
             </Button>
-            <Button variant="ghost" href={siteConfig.links.linkedin} dataAnalytics="social:linkedin">
+            <Button
+              variant="ghost"
+              href={siteConfig.links.linkedin}
+              dataAnalytics="social:linkedin"
+            >
               LinkedIn
             </Button>
             <Button variant="ghost" href={siteConfig.resume}>
