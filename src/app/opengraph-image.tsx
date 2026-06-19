@@ -55,11 +55,11 @@ export default function OpengraphImage() {
           paddingTop: 28,
         }}
       >
-        <div>Input Output (IOHK)</div>
+        <div>Multi-chain wallet</div>
         <div style={{ color: "#3a3d44" }}>·</div>
-        <div>Bolster, 100K+ users</div>
+        <div>Fintech, 100K+ users</div>
         <div style={{ color: "#3a3d44" }}>·</div>
-        <div>Globant</div>
+        <div>Proptech platform</div>
       </div>
     </div>,
     { ...size },

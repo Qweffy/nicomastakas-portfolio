@@ -117,18 +117,18 @@
     ],
     "contactKicker": "Contacto",
     "roles": {
-      "iohk": {
-        "name": "Input Output (IOHK)",
-        "meta": "Ingeniero Senior · Wallet Lace",
-        "body": "En Lace, la wallet multi-chain, diseñé un sistema de módulos por contrato que permite sumar nuevas cadenas e integraciones de dApps sin tocar el core. Aparte, construí el framework de Claude Code del equipo: los agentes y el tooling que otros ingenieros usan a diario.",
+      "wallet": {
+        "name": "Wallet cripto multi-chain",
+        "meta": "Ingeniero Senior",
+        "body": "En una wallet multi-chain, diseñé un sistema de módulos por contrato que permite sumar nuevas cadenas e integraciones de dApps sin tocar el core. Aparte, construí el framework de Claude Code del equipo: los agentes y el tooling que otros ingenieros usan a diario.",
         "metrics": [
           { "value": "7", "label": "agentes de Claude Code" },
           { "value": "4", "label": "servidores MCP integrados" }
         ],
-        "tags": ["TypeScript", "React", "Cardano", "Claude Code", "MCP"]
+        "tags": ["TypeScript", "React", "Claude Code", "MCP"]
       },
-      "bolster": {
-        "name": "Bolster",
+      "fintech": {
+        "name": "Fintech startup",
         "meta": "Ingeniero fundador #4",
         "body": "Entré como el cuarto ingeniero y construí superficies fintech greenfield desde cero. Fui dueño de la experiencia mobile central mientras crecía a 100K+ usuarios en siete meses, y después volví a hacerla rápida y estable, recortando fuerte el cold-start y los crashes.",
         "metrics": [
@@ -138,15 +138,15 @@
         ],
         "tags": ["React Native", "TypeScript", "Node", "fintech"]
       },
-      "globant": {
-        "name": "Globant",
-        "meta": "Full-stack · Lessen (proptech US)",
-        "body": "Ingeniero full-stack en Lessen, una plataforma proptech de EE.UU. Construí la librería de componentes React Native compartida sobre la que construían los equipos de producto, estandarizando la UI y recortando el esfuerzo cross-platform en torno a un tercio.",
+      "proptech": {
+        "name": "Plataforma proptech de EE.UU.",
+        "meta": "Ingeniero full-stack",
+        "body": "Ingeniero full-stack en una plataforma proptech de EE.UU. Construí la librería de componentes React Native compartida sobre la que construían los equipos de producto, estandarizando la UI y recortando el esfuerzo cross-platform en torno a un tercio.",
         "metrics": [{ "value": "−30%", "label": "esfuerzo cross-platform" }],
         "tags": ["React Native", "TypeScript", "sistemas de componentes"]
       },
-      "moony": {
-        "name": "Moony",
+      "founder": {
+        "name": "Startup early-stage",
         "meta": "Co-fundador",
         "body": "Co-fundé y construí el producto de punta a punta: cada capa, cada decisión. El curso intensivo de ser dueño de algo desde la idea hasta producción sobre el que se construyó todo lo demás.",
         "metrics": [],

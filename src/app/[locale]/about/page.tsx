@@ -7,7 +7,7 @@ import { Nav } from "@/components/Nav";
 import { Tag } from "@/components/Tag";
 import { siteConfig } from "@/lib/site";
 
-const ROLES = ["iohk", "bolster", "globant", "moony"] as const;
+const ROLES = ["wallet", "fintech", "proptech", "founder"] as const;
 
 type RoleMetric = { value: string; label: string };
 
