@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { delta as computeDelta } from "@/lib/dashboard/format";
 import { DeltaBadge } from "./DeltaBadge";
+import { InfoTip } from "./InfoTip";
 
 const card: CSSProperties = {
   background: "var(--surface)",
@@ -35,23 +36,35 @@ const sub: CSSProperties = {
   color: "var(--text-muted)",
 };
 
+const labelRow: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: "var(--space-2)",
+};
+
 export function KpiCard({
   label: labelText,
   value: valueText,
   now,
   prev,
   sub: subText,
+  info,
 }: {
   label: string;
   value: string;
   now?: number;
   prev?: number;
   sub?: string;
+  info?: string;
 }) {
   const d = now !== undefined && prev !== undefined ? computeDelta(now, prev) : null;
   return (
     <div style={card}>
-      <span style={label}>{labelText}</span>
+      <div style={labelRow}>
+        <span style={label}>{labelText}</span>
+        {info ? <InfoTip text={info} /> : null}
+      </div>
       <span style={value}>{valueText}</span>
       {d ? (
         <div style={deltaRow}>

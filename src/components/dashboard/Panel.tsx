@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import { InfoTip } from "./InfoTip";
 
 const panel: CSSProperties = {
   background: "var(--surface)",
@@ -28,20 +29,25 @@ const titleStyle: CSSProperties = {
 export function Panel({
   title,
   action,
+  info,
   padded = true,
   children,
 }: {
   title?: string;
   action?: ReactNode;
+  info?: string;
   padded?: boolean;
   children: ReactNode;
 }) {
   return (
     <section style={panel}>
-      {title || action ? (
+      {title || action || info ? (
         <header style={header}>
           <h3 style={titleStyle}>{title}</h3>
-          {action ? <div>{action}</div> : null}
+          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+            {action}
+            {info ? <InfoTip text={info} /> : null}
+          </div>
         </header>
       ) : null}
       <div style={{ padding: padded ? "var(--space-6)" : 0 }}>{children}</div>

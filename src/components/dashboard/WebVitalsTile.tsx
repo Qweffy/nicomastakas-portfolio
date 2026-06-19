@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { InfoTip } from "./InfoTip";
 
 const tile: CSSProperties = {
   background: "var(--surface)",
@@ -53,12 +54,14 @@ export function WebVitalsTile({
   unit = "",
   thresholds,
   max,
+  info,
 }: {
   name: string;
   value: number;
   unit?: string;
   thresholds: [number, number];
   max?: number;
+  info?: string;
 }) {
   const [goodMax, niMax] = thresholds;
   const scaleMax = max ?? niMax * 1.35;
@@ -80,7 +83,10 @@ export function WebVitalsTile({
   return (
     <div style={tile}>
       <div style={topRow}>
-        <span style={nameStyle}>{name}</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }}>
+          <span style={nameStyle}>{name}</span>
+          {info ? <InfoTip text={info} align="left" /> : null}
+        </span>
         <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-caption)", color }}>
           {rating}
         </span>

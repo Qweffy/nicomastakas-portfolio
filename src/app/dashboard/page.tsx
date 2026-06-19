@@ -19,14 +19,61 @@ const EVENT_LABELS: Record<string, string> = {
   scroll: "Scroll depth",
 };
 
-const VITALS: Record<string, { unit: string; thresholds: [number, number]; max?: number }> = {
-  LCP: { unit: "ms", thresholds: [2500, 4000] },
-  INP: { unit: "ms", thresholds: [200, 500] },
-  CLS: { unit: "", thresholds: [0.1, 0.25], max: 0.4 },
-  FCP: { unit: "ms", thresholds: [1800, 3000] },
-  TTFB: { unit: "ms", thresholds: [800, 1800] },
+const VITALS: Record<
+  string,
+  { unit: string; thresholds: [number, number]; max?: number; info: string }
+> = {
+  LCP: {
+    unit: "ms",
+    thresholds: [2500, 4000],
+    info: "Largest Contentful Paint: cuánto tarda en aparecer el contenido principal de la página. Bueno: menos de 2,5s.",
+  },
+  INP: {
+    unit: "ms",
+    thresholds: [200, 500],
+    info: "Interaction to Next Paint: qué tan rápido responde la página cuando alguien interactúa. Bueno: menos de 200ms.",
+  },
+  CLS: {
+    unit: "",
+    thresholds: [0.1, 0.25],
+    max: 0.4,
+    info: "Cumulative Layout Shift: cuánto se mueve el layout solo mientras carga (cuanto menos salta, mejor). Bueno: menos de 0,1.",
+  },
+  FCP: {
+    unit: "ms",
+    thresholds: [1800, 3000],
+    info: "First Contentful Paint: cuándo aparece el primer pedacito de contenido. Bueno: menos de 1,8s.",
+  },
+  TTFB: {
+    unit: "ms",
+    thresholds: [800, 1800],
+    info: "Time To First Byte: cuánto tarda el servidor en empezar a responder. Bueno: menos de 0,8s.",
+  },
 };
 const VITAL_ORDER = ["LCP", "INP", "CLS", "FCP", "TTFB"];
+
+const INFO = {
+  visitors:
+    "Personas únicas que entraron en el período. Se cuentan sin cookies, con un hash que se renueva cada día (si alguien vuelve otro día, cuenta como nuevo).",
+  pageviews: "Total de páginas vistas. Una misma persona puede sumar varias.",
+  avgTime:
+    "Tiempo promedio que la gente pasa de verdad en cada página (solo cuenta cuando la pestaña está visible).",
+  bounce:
+    "Porcentaje de visitas que vieron una sola página y se fueron sin más. Más bajo es mejor.",
+  traffic:
+    "Evolución de pageviews (área) y visitantes únicos (línea punteada) en el tiempo. El punto marca el pico.",
+  topPages: "Las páginas más vistas de tu sitio en el período.",
+  sources:
+    "De dónde viene la gente (LinkedIn, Google, etc.). 'Direct' = entraron directo, sin un sitio de origen.",
+  countries: "Países desde donde entran tus visitantes (por IP, sin guardarla).",
+  events:
+    "Acciones de alto valor: descargas del CV, clics salientes (GitHub/LinkedIn/demos) y clics de contacto.",
+  devices: "Tipo de dispositivo: mobile, desktop o tablet.",
+  browsers: "Navegador que usan tus visitantes (Chrome, Safari, Firefox...).",
+  os: "Sistema operativo (macOS, Windows, iOS, Android, Linux...).",
+  vitals:
+    "Métricas de rendimiento real de Google, medidas en tus visitantes. p75 = el valor que cumplen el 75% de las cargas (el 25% peor queda por encima).",
+} as const;
 
 const wrap: CSSProperties = {
   minHeight: "100vh",
@@ -166,6 +213,7 @@ function DashboardBody({ stats }: { stats: Stats }) {
           now={stats.kpis.visitors}
           prev={stats.kpis.visitorsPrev}
           sub="vs prev"
+          info={INFO.visitors}
         />
         <KpiCard
           label="Pageviews"
@@ -173,6 +221,7 @@ function DashboardBody({ stats }: { stats: Stats }) {
           now={stats.kpis.pageviews}
           prev={stats.kpis.pageviewsPrev}
           sub="vs prev"
+          info={INFO.pageviews}
         />
         <KpiCard
           label="Avg. time"
@@ -180,49 +229,51 @@ function DashboardBody({ stats }: { stats: Stats }) {
           now={stats.kpis.avgEngagementMs}
           prev={stats.kpis.avgEngagementPrevMs}
           sub="vs prev"
+          info={INFO.avgTime}
         />
         <KpiCard
           label="Bounce rate"
           value={formatPercent(stats.kpis.bounceRate)}
           sub="single-page visits"
+          info={INFO.bounce}
         />
       </div>
 
-      <Panel title="Traffic">
+      <Panel title="Traffic" info={INFO.traffic}>
         <TimeSeriesChart series={stats.series} bucket={stats.bucket} />
       </Panel>
 
       <div style={grid} className="nm-dash-2">
-        <Panel title="Top pages" padded={false}>
+        <Panel title="Top pages" padded={false} info={INFO.topPages}>
           <RankedBarList items={stats.topPages} />
         </Panel>
-        <Panel title="Sources" padded={false}>
+        <Panel title="Sources" padded={false} info={INFO.sources}>
           <RankedBarList items={stats.referrers} />
         </Panel>
       </div>
 
       <div style={grid} className="nm-dash-2">
-        <Panel title="Countries" padded={false}>
+        <Panel title="Countries" padded={false} info={INFO.countries}>
           <RankedBarList items={stats.countries} />
         </Panel>
-        <Panel title="Events" padded={false}>
+        <Panel title="Events" padded={false} info={INFO.events}>
           <RankedBarList items={eventItems} />
         </Panel>
       </div>
 
       <div style={grid} className="nm-dash-3">
-        <Panel title="Devices" padded={false}>
+        <Panel title="Devices" padded={false} info={INFO.devices}>
           <RankedBarList items={stats.devices} />
         </Panel>
-        <Panel title="Browsers" padded={false}>
+        <Panel title="Browsers" padded={false} info={INFO.browsers}>
           <RankedBarList items={stats.browsers} />
         </Panel>
-        <Panel title="OS" padded={false}>
+        <Panel title="OS" padded={false} info={INFO.os}>
           <RankedBarList items={stats.os} />
         </Panel>
       </div>
 
-      <Panel title="Core Web Vitals · p75">
+      <Panel title="Core Web Vitals · p75" info={INFO.vitals}>
         {vitalTiles.length === 0 ? (
           <p style={vitalsEmpty}>No data for this range</p>
         ) : (
@@ -235,6 +286,7 @@ function DashboardBody({ stats }: { stats: Stats }) {
                 unit={v.unit}
                 thresholds={v.thresholds}
                 max={v.max}
+                info={v.info}
               />
             ))}
           </div>

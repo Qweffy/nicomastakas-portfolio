@@ -926,6 +926,71 @@ body::after {
   background: var(--surface-2);
 }
 
+/* Info "?" affordance + Spanish tooltip (hover / focus / tap) */
+.nm-info {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+.nm-info__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1;
+  cursor: help;
+  transition:
+    color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+}
+.nm-info__btn:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+.nm-info__tip {
+  position: absolute;
+  top: calc(100% + 8px);
+  width: max-content;
+  max-width: 240px;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg);
+  border: var(--elevation-hairline);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  line-height: var(--leading-caption);
+  font-weight: var(--weight-regular);
+  letter-spacing: normal;
+  text-transform: none;
+  text-align: left;
+  color: var(--text-muted);
+  white-space: normal;
+  z-index: 30;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--motion-fast) var(--ease-out);
+  pointer-events: none;
+}
+.nm-info__tip--right {
+  right: 0;
+}
+.nm-info__tip--left {
+  left: 0;
+}
+.nm-info:hover .nm-info__tip,
+.nm-info:focus-within .nm-info__tip {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* ──────────────────────────────────────────────────────────────────────────
    Private /dashboard grids (analytics). Token-only, dark, responsive.
    ────────────────────────────────────────────────────────────────────────── */
