@@ -7,6 +7,8 @@ export interface ButtonProps {
   href?: string;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
+  /** Larger, attention-grabbing CTA (design-system detail). */
+  large?: boolean;
   onClick?: (e: MouseEvent) => void;
   children?: ReactNode;
 }
@@ -17,9 +19,10 @@ export function Button({
   onClick,
   disabled = false,
   type = "button",
+  large = false,
   children,
 }: ButtonProps) {
-  const className = `nm-btn nm-btn--${variant} nm-focusable${disabled ? " is-disabled" : ""}`;
+  const className = `nm-btn nm-btn--${variant}${large ? " nm-btn--lg" : ""} nm-focusable${disabled ? " is-disabled" : ""}`;
 
   if (href && !disabled) {
     return (

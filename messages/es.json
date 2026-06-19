@@ -157,27 +157,38 @@
   "design": {
     "kicker": "Diseño",
     "title": "Diseño lo que shippeo.",
-    "intro": "Mi foco es la ingeniería de producto, pero también diseño los productos: la dirección visual y un design system real en Claude Design, y después lo reconstruyo en este mismo codebase (Next.js 16, Tailwind v4) y lo shippeo. Lo difícil nunca fue el mockup; es hacer que aguante un codebase de verdad.",
+    "intro": "Mi foco es la ingeniería de producto, pero también diseño los productos: defino la dirección visual y un design system real en Claude Design, y después lo reconstruyo en este mismo codebase (Next.js 16, Tailwind v4) y lo shippeo. Lo difícil nunca fue el mockup; es hacer que aguante un codebase de verdad.",
     "toolchain": "Claude Design → Next.js + Tailwind → producción",
-    "tokensKicker": "El sistema, corriendo en vivo",
-    "tokensNote": "Esto no es un screenshot. La franja de abajo se renderiza con los tokens vivos que mueven esta página: seis colores, un acento, una escala de spacing de 4px, un único borde hairline como toda la elevación.",
     "systemsKicker": "Design systems",
-    "systemsNote": "No son pantallas sueltas: tokens, escalas tipográficas y reglas de componentes, un sistema coherente por producto. Tocá cualquiera para abrirlo entero.",
-    "ds": {
-      "portfolio": "El sistema detrás de este sitio. Lo diseñé en Claude Design y lo porté token por token al CSS que estás leyendo ahora mismo.",
-      "hiring-radar": "Sistema mission-control para el radar de búsqueda laboral: fósforo sobre casi-negro, denso en datos, numéricos en mono.",
-      "settle": "Un sistema más claro y denso en plata para el producto de bill-pay, donde la claridad le gana al brillo cuando hay dólares en juego."
+    "systemsNote": "Cada producto corre sobre un sistema real que armé en Claude Design y después shippeé en código. Abrí uno para verlo entero: tokens, tipografía y componentes.",
+    "viewSystem": "Ver el sistema →",
+    "completeKicker": "El sistema completo",
+    "completeNote": "Foundations más cada componente, renderizados directo del handoff de Claude Design.",
+    "foundations": "Foundations",
+    "groups": {
+      "Components": "Componentes",
+      "Interaction": "Interacción y estados",
+      "Brand": "Marca"
     },
-    "shippedKicker": "Diseñado acá, shippeado de verdad",
-    "shippedNote": "Cada sistema terminó siendo un producto en producción. Abrí la app en vivo, o leé cómo se construyó.",
-    "live": "En vivo →",
-    "caseStudy": "Case study →",
-    "noDemo": "Local-first, sin demo hosteada",
-    "products": {
-      "hiring-radar": "hiring-radar: búsqueda laboral híbrida",
-      "rubric": "rubric: CI para prompts",
-      "settle": "settle: revisión de facturas con IA",
-      "shoebox": "shoebox: OCR de tickets on-device"
+    "systems": {
+      "hiring-radar": {
+        "name": "hiring-radar",
+        "tagline": "Sistema mission-control para un radar de búsqueda laboral: fósforo sobre casi-negro, denso en datos, numéricos en mono.",
+        "liveLabel": "Demo en vivo →",
+        "caseLabel": "Case study →"
+      },
+      "settle": {
+        "name": "settle",
+        "tagline": "Sistema denso en plata para un producto de bill-pay: claro, calmo, la claridad por encima del brillo cuando hay dólares en juego.",
+        "liveLabel": "Demo en vivo →",
+        "caseLabel": "Case study →"
+      },
+      "portfolio": {
+        "name": "Nico Mastakas",
+        "tagline": "El sistema detrás de este sitio: seis colores, un acento, una escala de 4px. Portado token por token al CSS que estás leyendo.",
+        "liveLabel": "Explorar el sitio →",
+        "caseLabel": "Cómo construyo →"
+      }
     }
   },
   "work": {

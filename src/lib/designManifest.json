@@ -1,0 +1,149 @@
+{
+  "hiring-radar": {
+    "overview": "overview.webp",
+    "cards": [
+      {
+        "file": "core.webp",
+        "name": "Core, Buttons, IconButtons, Icons",
+        "subtitle": "Actions, icon controls, the Lucide-style glyph set",
+        "group": "Components"
+      },
+      {
+        "file": "data.webp",
+        "name": "Data, Tags, Badges, Gauge, Scorecards, JobRow",
+        "subtitle": "The instrument: status badges, match strength, score gauge, metric tiles, posting rows",
+        "group": "Components"
+      },
+      {
+        "file": "forms.webp",
+        "name": "Forms, Inputs, Select, Slider, Toggle",
+        "subtitle": "Text/search inputs, selects, salary slider, toggle, with focus & error states",
+        "group": "Components"
+      },
+      {
+        "file": "navigation.webp",
+        "name": "Navigation, Tabs, Segmented, Progress",
+        "subtitle": "Filter tabs with mono counts, search-mode segmented control, thin progress lines",
+        "group": "Components"
+      },
+      {
+        "file": "feedback.webp",
+        "name": "Feedback, Toasts, Banners, Skeletons, Empty/Error",
+        "subtitle": "Toasts with retry/undo, banners, shimmer skeletons, empty & recovery error states",
+        "group": "Components"
+      },
+      {
+        "file": "overlay.webp",
+        "name": "Overlays, Palette, Modal, Confirm, Menu, Tooltip, Drawer",
+        "subtitle": "⌘K command palette, dialogs, destructive confirm, dropdown menu, tooltips",
+        "group": "Components"
+      },
+      {
+        "file": "brand-radar.webp",
+        "name": "Radar motif, conic sweep + blips",
+        "subtitle": "The core metaphor: 4s linear sweep, blip pings on new signal. Honors reduced-motion",
+        "group": "Brand"
+      },
+      {
+        "file": "brand-logo.webp",
+        "name": "Logo, radar mark + wordmark",
+        "subtitle": "Phosphor sweep mark. 'Radar' always in phosphor; clear-space = mark height",
+        "group": "Brand"
+      }
+    ]
+  },
+  "portfolio": {
+    "overview": "overview.webp",
+    "cards": [
+      {
+        "file": "buttons.webp",
+        "name": "Button",
+        "subtitle": "primary · ghost · inline link",
+        "group": "Components"
+      },
+      {
+        "file": "case-study.webp",
+        "name": "CaseStudyCard",
+        "subtitle": "badge · title · outcome · metrics · tags",
+        "group": "Components"
+      },
+      {
+        "file": "metric.webp",
+        "name": "Metric",
+        "subtitle": "big number + small label",
+        "group": "Components"
+      },
+      {
+        "file": "tag.webp",
+        "name": "Tag",
+        "subtitle": "tech-stack / category pill",
+        "group": "Components"
+      },
+      {
+        "file": "nav.webp",
+        "name": "Nav & Footer",
+        "subtitle": "top bar + site footer",
+        "group": "Components"
+      },
+      {
+        "file": "content.webp",
+        "name": "Callout & CodeBlock",
+        "subtitle": "prose note + monospace code panel",
+        "group": "Components"
+      },
+      {
+        "file": "button-states.webp",
+        "name": "Button states",
+        "subtitle": "default · hover · focus-visible · active, primary / ghost / link",
+        "group": "Interaction"
+      },
+      {
+        "file": "case-states.webp",
+        "name": "CaseStudyCard states",
+        "subtitle": "default vs hover, border→accent, surface +1, arrow nudges",
+        "group": "Interaction"
+      }
+    ]
+  },
+  "settle": {
+    "overview": "overview.webp",
+    "cards": [
+      {
+        "file": "buttons.webp",
+        "name": "Buttons",
+        "subtitle": "4 variants × states",
+        "group": "Components"
+      },
+      {
+        "file": "badges.webp",
+        "name": "Status badges",
+        "subtitle": "Every AP state",
+        "group": "Components"
+      },
+      {
+        "file": "form.webp",
+        "name": "Form controls",
+        "subtitle": "Inputs, focus, error, choice",
+        "group": "Components"
+      },
+      {
+        "file": "nav.webp",
+        "name": "Sidebar nav",
+        "subtitle": "Default / active / count",
+        "group": "Components"
+      },
+      {
+        "file": "table.webp",
+        "name": "Bills table",
+        "subtitle": "Header, rows, totals, money",
+        "group": "Components"
+      },
+      {
+        "file": "command-palette.webp",
+        "name": "Command palette",
+        "subtitle": "⌘K search + groups + hints",
+        "group": "Components"
+      }
+    ]
+  }
+}

@@ -157,27 +157,38 @@
   "design": {
     "kicker": "Design",
     "title": "I design what I ship.",
-    "intro": "Product engineering is my focus, but I design the products too: the visual direction and a real design system in Claude Design, then I rebuild it in this exact codebase (Next.js 16, Tailwind v4) and ship it. The hard part was never the mockup; it's making it survive a real codebase.",
+    "intro": "Product engineering is my focus, but I design the products too: I work out the visual direction and a real design system in Claude Design, then rebuild it in this exact codebase (Next.js 16, Tailwind v4) and ship it. The hard part was never the mockup; it's making it survive a real codebase.",
     "toolchain": "Claude Design → Next.js + Tailwind → production",
-    "tokensKicker": "The system, running live",
-    "tokensNote": "This is not a screenshot. The strip below renders from the live tokens powering this page: six colors, one accent, a 4px spacing scale, a single hairline border as the only elevation.",
     "systemsKicker": "Design systems",
-    "systemsNote": "Not one-off screens: tokens, type scales, and component rules, one coherent system per product. Click any to open it full.",
-    "ds": {
-      "portfolio": "The system behind this site. Built in Claude Design, then ported token-for-token into the CSS you are reading right now.",
-      "hiring-radar": "Mission-control system for the job-hunt radar: phosphor on near-black, data-dense, mono numerics.",
-      "settle": "A lighter, money-dense system for the bill-pay product, where clarity beats flash when dollars are on the line."
+    "systemsNote": "Each product runs on a real system I built in Claude Design, then shipped in code. Open one to see the whole thing: tokens, type, and components.",
+    "viewSystem": "View system →",
+    "completeKicker": "The complete system",
+    "completeNote": "Foundations plus every component, rendered straight from the Claude Design handoff.",
+    "foundations": "Foundations",
+    "groups": {
+      "Components": "Components",
+      "Interaction": "Interaction & states",
+      "Brand": "Brand"
     },
-    "shippedKicker": "Designed here, shipped for real",
-    "shippedNote": "Every system became a production product. Open the live app, or read how it was built.",
-    "live": "Live →",
-    "caseStudy": "Case study →",
-    "noDemo": "Local-first, no hosted demo",
-    "products": {
-      "hiring-radar": "hiring-radar: hybrid job search",
-      "rubric": "rubric: CI for prompts",
-      "settle": "settle: AI bill review",
-      "shoebox": "shoebox: on-device receipt OCR"
+    "systems": {
+      "hiring-radar": {
+        "name": "hiring-radar",
+        "tagline": "Mission-control system for a job-hunt radar: phosphor on near-black, data-dense, mono numerics.",
+        "liveLabel": "Live demo →",
+        "caseLabel": "Case study →"
+      },
+      "settle": {
+        "name": "settle",
+        "tagline": "Money-dense system for an AP bill-pay product: light, calm, clarity over flash when dollars are on the line.",
+        "liveLabel": "Live demo →",
+        "caseLabel": "Case study →"
+      },
+      "portfolio": {
+        "name": "Nico Mastakas",
+        "tagline": "The system behind this site: six colors, one accent, a 4px scale. Ported token-for-token into the CSS you are reading.",
+        "liveLabel": "Explore the site →",
+        "caseLabel": "How I build →"
+      }
     }
   },
   "work": {
