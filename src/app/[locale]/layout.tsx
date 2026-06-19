@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import { Analytics } from "@/components/Analytics";
 import { CursorTrail } from "@/components/CursorTrail";
 import { PointerFX } from "@/components/PointerFX";
 import { ScrollProgress } from "@/components/ScrollProgress";
@@ -64,6 +65,7 @@ export default async function LocaleLayout({
         <ScrollProgress />
         <CursorTrail />
         <PointerFX />
+        <Analytics />
       </body>
     </html>
   );

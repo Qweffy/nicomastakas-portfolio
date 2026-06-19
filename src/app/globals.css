@@ -2,8 +2,10 @@
 
 /* ──────────────────────────────────────────────────────────────────────────
    Nico Mastakas — Design System tokens. Dark theme only (no light, no toggle).
-   These are the complete allowed set — never introduce others.
-   Ported verbatim from the design-system handoff (tokens/*.css).
+   The core set below is the complete allowed palette for the public site.
+   The only sanctioned extension is the additive data-viz block (success/warning/
+   danger + chart/zone aliases) used ONLY inside the private /dashboard for data
+   meaning, never for chrome. Ported verbatim from the design-system handoff (tokens/*.css).
    Fonts come from next/font (Geist + Geist Mono) via the layout variables.
    ────────────────────────────────────────────────────────────────────────── */
 :root {
@@ -59,6 +61,37 @@
   --motion-fast: 120ms;
   --motion-base: 180ms;
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Uppercase mono label tracking (KPI captions, panel titles, axes) */
+  --tracking-label: 0.06em;
+
+  /* ── Data-viz tokens (ADDITIVE, private /dashboard only). Semantic triad used
+     ONLY for data meaning (deltas, Web Vitals, chart status), never chrome.
+     The one-accent identity is unchanged for the public site. ── */
+  --success: #4fb286; /* up / good */
+  --warning: #e0a24a; /* needs-improvement */
+  --danger: #e5604d; /* down / poor */
+
+  --delta-up: var(--success);
+  --delta-down: var(--danger);
+  --delta-flat: var(--text-muted);
+
+  --vital-good: var(--success);
+  --vital-ni: var(--warning);
+  --vital-poor: var(--danger);
+
+  --chart-series-1: var(--accent); /* pageviews (area) */
+  --chart-series-2: var(--text-muted); /* visitors (line) */
+  --chart-area: color-mix(in oklab, var(--accent) 16%, transparent);
+  --chart-area-edge: color-mix(in oklab, var(--accent) 32%, transparent);
+  --chart-grid: var(--border);
+  --chart-peak: var(--accent);
+
+  --zone-good: color-mix(in oklab, var(--success) 26%, transparent);
+  --zone-ni: color-mix(in oklab, var(--warning) 26%, transparent);
+  --zone-poor: color-mix(in oklab, var(--danger) 26%, transparent);
+
+  --surface-2: color-mix(in oklab, var(--surface) 92%, white);
 }
 
 html {
@@ -816,5 +849,110 @@ body::after {
     min-height: 44px;
     display: inline-flex;
     align-items: center;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Private /dashboard components (ported from the Claude Design handoff
+   tokens/interactions.css). Reduced-motion is covered by the global * reset above.
+   ────────────────────────────────────────────────────────────────────────── */
+.nm-input {
+  font-family: var(--font-mono);
+  font-size: var(--text-body);
+  color: var(--text);
+  background: var(--surface);
+  border: var(--elevation-hairline);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  box-sizing: border-box;
+  width: 100%;
+  outline: none;
+  transition: border-color var(--motion-fast) var(--ease-out);
+}
+.nm-input::placeholder {
+  color: var(--text-muted);
+}
+.nm-input:hover {
+  border-color: color-mix(in oklab, var(--border) 60%, white);
+}
+.nm-input:focus,
+.nm-input:focus-visible {
+  border-color: var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.nm-input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+/* Segmented control (range tabs) */
+.nm-seg {
+  display: inline-flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: var(--surface);
+  border: var(--elevation-hairline);
+  border-radius: var(--radius-md);
+}
+.nm-seg__tab {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    color var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out);
+}
+.nm-seg__tab:hover:not(.is-active) {
+  color: var(--text);
+}
+.nm-seg__tab.is-active {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+/* Ranked-list row hover */
+.nm-rank__row {
+  transition: background var(--motion-fast) var(--ease-out);
+}
+.nm-rank__row:hover {
+  background: var(--surface-2);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Private /dashboard grids (analytics). Token-only, dark, responsive.
+   ────────────────────────────────────────────────────────────────────────── */
+.nm-dash-kpis {
+  grid-template-columns: repeat(4, 1fr);
+}
+.nm-dash-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.nm-dash-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 880px) {
+  .nm-dash-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .nm-dash-3 {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .nm-dash-kpis,
+  .nm-dash-2,
+  .nm-dash-3 {
+    grid-template-columns: 1fr;
+  }
+  .nm-dash-main {
+    padding: var(--space-8) var(--space-4) !important;
   }
 }

@@ -7,9 +7,10 @@ import { routing } from "@/i18n/routing";
 export default createMiddleware(routing);
 
 export const config = {
-  // Skip API, Next internals, extension-less metadata routes (e.g. /opengraph-image,
-  // /icon), and any path with a file extension.
+  // Skip API, the private /dashboard (its own root layout), Next internals,
+  // extension-less metadata routes (e.g. /opengraph-image, /icon), and any path
+  // with a file extension.
   matcher: [
-    "/((?!api|_next|_vercel|opengraph-image|twitter-image|icon|apple-icon|manifest|.*\\..*).*)",
+    "/((?!api|dashboard|_next|_vercel|opengraph-image|twitter-image|icon|apple-icon|manifest|.*\\..*).*)",
   ],
 };
