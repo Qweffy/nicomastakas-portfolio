@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { allWorkParams } from "@/lib/content";
+import { designSystemSlugs } from "@/lib/design";
 import { siteConfig } from "@/lib/site";
 
 function localizedUrl(locale: string, path: string): string {
@@ -10,7 +11,13 @@ function localizedUrl(locale: string, path: string): string {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const slugs = [...new Set(allWorkParams().map((p) => p.slug))];
-  const paths = ["", "/about", ...slugs.map((s) => `/work/${s}`)];
+  const paths = [
+    "",
+    "/about",
+    "/design",
+    ...designSystemSlugs.map((s) => `/design/${s}`),
+    ...slugs.map((s) => `/work/${s}`),
+  ];
 
   return paths.map((path) => ({
     url: `${siteConfig.url}${path}`,
