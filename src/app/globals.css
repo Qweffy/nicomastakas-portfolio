@@ -457,6 +457,27 @@ a {
   color: var(--text);
 }
 
+/* ── Accent scrollbar ── */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--accent) 75%, var(--surface)) var(--surface);
+}
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--accent) 75%, var(--surface));
+  border-radius: 9999px;
+  border: 2px solid var(--surface);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
 /* ── Subtle film grain overlay ── */
 body::after {
   content: "";
@@ -481,7 +502,8 @@ body::after {
 }
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    .nm-sect {
+    .nm-sect,
+    .nm-reveal {
       animation: nm-reveal both;
       animation-timeline: view();
       animation-range: entry 5% cover 24%;
