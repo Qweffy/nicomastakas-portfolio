@@ -1,5 +1,11 @@
 {
-  "nav": { "work": "Work", "how": "How I build", "about": "About", "contact": "Contact" },
+  "nav": {
+    "work": "Work",
+    "how": "How I build",
+    "design": "Design",
+    "about": "About",
+    "contact": "Contact"
+  },
   "common": { "email": "Email", "github": "GitHub", "linkedin": "LinkedIn", "resume": "Resume" },
   "home": {
     "availability": "Open to AI-native product roles",
@@ -146,6 +152,32 @@
         "metrics": [],
         "tags": ["full-stack", "0-to-1 product"]
       }
+    }
+  },
+  "design": {
+    "kicker": "Design",
+    "title": "I design what I ship.",
+    "intro": "Product engineering is my focus, but I design the products too: the visual direction and a real design system in Claude Design, then I rebuild it in this exact codebase (Next.js 16, Tailwind v4) and ship it. The hard part was never the mockup; it's making it survive a real codebase.",
+    "toolchain": "Claude Design → Next.js + Tailwind → production",
+    "tokensKicker": "The system, running live",
+    "tokensNote": "This is not a screenshot. The strip below renders from the live tokens powering this page: six colors, one accent, a 4px spacing scale, a single hairline border as the only elevation.",
+    "systemsKicker": "Design systems",
+    "systemsNote": "Not one-off screens: tokens, type scales, and component rules, one coherent system per product. Click any to open it full.",
+    "ds": {
+      "portfolio": "The system behind this site. Built in Claude Design, then ported token-for-token into the CSS you are reading right now.",
+      "hiring-radar": "Mission-control system for the job-hunt radar: phosphor on near-black, data-dense, mono numerics.",
+      "settle": "A lighter, money-dense system for the bill-pay product, where clarity beats flash when dollars are on the line."
+    },
+    "shippedKicker": "Designed here, shipped for real",
+    "shippedNote": "Every system became a production product. Open the live app, or read how it was built.",
+    "live": "Live →",
+    "caseStudy": "Case study →",
+    "noDemo": "Local-first, no hosted demo",
+    "products": {
+      "hiring-radar": "hiring-radar — hybrid job search",
+      "rubric": "rubric — CI for prompts",
+      "settle": "settle — AI bill review",
+      "shoebox": "shoebox — on-device receipt OCR"
     }
   },
   "work": {

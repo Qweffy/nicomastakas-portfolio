@@ -220,6 +220,7 @@ function navLinks(nav: Awaited<ReturnType<typeof getTranslations>>) {
   return [
     { label: nav("work"), href: "/#work" },
     { label: nav("how"), href: "/work/how-i-build-with-ai" },
+    { label: nav("design"), href: "/design" },
     { label: nav("about"), href: "/about" },
     { label: nav("contact"), href: `mailto:${siteConfig.email}`, external: true },
   ];

@@ -451,6 +451,91 @@ a {
   white-space: nowrap;
 }
 
+/* ── Shot — framed screenshot + zero-JS CSS :target lightbox (design page) ── */
+.shot {
+  margin: 0;
+}
+.shot__thumb {
+  display: block;
+  border: var(--elevation-hairline);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+  transition: border-color var(--motion-base) var(--ease-out);
+}
+.shot__thumb:hover {
+  border-color: var(--accent);
+}
+.shot__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.shot__img--tall {
+  height: 460px;
+  object-fit: cover;
+  object-position: top;
+}
+.shot__cap {
+  margin-top: var(--space-3);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  line-height: var(--leading-caption);
+}
+.shot__lightbox {
+  display: none;
+}
+.shot__lightbox:target {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: auto;
+  padding: var(--space-8);
+  background: color-mix(in oklab, var(--bg) 86%, black);
+  cursor: zoom-out;
+}
+.shot__lightbox:target img {
+  max-width: min(1100px, 100%);
+  height: auto;
+  border: var(--elevation-hairline);
+  border-radius: var(--radius-md);
+}
+
+/* ── Live design-token specimen (the design page's "the specimen is the impl") ── */
+.nm-tokens {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  border: var(--elevation-hairline);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  padding: var(--space-4);
+}
+.nm-swatch {
+  border: var(--elevation-hairline);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.nm-swatch__chip {
+  height: 44px;
+}
+.nm-swatch__meta {
+  padding: var(--space-2) var(--space-3);
+}
+.nm-swatch__name {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--text);
+}
+.nm-swatch__hex {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+}
+
 /* ──────────────────────────────────────────────────────────────────────────
    MOBILE — single breakpoint at ≤ 640px → everything single-column.
    Token type overrides cascade into the inline-styled components (they read
@@ -516,6 +601,9 @@ a {
   .nm-grid-2,
   .nm-grid-3 {
     grid-template-columns: 1fr !important;
+  }
+  .nm-tokens {
+    grid-template-columns: 1fr 1fr !important;
   }
 
   /* About: role title + meta stack; metric row tightens (still wraps) */
