@@ -25,9 +25,9 @@ const CARDS = [
   },
   {
     slug: "how-i-build-with-ai",
-    company: "writeup · IOHK",
+    company: "writeup",
     badge: "AI",
-    tags: ["Claude Code", "MCP"],
+    tags: ["multi-agent", "MCP", "FinOps"],
   },
 ] as const;
 
