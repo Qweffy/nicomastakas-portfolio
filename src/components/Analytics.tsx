@@ -29,7 +29,17 @@ function externalReferrer(): string | undefined {
   }
 }
 
+/** Owner opt-out: set localStorage nm_no_track via ?nm-track=off so your own visits aren't counted. */
+function isExcluded(): boolean {
+  try {
+    return localStorage.getItem("nm_no_track") === "1";
+  } catch {
+    return false;
+  }
+}
+
 function send(body: Beacon): void {
+  if (isExcluded()) return;
   try {
     const json = JSON.stringify(body);
     if (typeof navigator.sendBeacon === "function") {
@@ -63,6 +73,17 @@ export function Analytics() {
     accumulated.current = 0;
     const path = currentPath.current;
     if (ms > 0 && path) send({ type: "engagement", path, engagementMs: Math.round(ms) });
+  }, []);
+
+  // Owner opt-out toggle: ?nm-track=off excludes this browser, ?nm-track=on re-enables.
+  useEffect(() => {
+    try {
+      const p = new URLSearchParams(window.location.search).get("nm-track");
+      if (p === "off") localStorage.setItem("nm_no_track", "1");
+      else if (p === "on") localStorage.removeItem("nm_no_track");
+    } catch {
+      // localStorage may be unavailable (private mode); ignore.
+    }
   }, []);
 
   // Pageview + engagement bookkeeping on every route change.
