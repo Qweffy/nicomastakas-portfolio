@@ -23,12 +23,23 @@ const SYSTEMS = [
 const PRODUCTS = [
   {
     key: "hiring-radar",
+    shot: "/images/hiring-radar/dashboard.png",
     live: "https://hiring-radar.nicomastakas.com",
     caseStudy: "/work/hiring-radar",
   },
-  { key: "rubric", live: "https://rubric.nicomastakas.com", caseStudy: "/work/rubric" },
-  { key: "settle", live: "https://settle.nicomastakas.com", caseStudy: "/work/settle" },
-  { key: "shoebox", live: null, caseStudy: "/work/shoebox" },
+  {
+    key: "rubric",
+    shot: "/images/rubric/suites-overview.png",
+    live: "https://rubric.nicomastakas.com",
+    caseStudy: "/work/rubric",
+  },
+  {
+    key: "settle",
+    shot: "/images/settle/cockpit.png",
+    live: "https://settle.nicomastakas.com",
+    caseStudy: "/work/settle",
+  },
+  { key: "shoebox", shot: "/images/shoebox/overview.png", live: null, caseStudy: "/work/shoebox" },
 ] as const;
 
 const wrap: CSSProperties = {
@@ -98,13 +109,13 @@ const grid2: CSSProperties = {
   gridTemplateColumns: "repeat(2, 1fr)",
   gap: "var(--space-6)",
 };
-const prodRow: CSSProperties = {
+const shotFoot: CSSProperties = {
   display: "flex",
   alignItems: "baseline",
   justifyContent: "space-between",
-  gap: "var(--space-6)",
-  padding: "var(--space-4) 0",
-  borderBottom: "var(--elevation-hairline)",
+  gap: "var(--space-4)",
+  flexWrap: "wrap",
+  marginTop: "var(--space-3)",
 };
 const prodName: CSSProperties = {
   fontSize: "var(--text-body)",
@@ -202,27 +213,30 @@ export default async function DesignPage({ params }: { params: Promise<{ locale:
           <p className="nm-full" style={note}>
             {t("shippedNote")}
           </p>
-          <div className="nm-morework">
+          <div className="nm-grid-2" style={grid2}>
             {PRODUCTS.map((p) => (
-              <div key={p.key} className="nm-morework__row" style={prodRow}>
-                <span style={prodName}>{t(`products.${p.key}`)}</span>
-                <span style={prodLinks}>
-                  {p.live ? (
-                    <a
-                      className="nm-footlink nm-focusable"
-                      href={p.live}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {t("live")}
-                    </a>
-                  ) : (
-                    <span style={{ color: "var(--text-muted)" }}>{t("noDemo")}</span>
-                  )}
-                  <Link className="nm-footlink nm-focusable" href={p.caseStudy}>
-                    {t("caseStudy")}
-                  </Link>
-                </span>
+              <div key={p.key}>
+                <Shot src={p.shot} alt={`${p.key} shipped to production`} id={`shipped-${p.key}`} />
+                <div style={shotFoot}>
+                  <span style={prodName}>{t(`products.${p.key}`)}</span>
+                  <span style={prodLinks}>
+                    {p.live ? (
+                      <a
+                        className="nm-footlink nm-focusable"
+                        href={p.live}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {t("live")}
+                      </a>
+                    ) : (
+                      <span style={{ color: "var(--text-muted)" }}>{t("noDemo")}</span>
+                    )}
+                    <Link className="nm-footlink nm-focusable" href={p.caseStudy}>
+                      {t("caseStudy")}
+                    </Link>
+                  </span>
+                </div>
               </div>
             ))}
           </div>
