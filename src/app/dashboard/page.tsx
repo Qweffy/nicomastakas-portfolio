@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { redirect } from "next/navigation";
+import { Funnel } from "@/components/dashboard/Funnel";
 import { KpiCard } from "@/components/dashboard/KpiCard";
 import { Panel } from "@/components/dashboard/Panel";
 import { RangeTabs } from "@/components/dashboard/RangeTabs";
@@ -12,12 +13,21 @@ import { getStats, normalizeRange, type Stats } from "@/lib/dashboard/queries";
 
 export const dynamic = "force-dynamic";
 
-const EVENT_LABELS: Record<string, string> = {
+const CLICK_LABELS: Record<string, string> = {
   cv_download: "CV downloads",
   outbound: "Outbound clicks",
   contact: "Contact clicks",
-  scroll: "Scroll depth",
+  project_card: "Project cards",
+  more_work: "More-work links",
+  repo: "Repo links",
+  demo: "Live demo",
+  case_study: "Case study",
+  design_card: "Design cards",
+  nav: "Nav links",
+  footer: "Footer links",
+  social: "Social links",
 };
+const LANG_LABELS: Record<string, string> = { en: "English", es: "Español" };
 
 const VITALS: Record<
   string,
@@ -63,11 +73,18 @@ const INFO = {
   traffic:
     "Evolución de pageviews (área) y visitantes únicos (línea punteada) en el tiempo. El punto marca el pico.",
   topPages: "Las páginas más vistas de tu sitio en el período.",
+  topProjects:
+    "Tus proyectos ordenados por interés: vistas de la página del proyecto + clics en su card, demo o repo.",
+  funnel:
+    "El embudo: de todas las visitas, cuántas vieron un proyecto, exploraron en profundidad (demo/repo/leer el case study) y terminaron en CV o contacto.",
+  avgTimePage: "Tiempo promedio (solo visible) que pasan en cada página.",
+  clicks:
+    "Todos los clics registrados, por tipo: cards de proyecto, nav, social, demo, CV, contacto, etc.",
+  reads: "De los que abrieron cada case study, qué % llegó hasta el final (scroll al 100%).",
   sources:
     "De dónde viene la gente (LinkedIn, Google, etc.). 'Direct' = entraron directo, sin un sitio de origen.",
   countries: "Países desde donde entran tus visitantes (por IP, sin guardarla).",
-  events:
-    "Acciones de alto valor: descargas del CV, clics salientes (GitHub/LinkedIn/demos) y clics de contacto.",
+  languages: "Visitantes por idioma del sitio (EN/ES).",
   devices: "Tipo de dispositivo: mobile, desktop o tablet.",
   browsers: "Navegador que usan tus visitantes (Chrome, Safari, Firefox...).",
   os: "Sistema operativo (macOS, Windows, iOS, Android, Linux...).",
@@ -97,11 +114,33 @@ const header: CSSProperties = {
   gap: "var(--space-6)",
   flexWrap: "wrap",
 };
+const titleGroup: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: "var(--space-4)",
+  flexWrap: "wrap",
+};
 const titleStyle: CSSProperties = {
   fontSize: "var(--text-section)",
   fontWeight: "var(--weight-semibold)",
   letterSpacing: "-0.015em",
   margin: 0,
+};
+const activeBadge: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "var(--space-2)",
+  fontFamily: "var(--font-mono)",
+  fontSize: "var(--text-caption)",
+  color: "var(--text-muted)",
+  whiteSpace: "nowrap",
+};
+const activeDot: CSSProperties = {
+  width: "8px",
+  height: "8px",
+  borderRadius: "9999px",
+  background: "var(--accent)",
+  display: "inline-block",
 };
 const controls: CSSProperties = {
   display: "flex",
@@ -136,6 +175,8 @@ const vitalsEmpty: CSSProperties = {
   color: "var(--text-muted)",
 };
 
+const percent = (n: number) => `${n}%`;
+
 export default async function DashboardPage({
   searchParams,
 }: {
@@ -158,7 +199,15 @@ export default async function DashboardPage({
     <div style={wrap}>
       <main style={container} className="nm-dash-main">
         <header style={header}>
-          <h1 style={titleStyle}>Analytics</h1>
+          <div style={titleGroup}>
+            <h1 style={titleStyle}>Analytics</h1>
+            {stats ? (
+              <span style={activeBadge}>
+                <span style={activeDot} aria-hidden="true" />
+                {stats.activeNow} active now
+              </span>
+            ) : null}
+          </div>
           <div style={controls}>
             <RangeTabs active={range} />
             <form method="post" action="/api/dashboard-logout">
@@ -190,9 +239,15 @@ export default async function DashboardPage({
 }
 
 function DashboardBody({ stats }: { stats: Stats }) {
-  const eventItems = stats.events.map((e) => ({
-    label: EVENT_LABELS[e.label] ?? e.label,
-    value: e.value,
+  const showDelta = stats.range !== "all";
+  const deltaSub = showDelta ? "vs prev" : "all time";
+  const clickItems = stats.clicks.map((c) => ({
+    label: CLICK_LABELS[c.label] ?? c.label,
+    value: c.value,
+  }));
+  const languageItems = stats.languages.map((l) => ({
+    label: LANG_LABELS[l.label] ?? l.label,
+    value: l.value,
   }));
   const vitalTiles = VITAL_ORDER.map((name) => {
     const v = stats.vitals.find((x) => x.name === name);
@@ -210,25 +265,25 @@ function DashboardBody({ stats }: { stats: Stats }) {
         <KpiCard
           label="Visitors"
           value={formatNumber(stats.kpis.visitors)}
-          now={stats.kpis.visitors}
-          prev={stats.kpis.visitorsPrev}
-          sub="vs prev"
+          now={showDelta ? stats.kpis.visitors : undefined}
+          prev={showDelta ? stats.kpis.visitorsPrev : undefined}
+          sub={deltaSub}
           info={INFO.visitors}
         />
         <KpiCard
           label="Pageviews"
           value={formatNumber(stats.kpis.pageviews)}
-          now={stats.kpis.pageviews}
-          prev={stats.kpis.pageviewsPrev}
-          sub="vs prev"
+          now={showDelta ? stats.kpis.pageviews : undefined}
+          prev={showDelta ? stats.kpis.pageviewsPrev : undefined}
+          sub={deltaSub}
           info={INFO.pageviews}
         />
         <KpiCard
           label="Avg. time"
           value={formatDuration(stats.kpis.avgEngagementMs)}
-          now={stats.kpis.avgEngagementMs}
-          prev={stats.kpis.avgEngagementPrevMs}
-          sub="vs prev"
+          now={showDelta ? stats.kpis.avgEngagementMs : undefined}
+          prev={showDelta ? stats.kpis.avgEngagementPrevMs : undefined}
+          sub={deltaSub}
           info={INFO.avgTime}
         />
         <KpiCard
@@ -244,20 +299,41 @@ function DashboardBody({ stats }: { stats: Stats }) {
       </Panel>
 
       <div style={grid} className="nm-dash-2">
-        <Panel title="Top pages" padded={false} info={INFO.topPages}>
-          <RankedBarList items={stats.topPages} />
+        <Panel title="Top projects" padded={false} info={INFO.topProjects}>
+          <RankedBarList items={stats.topProjects} />
         </Panel>
-        <Panel title="Sources" padded={false} info={INFO.sources}>
-          <RankedBarList items={stats.referrers} />
+        <Panel title="Funnel" info={INFO.funnel}>
+          <Funnel steps={stats.funnel} />
         </Panel>
       </div>
 
       <div style={grid} className="nm-dash-2">
+        <Panel title="Top pages" padded={false} info={INFO.topPages}>
+          <RankedBarList items={stats.topPages} />
+        </Panel>
+        <Panel title="Avg time per page" padded={false} info={INFO.avgTimePage}>
+          <RankedBarList items={stats.avgTimePerPage} formatValue={formatDuration} />
+        </Panel>
+      </div>
+
+      <div style={grid} className="nm-dash-2">
+        <Panel title="Clicks" padded={false} info={INFO.clicks}>
+          <RankedBarList items={clickItems} />
+        </Panel>
+        <Panel title="Case-study reads" padded={false} info={INFO.reads}>
+          <RankedBarList items={stats.reads} formatValue={percent} />
+        </Panel>
+      </div>
+
+      <div style={grid} className="nm-dash-3">
+        <Panel title="Sources" padded={false} info={INFO.sources}>
+          <RankedBarList items={stats.referrers} />
+        </Panel>
         <Panel title="Countries" padded={false} info={INFO.countries}>
           <RankedBarList items={stats.countries} />
         </Panel>
-        <Panel title="Events" padded={false} info={INFO.events}>
-          <RankedBarList items={eventItems} />
+        <Panel title="Language" padded={false} info={INFO.languages}>
+          <RankedBarList items={languageItems} />
         </Panel>
       </div>
 

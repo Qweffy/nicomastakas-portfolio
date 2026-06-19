@@ -134,7 +134,10 @@ export function Analytics() {
 
       const explicit = anchor.getAttribute("data-analytics");
       if (explicit) {
-        send({ type: "event", event: explicit, path: here, props: { href } });
+        const sep = explicit.indexOf(":");
+        const category = sep === -1 ? explicit : explicit.slice(0, sep);
+        const label = sep === -1 ? undefined : explicit.slice(sep + 1);
+        send({ type: "event", event: category, path: here, props: { label, href } });
         return;
       }
       if (href.startsWith("mailto:")) {

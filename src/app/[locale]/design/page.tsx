@@ -111,7 +111,12 @@ export default async function DesignPage({ params }: { params: Promise<{ locale:
           </p>
           <div className="nm-grid-2" style={grid}>
             {DESIGN_SYSTEMS.map((s) => (
-              <Link key={s.slug} href={`/design/${s.slug}`} className="nm-syscard nm-focusable">
+              <Link
+                key={s.slug}
+                href={`/design/${s.slug}`}
+                className="nm-syscard nm-focusable"
+                data-analytics={`design_card:${s.slug}`}
+              >
                 <div className="nm-syscard__preview">
                   <img
                     src={`/images/design/${s.slug}/overview.webp`}

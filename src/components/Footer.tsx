@@ -3,6 +3,8 @@ import type { CSSProperties } from "react";
 export interface FooterLink {
   label: string;
   href: string;
+  /** Analytics tag, e.g. "footer:github". Captured on click by the collector. */
+  analytics?: string;
 }
 
 const foot: CSSProperties = {
@@ -63,7 +65,12 @@ export function Footer({
       <div style={right}>
         <div style={linkRow}>
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="nm-footlink nm-focusable">
+            <a
+              key={l.href}
+              href={l.href}
+              className="nm-footlink nm-focusable"
+              data-analytics={l.analytics}
+            >
               {l.label}
             </a>
           ))}

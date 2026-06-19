@@ -172,10 +172,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const nav = await getTranslations("nav");
 
   const navLinks = [
-    { label: nav("work"), href: "/#work" },
-    { label: nav("how"), href: "/work/how-i-build-with-ai" },
-    { label: nav("design"), href: "/design" },
-    { label: nav("about"), href: "/about" },
+    { label: nav("work"), href: "/#work", analytics: "nav:work" },
+    { label: nav("how"), href: "/work/how-i-build-with-ai", analytics: "nav:how" },
+    { label: nav("design"), href: "/design", analytics: "nav:design" },
+    { label: nav("about"), href: "/about", analytics: "nav:about" },
     { label: nav("contact"), href: `mailto:${siteConfig.email}`, external: true },
   ];
 
@@ -202,10 +202,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <Button variant="primary" href={`mailto:${siteConfig.email}`}>
               {nav("contact")}
             </Button>
-            <Button variant="ghost" href={siteConfig.links.github}>
+            <Button variant="ghost" href={siteConfig.links.github} dataAnalytics="social:github">
               GitHub
             </Button>
-            <Button variant="ghost" href={siteConfig.links.linkedin}>
+            <Button variant="ghost" href={siteConfig.links.linkedin} dataAnalytics="social:linkedin">
               LinkedIn
             </Button>
             <Button variant="ghost" href={siteConfig.resume}>
@@ -234,6 +234,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <CaseStudyCard
                 key={card.slug}
                 href={`/work/${card.slug}`}
+                dataAnalytics={`project_card:${card.slug}`}
                 company={card.company}
                 badge={card.badge}
                 title={t(`cards.${card.slug}.title`)}
@@ -260,6 +261,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                     className="nm-morework__row"
                     target="_blank"
                     rel="noreferrer"
+                    data-analytics={`repo:${m.key}`}
                   >
                     <div className="nm-morework__main">
                       <div className="nm-morework__title">{t(`more.${m.key}.title`)}</div>
@@ -268,7 +270,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                     <span className="nm-morework__meta">{t(`more.${m.key}.meta`)}</span>
                   </a>
                 ) : (
-                  <Link key={m.key} href={m.href} className="nm-morework__row">
+                  <Link
+                    key={m.key}
+                    href={m.href}
+                    className="nm-morework__row"
+                    data-analytics={`more_work:${m.key}`}
+                  >
                     <div className="nm-morework__main">
                       <div className="nm-morework__title">{t(`more.${m.key}.title`)}</div>
                       <div className="nm-morework__sub">{t(`more.${m.key}.sub`)}</div>
@@ -281,7 +288,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
 
           <div style={{ marginTop: "var(--space-8)" }}>
-            <Button variant="link" href={siteConfig.links.github}>
+            <Button variant="link" href={siteConfig.links.github} dataAnalytics="social:github">
               {t("moreGitHub")}
             </Button>
           </div>
@@ -296,8 +303,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 function footerLinks() {
   return [
     { label: "Email", href: `mailto:${siteConfig.email}` },
-    { label: "GitHub", href: siteConfig.links.github },
-    { label: "LinkedIn", href: siteConfig.links.linkedin },
+    { label: "GitHub", href: siteConfig.links.github, analytics: "social:github" },
+    { label: "LinkedIn", href: siteConfig.links.linkedin, analytics: "social:linkedin" },
     { label: "Resume", href: siteConfig.resume },
   ];
 }

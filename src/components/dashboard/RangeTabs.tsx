@@ -21,7 +21,7 @@ export function RangeTabs({ active }: { active: Range }) {
             href={`/dashboard?range=${o.key}`}
             role="tab"
             aria-selected={isActive}
-            className={`nm-seg__tab nm-focusable${isActive ? "is-active" : ""}`}
+            className={`nm-seg__tab nm-focusable${isActive ? " is-active" : ""}`}
           >
             {o.label}
           </Link>

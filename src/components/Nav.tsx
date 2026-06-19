@@ -9,6 +9,8 @@ export interface NavLink {
   href: string;
   /** External links (mailto:, https:, files) render as a plain anchor. */
   external?: boolean;
+  /** Analytics tag, e.g. "nav:work". Captured on click by the collector. */
+  analytics?: string;
 }
 
 const bar: CSSProperties = {
@@ -58,11 +60,16 @@ export function Nav({ name = "Nico Mastakas", links }: { name?: string; links: N
           return (
             <li key={l.href}>
               {l.external ? (
-                <a href={l.href} className="nm-navlink nm-focusable">
+                <a href={l.href} className="nm-navlink nm-focusable" data-analytics={l.analytics}>
                   {l.label}
                 </a>
               ) : (
-                <Link href={l.href} className="nm-navlink nm-focusable" aria-current={current}>
+                <Link
+                  href={l.href}
+                  className="nm-navlink nm-focusable"
+                  aria-current={current}
+                  data-analytics={l.analytics}
+                >
                   {l.label}
                 </Link>
               )}

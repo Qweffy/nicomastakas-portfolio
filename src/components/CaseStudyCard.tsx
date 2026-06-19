@@ -17,6 +17,8 @@ export interface CaseStudyCardProps {
   tags?: string[];
   /** Internal route (e.g. `/work/settle`). Makes the whole card a locale-aware link. */
   href?: string;
+  /** Analytics tag, e.g. "project_card:settle". Captured on click by the collector. */
+  dataAnalytics?: string;
 }
 
 /* Layout only — the skin (background, border, radius, hover) lives in `.nm-case`. */
@@ -87,6 +89,7 @@ export function CaseStudyCard({
   metrics = [],
   tags = [],
   href,
+  dataAnalytics,
 }: CaseStudyCardProps) {
   const body = (
     <>
@@ -128,7 +131,7 @@ export function CaseStudyCard({
 
   if (href) {
     return (
-      <Link href={href} className="nm-case nm-focusable" style={card}>
+      <Link href={href} className="nm-case nm-focusable" style={card} data-analytics={dataAnalytics}>
         {body}
       </Link>
     );

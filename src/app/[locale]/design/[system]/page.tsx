@@ -140,15 +140,24 @@ export default async function DesignSystemPage({
                 href={sys.live}
                 target="_blank"
                 rel="noreferrer"
+                data-analytics={`demo:${system}`}
               >
                 {liveLabel}
               </a>
             ) : (
-              <Link className="nm-btn nm-btn--primary nm-btn--lg nm-focusable" href={sys.live}>
+              <Link
+                className="nm-btn nm-btn--primary nm-btn--lg nm-focusable"
+                href={sys.live}
+                data-analytics={`demo:${system}`}
+              >
                 {liveLabel}
               </Link>
             )}
-            <Link className="nm-btn nm-btn--ghost nm-btn--lg nm-focusable" href={sys.caseStudy}>
+            <Link
+              className="nm-btn nm-btn--ghost nm-btn--lg nm-focusable"
+              href={sys.caseStudy}
+              data-analytics={`case_study:${system}`}
+            >
               {caseLabel}
             </Link>
           </div>

@@ -938,8 +938,9 @@ body::after {
   color: var(--text);
 }
 .nm-seg__tab.is-active {
-  color: var(--text);
+  color: var(--accent);
   background: var(--surface-2);
+  font-weight: var(--weight-semibold);
 }
 
 /* Ranked-list row hover */
