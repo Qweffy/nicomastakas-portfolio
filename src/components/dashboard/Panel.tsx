@@ -5,7 +5,6 @@ const panel: CSSProperties = {
   background: "var(--surface)",
   border: "var(--elevation-hairline)",
   borderRadius: "var(--radius-md)",
-  overflow: "hidden",
   boxSizing: "border-box",
   minWidth: 0,
 };
@@ -39,9 +38,10 @@ export function Panel({
   padded?: boolean;
   children: ReactNode;
 }) {
+  const hasHeader = Boolean(title || action || info);
   return (
     <section style={panel}>
-      {title || action || info ? (
+      {hasHeader ? (
         <header style={header}>
           <h3 style={titleStyle}>{title}</h3>
           <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
@@ -50,7 +50,17 @@ export function Panel({
           </div>
         </header>
       ) : null}
-      <div style={{ padding: padded ? "var(--space-6)" : 0 }}>{children}</div>
+      <div
+        style={{
+          padding: padded ? "var(--space-6)" : 0,
+          // Clip body content (e.g. bar rows) to the panel's rounded corners without
+          // clipping the header's tooltip, which now escapes the panel freely.
+          overflow: "hidden",
+          borderRadius: hasHeader ? "0 0 var(--radius-md) var(--radius-md)" : "var(--radius-md)",
+        }}
+      >
+        {children}
+      </div>
     </section>
   );
 }

@@ -117,6 +117,30 @@ a {
   outline-offset: 2px;
 }
 
+/* Accent (blue) cursor, mouse pointers only. Safari ignores SVG cursors and
+   falls back to the native cursor gracefully. */
+@media (pointer: fine) {
+  html,
+  body {
+    cursor: url("/cursor-default.svg") 3 2, auto;
+  }
+  a,
+  button,
+  summary,
+  select,
+  label[for],
+  [role="button"],
+  .nm-btn,
+  .nm-navlink,
+  .nm-footlink,
+  .nm-seg__tab,
+  .nm-info__btn,
+  input[type="submit"],
+  input[type="button"] {
+    cursor: url("/cursor-pointer.svg") 9 2, pointer;
+  }
+}
+
 /* ── Rendered MDX case-study content. Styled to the design tokens. ── */
 .mdx {
   font-size: var(--text-body);
