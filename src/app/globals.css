@@ -147,7 +147,7 @@ a {
   color: var(--text);
   font-weight: var(--weight-semibold);
 }
-.mdx a {
+.mdx a:not(.nm-btn) {
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -157,7 +157,7 @@ a {
     text-decoration-thickness var(--motion-fast) var(--ease-out),
     text-underline-offset var(--motion-fast) var(--ease-out);
 }
-.mdx a:hover {
+.mdx a:not(.nm-btn):hover {
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
 }
