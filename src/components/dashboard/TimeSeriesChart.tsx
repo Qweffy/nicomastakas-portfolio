@@ -48,6 +48,31 @@ const tooltipStyle: CSSProperties = {
   fontSize: 12,
 };
 
+// Edge-aware x-axis tick: anchor the first label to the start and the last to the
+// end so the outermost labels never clip against the chart edges, whatever their width.
+type AxisTickProps = {
+  x?: number;
+  y?: number;
+  index?: number;
+  visibleTicksCount?: number;
+  payload?: { value?: string | number };
+};
+function AxisTick({ x = 0, y = 0, index = 0, visibleTicksCount = 0, payload }: AxisTickProps) {
+  const anchor = index === 0 ? "start" : index >= visibleTicksCount - 1 ? "end" : "middle";
+  return (
+    <text
+      x={x}
+      y={y + 14}
+      textAnchor={anchor}
+      fill="var(--text-muted)"
+      fontFamily="var(--font-mono)"
+      fontSize={12}
+    >
+      {payload?.value ?? ""}
+    </text>
+  );
+}
+
 function formatBucket(value: string, bucket: "hour" | "day"): string {
   // Buckets come back as Buenos Aires wall-time text with no offset
   // (date_trunc(..., ts AT TIME ZONE tz)::text); read them as UTC so the rendered
@@ -115,13 +140,12 @@ export function TimeSeriesChart({
           <CartesianGrid vertical={false} stroke="var(--chart-grid)" strokeWidth={1} />
           <XAxis
             dataKey="label"
-            tick={tick}
+            tick={<AxisTick />}
             tickLine={false}
             axisLine={{ stroke: "var(--chart-grid)" }}
-            tickMargin={8}
             minTickGap={48}
             interval="preserveStartEnd"
-            padding={{ left: 28, right: 28 }}
+            padding={{ left: 8, right: 8 }}
           />
           <YAxis
             tick={tick}
