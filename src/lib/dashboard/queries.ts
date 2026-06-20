@@ -91,11 +91,21 @@ export async function getStats(
   const now = Date.now();
   const sinceMs = range === "all" ? 0 : now - DAYS[range] * 86_400_000;
   const prevMs = range === "all" ? 0 : sinceMs - (now - sinceMs);
-  const bucket: "hour" | "day" = range === "24h" ? "hour" : "day";
+  let bucket: "hour" | "day" = range === "24h" ? "hour" : "day";
   const since = new Date(sinceMs).toISOString();
   const prev = new Date(prevMs).toISOString();
 
   const sql = sqlClient();
+
+  // Series granularity: hourly for a 24h window, and for the "all" view while the
+  // data still spans <= 2 days (otherwise the chart collapses to a flat 1-2 point
+  // block); daily for any wider span so the axis stays readable.
+  if (range === "all") {
+    const span = (await sql`
+      SELECT extract(epoch from (max(ts) - min(ts)))::float8 AS s FROM events
+    `) as unknown as Array<{ s: number | null }>;
+    bucket = Number(span[0]?.s ?? 0) <= 2 * 86_400 ? "hour" : "day";
+  }
 
   const kpiP = sql`
     SELECT
@@ -147,7 +157,7 @@ export async function getStats(
   ` as unknown as Promise<FeedItem[]>;
 
   const seriesP = sql`
-    SELECT (date_trunc(${bucket}, ts))::text AS bucket,
+    SELECT (date_trunc(${bucket}, ts AT TIME ZONE ${TZ}))::text AS bucket,
       count(*) FILTER (WHERE type = 'pageview')::int AS pageviews,
       count(DISTINCT visitor)::int AS visitors
     FROM events WHERE ts >= ${since}

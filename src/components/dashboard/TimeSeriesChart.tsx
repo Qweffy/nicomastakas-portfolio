@@ -42,11 +42,14 @@ const axisRow: CSSProperties = {
 };
 
 function formatBucket(value: string, bucket: "hour" | "day"): string {
-  const d = new Date(value.replace(" ", "T"));
+  // Buckets come back as Buenos Aires wall-time text with no offset
+  // (date_trunc(..., ts AT TIME ZONE tz)::text); read them as UTC so the rendered
+  // numbers match that wall time regardless of the server's own timezone.
+  const d = new Date(`${value.replace(" ", "T")}Z`);
   if (Number.isNaN(d.getTime())) return value;
   return bucket === "hour"
-    ? d.toLocaleTimeString("en-US", { hour: "numeric" })
-    : d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    ? d.toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", timeZone: "UTC" })
+    : d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
 }
 
 export function TimeSeriesChart({
@@ -74,6 +77,10 @@ export function TimeSeriesChart({
   );
   const peak = series[peakIdx];
   const peakX = x(peakIdx);
+  const peakY = peak ? y(peak.pageviews) : 0;
+  // Keep the "peak N" label inside the chart: drop it below the point when the peak
+  // sits near the top edge (the common case when traffic is flat at the max).
+  const peakLabelY = peakY - 10 < PAD_T + 14 ? peakY + 20 : peakY - 10;
   const peakAnchor = peakIdx > n * 0.7 ? "end" : peakIdx < n * 0.3 ? "start" : "middle";
   const grids = [0, 0.5, 1].map((g) => PAD_T + INNER_H - g * INNER_H);
 
@@ -156,7 +163,7 @@ export function TimeSeriesChart({
             />
             <text
               x={peakX}
-              y={y(peak.pageviews) - 10}
+              y={peakLabelY}
               textAnchor={peakAnchor}
               fill="var(--text)"
               fontFamily="var(--font-mono)"
@@ -170,6 +177,9 @@ export function TimeSeriesChart({
 
       <div style={axisRow}>
         <span>{formatBucket(series[0]?.bucket ?? "", bucket)}</span>
+        {n >= 3 ? (
+          <span>{formatBucket(series[Math.floor((n - 1) / 2)]?.bucket ?? "", bucket)}</span>
+        ) : null}
         <span>{formatBucket(series[n - 1]?.bucket ?? "", bucket)}</span>
       </div>
     </div>

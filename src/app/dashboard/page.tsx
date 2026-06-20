@@ -32,7 +32,21 @@ const CLICK_LABELS: Record<string, string> = {
   footer: "Footer links",
   social: "Social links",
 };
-const LANG_LABELS: Record<string, string> = { en: "English", es: "Español" };
+const LANG_LABELS: Record<string, string> = { en: "Inglés", es: "Español" };
+
+const PAGE_NAMES: Record<string, string> = { "/": "Home", "/work": "Work", "/design": "Design" };
+function titleizeSlug(slug: string): string {
+  return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+// Turn a stored path into a readable "Page · Lang" label. The site uses as-needed
+// locale prefixes, so "/" is the English home and "/es" the Spanish one, etc.
+function prettyPath(path: string): string {
+  const isEs = path === "/es" || path.startsWith("/es/");
+  const logical = isEs ? path.replace(/^\/es/, "") || "/" : path;
+  const seg = logical.match(/^\/(?:work|design)\/([^/?#]+)/);
+  const name = seg?.[1] ? titleizeSlug(seg[1]) : (PAGE_NAMES[logical] ?? logical);
+  return `${name} · ${isEs ? "Español" : "Inglés"}`;
+}
 
 const VITALS: Record<
   string,
@@ -162,6 +176,9 @@ function DashboardBody({ stats }: { stats: Stats }) {
   const deltaSub = showDelta ? "vs prev" : "all time";
   const clickItems = stats.clicks.map((c) => ({ label: CLICK_LABELS[c.label] ?? c.label, value: c.value }));
   const languageItems = stats.languages.map((l) => ({ label: LANG_LABELS[l.label] ?? l.label, value: l.value }));
+  const pageItems = stats.topPages.map((p) => ({ label: prettyPath(p.label), value: p.value }));
+  const landingItems = stats.landing.map((p) => ({ label: prettyPath(p.label), value: p.value }));
+  const avgTimeItems = stats.avgTimePerPage.map((p) => ({ label: prettyPath(p.label), value: p.value }));
   const vitalTiles = VITAL_ORDER.map((name) => {
     const v = stats.vitals.find((x) => x.name === name);
     const cfg = VITALS[name];
@@ -200,7 +217,7 @@ function DashboardBody({ stats }: { stats: Stats }) {
 
       <div style={grid} className="nm-dash-2">
         <Panel title="Top pages" padded={false} info={INFO.topPages}>
-          <RankedBarList items={stats.topPages} />
+          <RankedBarList items={pageItems} />
         </Panel>
         <Panel
           title="Landing pages"
@@ -208,13 +225,13 @@ function DashboardBody({ stats }: { stats: Stats }) {
           info={INFO.landing}
           action={<span style={smallStat}>{stats.pagesPerVisit.toFixed(1)} pages/visit</span>}
         >
-          <RankedBarList items={stats.landing} />
+          <RankedBarList items={landingItems} />
         </Panel>
       </div>
 
       <div style={grid} className="nm-dash-2">
         <Panel title="Avg time per page" padded={false} info={INFO.avgTimePage}>
-          <RankedBarList items={stats.avgTimePerPage} formatValue={formatDuration} />
+          <RankedBarList items={avgTimeItems} formatValue={formatDuration} />
         </Panel>
         <Panel title="Reading depth" info={INFO.readingDepth}>
           <ReadingDepth rows={stats.readingDepth} />
