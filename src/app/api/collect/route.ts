@@ -1,5 +1,6 @@
 import { isbot } from "isbot";
 import { z } from "zod";
+import { OWNER_COOKIE, isValidOwnerToken, readCookieValue } from "@/lib/analytics/owner";
 import { getDb } from "@/lib/db";
 import { events } from "@/lib/db/schema";
 
@@ -20,11 +21,11 @@ export async function POST(request: Request) {
   // Analytics is a no-op until the database is configured (avoids log spam pre-Neon).
   if (!process.env.DATABASE_URL) return new Response(null, { status: 204 });
 
-  // Owner opt-out: the nm_owner cookie (set on dashboard login or ?nm-track=off)
-  // excludes Nico's own visits server-side, robustly, even if localStorage is cleared.
-  if ((request.headers.get("cookie") ?? "").includes("nm_owner=1")) {
-    return new Response(null, { status: 204 });
-  }
+  // Owner opt-out: a signed, httpOnly nm_owner cookie (set on dashboard login or via
+  // ?nm-track=off) excludes Nico's own visits server-side, robustly, even if localStorage
+  // is cleared. The HMAC makes it unforgeable, so no visitor can poison their own count.
+  const ownerToken = readCookieValue(request.headers.get("cookie"), OWNER_COOKIE);
+  if (await isValidOwnerToken(ownerToken)) return new Response(null, { status: 204 });
 
   const ua = request.headers.get("user-agent") ?? "";
   if (isbot(ua)) return new Response(null, { status: 204 });
