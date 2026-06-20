@@ -75,12 +75,18 @@ export function Analytics() {
     if (ms > 0 && path) send({ type: "engagement", path, engagementMs: Math.round(ms) });
   }, []);
 
-  // Owner opt-out toggle: ?nm-track=off excludes this browser, ?nm-track=on re-enables.
+  // Owner opt-out toggle: ?nm-track=off excludes this browser (localStorage + a
+  // year-long nm_owner cookie the server also honors); ?nm-track=on re-enables.
   useEffect(() => {
     try {
       const p = new URLSearchParams(window.location.search).get("nm-track");
-      if (p === "off") localStorage.setItem("nm_no_track", "1");
-      else if (p === "on") localStorage.removeItem("nm_no_track");
+      if (p === "off") {
+        localStorage.setItem("nm_no_track", "1");
+        document.cookie = "nm_owner=1; path=/; max-age=31536000; samesite=lax";
+      } else if (p === "on") {
+        localStorage.removeItem("nm_no_track");
+        document.cookie = "nm_owner=; path=/; max-age=0";
+      }
     } catch {
       // localStorage may be unavailable (private mode); ignore.
     }

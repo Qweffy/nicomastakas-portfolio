@@ -10,7 +10,7 @@ const empty: CSSProperties = {
 const list: CSSProperties = {
   display: "flex",
   flexDirection: "column",
-  maxHeight: "360px",
+  maxHeight: "300px",
   overflowY: "auto",
 };
 const rowStyle: CSSProperties = {

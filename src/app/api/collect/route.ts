@@ -20,6 +20,12 @@ export async function POST(request: Request) {
   // Analytics is a no-op until the database is configured (avoids log spam pre-Neon).
   if (!process.env.DATABASE_URL) return new Response(null, { status: 204 });
 
+  // Owner opt-out: the nm_owner cookie (set on dashboard login or ?nm-track=off)
+  // excludes Nico's own visits server-side, robustly, even if localStorage is cleared.
+  if ((request.headers.get("cookie") ?? "").includes("nm_owner=1")) {
+    return new Response(null, { status: 204 });
+  }
+
   const ua = request.headers.get("user-agent") ?? "";
   if (isbot(ua)) return new Response(null, { status: 204 });
 
