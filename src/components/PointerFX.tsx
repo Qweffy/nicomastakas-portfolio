@@ -29,7 +29,7 @@ export function PointerFX() {
         const radius = r.width + 60;
         const dist = Math.hypot(dx, dy);
         if (dist < radius) {
-          const k = 0.196 * (1 - dist / radius);
+          const k = 0.14 * (1 - dist / radius);
           btn.style.transform = `translate(${(dx * k).toFixed(1)}px, ${(dy * k).toFixed(1)}px)`;
         } else if (btn.style.transform) {
           btn.style.transform = "";
