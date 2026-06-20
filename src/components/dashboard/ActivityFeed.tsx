@@ -10,7 +10,7 @@ const empty: CSSProperties = {
 const list: CSSProperties = {
   display: "flex",
   flexDirection: "column",
-  maxHeight: "300px",
+  maxHeight: "360px",
   overflowY: "auto",
 };
 const rowStyle: CSSProperties = {
@@ -18,11 +18,11 @@ const rowStyle: CSSProperties = {
   alignItems: "baseline",
   justifyContent: "space-between",
   gap: "var(--space-4)",
-  padding: "var(--space-3) 0",
+  padding: "var(--space-2) 0",
   borderBottom: "var(--elevation-hairline)",
 };
 const text: CSSProperties = {
-  fontSize: "var(--text-body)",
+  fontSize: "var(--text-caption)",
   color: "var(--text)",
   minWidth: 0,
 };
