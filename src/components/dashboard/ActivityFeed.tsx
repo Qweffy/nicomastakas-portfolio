@@ -36,6 +36,7 @@ const dot: CSSProperties = {
   flexShrink: 0,
 };
 const place: CSSProperties = { color: "var(--text-muted)" };
+const placeAccent: CSSProperties = { color: "var(--accent)", fontWeight: "var(--weight-medium)" };
 const time: CSSProperties = {
   fontFamily: "var(--font-mono)",
   fontSize: "var(--text-caption)",
@@ -92,8 +93,16 @@ export function ActivityFeed({ items }: { items: FeedItem[] }) {
           <div key={`${item.epoch}-${i}`} style={rowStyle}>
             <span style={text}>
               {a.highValue ? <span style={dot} aria-hidden="true" /> : null}
-              <span style={place}>{who ? `Alguien de ${who}` : "Alguien"}</span>{" "}
-              <span style={{ color: a.highValue ? "var(--success)" : "var(--text)" }}>{a.text}</span>
+              {who ? (
+                <span style={place}>
+                  Alguien de <span style={placeAccent}>{who}</span>
+                </span>
+              ) : (
+                <span style={place}>Alguien</span>
+              )}{" "}
+              <span style={{ color: a.highValue ? "var(--success)" : "var(--text)" }}>
+                {a.text}
+              </span>
             </span>
             <span style={time}>{formatRelativeTime(item.epoch)}</span>
           </div>
