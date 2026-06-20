@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
+import { AutoRefresh } from "@/components/dashboard/AutoRefresh";
 import { Funnel } from "@/components/dashboard/Funnel";
 import { Heatmap } from "@/components/dashboard/Heatmap";
 import { KpiCard } from "@/components/dashboard/KpiCard";
@@ -152,6 +153,8 @@ export default async function DashboardPage({
             </form>
           </div>
         </header>
+
+        <AutoRefresh intervalMs={60_000} />
 
         {errorMsg || !stats ? (
           <div style={errorCard}>
