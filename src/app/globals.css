@@ -124,13 +124,9 @@ a {
   line-height: var(--leading-body);
   color: var(--text);
 }
-/* Case-study images break out wider than the text column for bigger visuals,
-   centered on the page (capped at the viewport so they never cause scroll). */
+/* Bigger vertical breathing room around case-study images. */
 .mdx p:has(img) {
-  width: min(1120px, 92vw);
-  max-width: none;
-  margin: var(--space-8) 0 var(--space-8) 50%;
-  transform: translateX(-50%);
+  margin-block: var(--space-8);
 }
 .mdx h2 {
   font-size: var(--text-section);
