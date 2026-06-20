@@ -121,6 +121,7 @@ export function TimeSeriesChart({
             tickMargin={8}
             minTickGap={48}
             interval="preserveStartEnd"
+            padding={{ left: 28, right: 28 }}
           />
           <YAxis
             tick={tick}
