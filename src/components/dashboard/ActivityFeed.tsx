@@ -45,6 +45,16 @@ const time: CSSProperties = {
   flexShrink: 0,
 };
 
+// ISO country code (from Vercel geo headers) to a full Spanish name, e.g. NL -> Países Bajos.
+const regionNames = new Intl.DisplayNames(["es"], { type: "region" });
+function countryName(code: string): string {
+  try {
+    return regionNames.of(code.toUpperCase()) ?? code;
+  } catch {
+    return code;
+  }
+}
+
 function cleanPath(path: string | null): string {
   if (!path) return "una página";
   const p = path.replace(/^\/es(?=\/|$)/, "") || "/";
@@ -87,7 +97,11 @@ export function ActivityFeed({ items }: { items: FeedItem[] }) {
   return (
     <div style={list}>
       {items.map((item, i) => {
-        const who = item.city && item.country ? `${item.city}, ${item.country}` : item.country;
+        const who = item.country
+          ? item.city
+            ? `${item.city}, ${countryName(item.country)}`
+            : countryName(item.country)
+          : null;
         const a = action(item);
         return (
           <div key={`${item.epoch}-${i}`} style={rowStyle}>
