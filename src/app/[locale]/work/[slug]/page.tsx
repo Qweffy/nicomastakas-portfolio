@@ -33,7 +33,7 @@ const wrap: CSSProperties = {
   fontFamily: "var(--font-sans)",
 };
 const article: CSSProperties = {
-  maxWidth: "760px",
+  maxWidth: "840px",
   margin: "0 auto",
   padding: "var(--space-16) var(--space-8) var(--space-12)",
   boxSizing: "border-box",
