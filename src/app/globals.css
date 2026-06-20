@@ -308,6 +308,15 @@ a {
   text-underline-offset: 5px;
 }
 
+/* Link-only MDX paragraphs (case-study "Live + source") render as a button row. */
+.nm-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-6) 0;
+}
+
 /* ── Case-study card ── */
 .nm-case {
   background: var(--surface);
