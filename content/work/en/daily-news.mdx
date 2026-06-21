@@ -40,7 +40,7 @@ Chose MiniLM on-device plus a plain cosine scan in Firestore over standing up a 
 
 ### Grounding + refusal over free generation
 
-Chose to force every answer to cite retrieved sources and refuse when nothing matches. Trade-off: more "I don't have that" replies, but zero confident hallucinations, the right call for news.
+Chose to force every answer to cite retrieved sources and refuse when nothing matches. Trade-off: more "I don't have that" replies, but every claim has to trace back to a cited article instead of the model's memory, the right call for news.
 
 ### Clean Architecture + BLoC over quick widgets
 

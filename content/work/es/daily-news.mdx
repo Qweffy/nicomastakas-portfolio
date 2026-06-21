@@ -40,7 +40,7 @@ Elegí MiniLM en el dispositivo más un barrido cosine simple en Firestore en lu
 
 ### Fundamento + rechazo en vez de generación libre
 
-Elegí forzar que cada respuesta cite las fuentes recuperadas y rechazar cuando nada coincide. Compensación: más respuestas del tipo "no tengo eso", pero cero alucinaciones seguras, la decisión correcta para noticias.
+Elegí forzar que cada respuesta cite las fuentes recuperadas y rechazar cuando nada coincide. Compensación: más respuestas del tipo "no tengo eso", pero cada afirmación tiene que remontarse a un artículo citado en vez de a la memoria del modelo, la decisión correcta para noticias.
 
 ### Clean Architecture + BLoC en vez de widgets rápidos
 
