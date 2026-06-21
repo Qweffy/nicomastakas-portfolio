@@ -41,6 +41,7 @@
   --weight-semibold: 600;
   --weight-bold: 700;
   --measure: 65ch;
+  --container: 1120px;
 
   /* Spacing — 4px base, these 8 steps only */
   --space-1: 4px;
@@ -106,6 +107,18 @@ body {
   line-height: var(--leading-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* Single layout container — the source of truth for page width + horizontal
+   gutters. Used by every page main/article and by the Nav/Footer inner row so
+   everything lines up on the same column. The mobile media query below relaxes
+   the max-width and tightens the gutter. */
+.nm-container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--space-8);
+  box-sizing: border-box;
 }
 
 a {
@@ -829,12 +842,11 @@ body::after {
   }
 
   /* Nav (no hamburger): logotype + links wrap, ≥44px targets, no overflow */
-  .nm-nav {
+  .nm-nav__row {
     flex-wrap: wrap !important;
     gap: var(--space-3) !important;
-    padding: var(--space-4) !important;
   }
-  .nm-nav > ul {
+  .nm-nav__row > ul {
     flex-wrap: wrap !important;
     gap: var(--space-2) var(--space-4) !important;
     min-width: 0;
@@ -846,16 +858,15 @@ body::after {
   }
 
   /* Footer: blocks stack, left-aligned */
-  .nm-footer {
+  .nm-footer__row {
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: var(--space-8) !important;
-    padding: var(--space-12) var(--space-4) !important;
   }
-  .nm-footer > div {
+  .nm-footer__row > div {
     min-width: 0;
   }
-  .nm-footer > div:last-child {
+  .nm-footer__row > div:last-child {
     align-items: flex-start !important;
   }
   .nm-footer a {

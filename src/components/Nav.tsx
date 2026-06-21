@@ -15,13 +15,14 @@ export interface NavLink {
 
 const bar: CSSProperties = {
   fontFamily: "var(--font-sans)",
+  paddingBlock: "var(--space-4)",
+  background: "var(--bg)",
+  borderBottom: "var(--elevation-hairline)",
+};
+const row: CSSProperties = {
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: "var(--space-4) var(--space-8)",
-  background: "var(--bg)",
-  borderBottom: "var(--elevation-hairline)",
-  boxSizing: "border-box",
 };
 const logo: CSSProperties = {
   fontSize: "var(--text-card-title)",
@@ -50,36 +51,38 @@ export function Nav({ name = "Nico Mastakas", links }: { name?: string; links: N
 
   return (
     <nav className="nm-nav" style={bar}>
-      <Link href="/" className="nm-focusable" style={logo}>
-        {name}
-      </Link>
-      <ul style={list}>
-        {links.map((l) => {
-          const active = !l.external && pathOf(l.href) === pathname;
-          const current = active ? "page" : undefined;
-          return (
-            <li key={l.href}>
-              {l.external ? (
-                <a href={l.href} className="nm-navlink nm-focusable" data-analytics={l.analytics}>
-                  {l.label}
-                </a>
-              ) : (
-                <Link
-                  href={l.href}
-                  className="nm-navlink nm-focusable"
-                  aria-current={current}
-                  data-analytics={l.analytics}
-                >
-                  {l.label}
-                </Link>
-              )}
-            </li>
-          );
-        })}
-        <li>
-          <LocaleSwitcher />
-        </li>
-      </ul>
+      <div className="nm-container nm-nav__row" style={row}>
+        <Link href="/" className="nm-focusable" style={logo}>
+          {name}
+        </Link>
+        <ul style={list}>
+          {links.map((l) => {
+            const active = !l.external && pathOf(l.href) === pathname;
+            const current = active ? "page" : undefined;
+            return (
+              <li key={l.href}>
+                {l.external ? (
+                  <a href={l.href} className="nm-navlink nm-focusable" data-analytics={l.analytics}>
+                    {l.label}
+                  </a>
+                ) : (
+                  <Link
+                    href={l.href}
+                    className="nm-navlink nm-focusable"
+                    aria-current={current}
+                    data-analytics={l.analytics}
+                  >
+                    {l.label}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
+          <li>
+            <LocaleSwitcher />
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 }

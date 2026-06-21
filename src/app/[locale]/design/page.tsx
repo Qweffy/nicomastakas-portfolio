@@ -13,12 +13,6 @@ const wrap: CSSProperties = {
   color: "var(--text)",
   fontFamily: "var(--font-sans)",
 };
-const main: CSSProperties = {
-  maxWidth: "1120px",
-  margin: "0 auto",
-  padding: "0 var(--space-8)",
-  boxSizing: "border-box",
-};
 const intro: CSSProperties = { padding: "var(--space-16) 0 var(--space-12)" };
 const kicker: CSSProperties = {
   fontFamily: "var(--font-mono)",
@@ -92,7 +86,7 @@ export default async function DesignPage({ params }: { params: Promise<{ locale:
     <div style={wrap}>
       <Nav links={navLinks(nav)} />
 
-      <main className="nm-container" style={main}>
+      <main className="nm-container">
         <section className="nm-sect" style={intro}>
           <div style={kicker}>
             <span style={dot}>·</span> {t("kicker")}

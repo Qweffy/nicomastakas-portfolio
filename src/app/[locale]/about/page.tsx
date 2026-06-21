@@ -17,12 +17,6 @@ const wrap: CSSProperties = {
   color: "var(--text)",
   fontFamily: "var(--font-sans)",
 };
-const article: CSSProperties = {
-  maxWidth: "920px",
-  margin: "0 auto",
-  padding: "0 var(--space-8)",
-  boxSizing: "border-box",
-};
 const kicker: CSSProperties = {
   fontFamily: "var(--font-mono)",
   fontSize: "var(--text-caption)",
@@ -130,7 +124,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
     <div style={wrap}>
       <Nav links={navLinks(await getTranslations("nav"))} />
 
-      <article className="nm-container" style={article}>
+      <article className="nm-container">
         <section className="nm-sect" style={intro}>
           <div style={kicker}>
             <span style={dot}>·</span> {t("kicker")}

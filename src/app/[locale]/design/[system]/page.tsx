@@ -37,12 +37,6 @@ const wrap: CSSProperties = {
   color: "var(--text)",
   fontFamily: "var(--font-sans)",
 };
-const main: CSSProperties = {
-  maxWidth: "1120px",
-  margin: "0 auto",
-  padding: "0 var(--space-8)",
-  boxSizing: "border-box",
-};
 const head: CSSProperties = { padding: "var(--space-16) 0 var(--space-12)" };
 const kicker: CSSProperties = {
   fontFamily: "var(--font-mono)",
@@ -123,7 +117,7 @@ export default async function DesignSystemPage({
     <div style={wrap}>
       <Nav links={navLinks(nav)} />
 
-      <main className="nm-container" style={main}>
+      <main className="nm-container">
         <section className="nm-sect" style={head}>
           <div style={kicker}>
             <Link href="/design" className="nm-footlink nm-focusable">

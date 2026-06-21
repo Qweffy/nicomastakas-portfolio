@@ -45,12 +45,6 @@ const wrap: CSSProperties = {
   color: "var(--text)",
   fontFamily: "var(--font-sans)",
 };
-const main: CSSProperties = {
-  maxWidth: "1120px",
-  margin: "0 auto",
-  padding: "0 var(--space-8)",
-  boxSizing: "border-box",
-};
 const hero: CSSProperties = { padding: "var(--space-16) 0 var(--space-12)" };
 const pill: CSSProperties = {
   display: "inline-flex",
@@ -198,7 +192,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       />
       <Nav links={navLinks} />
 
-      <main className="nm-container" style={main}>
+      <main className="nm-container">
         <section className="nm-sect" style={hero}>
           <div style={pill}>
             <span className="nm-dot" style={dot} />
