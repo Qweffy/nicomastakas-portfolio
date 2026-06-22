@@ -71,6 +71,10 @@ export type Stats = {
 const DAYS: Record<Exclude<Range, "all">, number> = { "24h": 1, "7d": 7, "30d": 30, "90d": 90 };
 const PROJECT_CATEGORIES = ["project_card", "more_work", "repo", "demo", "case_study", "design_card"];
 const TZ = "America/Argentina/Buenos_Aires";
+// Visible ms that makes a visit count as a real, engaged human. Anything shorter with
+// no interaction (a 1-second bounce or a headless crawler) is indistinguishable from a
+// bot, so it does not count as audience. Tune this one number to taste.
+const ENGAGED_MS = 10_000;
 
 export function normalizeRange(value: string | undefined): Range {
   return value === "24h" || value === "7d" || value === "30d" || value === "90d" || value === "all"
@@ -114,7 +118,7 @@ export async function getStats(
   // keeps the array non-empty so `= ANY(...)` never hits an empty-array type error.
   const humanRows = (await sql`
     SELECT coalesce(array_agg(DISTINCT visitor), ARRAY[]::text[]) AS v
-    FROM events WHERE ts >= ${since} AND visitor IS NOT NULL AND type IN ('engagement', 'event')
+    FROM events WHERE ts >= ${since} AND visitor IS NOT NULL AND (type = 'event' OR (type = 'engagement' AND engagement_ms >= ${ENGAGED_MS}))
   `) as unknown as Array<{ v: string[] }>;
   const humans = humanRows[0]?.v?.length ? humanRows[0].v : ["__none__"];
 
@@ -125,11 +129,11 @@ export async function getStats(
   const kpiP = sql`
     WITH hn AS (
       SELECT DISTINCT visitor FROM events
-      WHERE ts >= ${since} AND visitor IS NOT NULL AND type IN ('engagement', 'event')
+      WHERE ts >= ${since} AND visitor IS NOT NULL AND (type = 'event' OR (type = 'engagement' AND engagement_ms >= ${ENGAGED_MS}))
     ),
     hp AS (
       SELECT DISTINCT visitor FROM events
-      WHERE ts >= ${prev} AND ts < ${since} AND visitor IS NOT NULL AND type IN ('engagement', 'event')
+      WHERE ts >= ${prev} AND ts < ${since} AND visitor IS NOT NULL AND (type = 'event' OR (type = 'engagement' AND engagement_ms >= ${ENGAGED_MS}))
     )
     SELECT
       (SELECT count(*) FROM hn)::int AS v_now,
@@ -143,7 +147,7 @@ export async function getStats(
   const qualityP = sql`
     SELECT
       count(DISTINCT visitor)::int AS total,
-      count(DISTINCT visitor) FILTER (WHERE type IN ('engagement', 'event'))::int AS human
+      count(DISTINCT visitor) FILTER (WHERE (type = 'event' OR (type = 'engagement' AND engagement_ms >= ${ENGAGED_MS})))::int AS human
     FROM events WHERE ts >= ${since} AND visitor IS NOT NULL
   ` as unknown as Promise<Array<{ total: number; human: number }>>;
 
@@ -161,7 +165,7 @@ export async function getStats(
       FROM events WHERE ts >= ${since} AND visitor IS NOT NULL
         AND visitor IN (
           SELECT DISTINCT visitor FROM events
-          WHERE ts >= ${since} AND type IN ('engagement', 'event')
+          WHERE ts >= ${since} AND (type = 'event' OR (type = 'engagement' AND engagement_ms >= ${ENGAGED_MS}))
         )
       GROUP BY visitor
     ) s WHERE pv > 0
@@ -319,7 +323,7 @@ export async function getStats(
     SELECT label, round(100.0 * finishers / NULLIF(viewers, 0))::int AS value FROM (
       SELECT
         substring(path from '^/(?:es/)?work/([^/?#]+)') AS label,
-        count(DISTINCT visitor) FILTER (WHERE type = 'engagement' OR (type = 'event' AND event_name = 'scroll')) AS viewers,
+        count(DISTINCT visitor) FILTER (WHERE (type = 'engagement' AND engagement_ms >= ${ENGAGED_MS}) OR (type = 'event' AND event_name = 'scroll')) AS viewers,
         count(DISTINCT visitor) FILTER (
           WHERE type = 'event' AND event_name = 'scroll' AND props->>'depth' = '100'
         ) AS finishers
@@ -334,7 +338,7 @@ export async function getStats(
     SELECT slug, viewers::int, d25::int, d50::int, d75::int, d100::int FROM (
       SELECT
         substring(path from '^/(?:es/)?work/([^/?#]+)') AS slug,
-        count(DISTINCT visitor) FILTER (WHERE type = 'engagement' OR (type = 'event' AND event_name = 'scroll')) AS viewers,
+        count(DISTINCT visitor) FILTER (WHERE (type = 'engagement' AND engagement_ms >= ${ENGAGED_MS}) OR (type = 'event' AND event_name = 'scroll')) AS viewers,
         count(DISTINCT visitor) FILTER (WHERE type='event' AND event_name='scroll' AND props->>'depth'='25') AS d25,
         count(DISTINCT visitor) FILTER (WHERE type='event' AND event_name='scroll' AND props->>'depth'='50') AS d50,
         count(DISTINCT visitor) FILTER (WHERE type='event' AND event_name='scroll' AND props->>'depth'='75') AS d75,

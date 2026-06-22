@@ -85,14 +85,14 @@ const VITAL_ORDER = ["LCP", "INP", "CLS", "FCP", "TTFB"];
 const INFO = {
   feed: "Las últimas visitas y eventos, lo más nuevo arriba. Lo verde es alto valor (CV/contacto). Los bots (visitas sin engagement, normalmente de datacenters) van con un tag 'bot' y atenuados. Se actualiza al recargar.",
   visitors:
-    "Personas únicas (humanas) que entraron en el período. Solo cuenta visitantes que engancharon o interactuaron; los bots/crawlers que solo cargan el HTML quedan afuera. Sin cookies, con un hash que se renueva cada día (si vuelven otro día, cuentan como nuevo).",
+    "Personas únicas que ENGANCHARON: interactuaron (scroll/click) o se quedaron un tiempo real (≥10s). Los bots y los rebotes de 1 segundo quedan afuera (son indistinguibles). Sin cookies, con un hash que se renueva cada día (si vuelven otro día, cuentan como nuevo).",
   pageviews: "Total de páginas vistas por humanos. Una misma persona puede sumar varias.",
   avgTime:
     "Tiempo promedio que la gente pasa de verdad en cada página (solo cuando la pestaña está visible).",
   bounce:
     "Porcentaje de visitas humanas que vieron una sola página y se fueron. Más bajo es mejor.",
   audience:
-    "Humanos (engancharon o interactuaron) vs tráfico automatizado (bots/crawlers que solo cargan el HTML). Los KPIs de arriba ya cuentan solo humanos; acá ves cuánto del total es ruido.",
+    "Humanos enganchados (interactuaron con scroll/click o se quedaron ≥10s) vs el resto: bots y rebotes de 1 segundo, que para esto son lo mismo. Los KPIs de arriba cuentan solo a los enganchados.",
   traffic: "Pageviews (área) y visitantes únicos (línea) en el tiempo. El punto marca el pico.",
   topProjects: "Tus proyectos por interés: vistas de su página + clics en su card, demo o repo.",
   funnel: "El embudo: visitas → vieron un proyecto → exploraron a fondo → CV/contacto.",
@@ -296,7 +296,7 @@ function DashboardBody({ stats }: { stats: Stats }) {
   const automated = Math.max(0, stats.audience.total - stats.audience.human);
   const audienceItems = [
     { label: "Humans", value: stats.audience.human },
-    { label: "Automated", value: automated },
+    { label: "Bots & bounces", value: automated },
   ];
   const humanShare = stats.audience.total > 0 ? stats.audience.human / stats.audience.total : 0;
   const vitalTiles = VITAL_ORDER.map((name) => {
