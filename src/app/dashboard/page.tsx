@@ -53,44 +53,78 @@ const VITALS: Record<
   string,
   { unit: string; thresholds: [number, number]; max?: number; info: string }
 > = {
-  LCP: { unit: "ms", thresholds: [2500, 4000], info: "Largest Contentful Paint: cuánto tarda en aparecer el contenido principal. Bueno: menos de 2,5s." },
-  INP: { unit: "ms", thresholds: [200, 500], info: "Interaction to Next Paint: qué tan rápido responde la página al interactuar. Bueno: menos de 200ms." },
-  CLS: { unit: "", thresholds: [0.1, 0.25], max: 0.4, info: "Cumulative Layout Shift: cuánto se mueve el layout mientras carga. Bueno: menos de 0,1." },
-  FCP: { unit: "ms", thresholds: [1800, 3000], info: "First Contentful Paint: cuándo aparece el primer contenido. Bueno: menos de 1,8s." },
-  TTFB: { unit: "ms", thresholds: [800, 1800], info: "Time To First Byte: cuánto tarda el servidor en responder. Bueno: menos de 0,8s." },
+  LCP: {
+    unit: "ms",
+    thresholds: [2500, 4000],
+    info: "Largest Contentful Paint: cuánto tarda en aparecer el contenido principal. Bueno: menos de 2,5s.",
+  },
+  INP: {
+    unit: "ms",
+    thresholds: [200, 500],
+    info: "Interaction to Next Paint: qué tan rápido responde la página al interactuar. Bueno: menos de 200ms.",
+  },
+  CLS: {
+    unit: "",
+    thresholds: [0.1, 0.25],
+    max: 0.4,
+    info: "Cumulative Layout Shift: cuánto se mueve el layout mientras carga. Bueno: menos de 0,1.",
+  },
+  FCP: {
+    unit: "ms",
+    thresholds: [1800, 3000],
+    info: "First Contentful Paint: cuándo aparece el primer contenido. Bueno: menos de 1,8s.",
+  },
+  TTFB: {
+    unit: "ms",
+    thresholds: [800, 1800],
+    info: "Time To First Byte: cuánto tarda el servidor en responder. Bueno: menos de 0,8s.",
+  },
 };
 const VITAL_ORDER = ["LCP", "INP", "CLS", "FCP", "TTFB"];
 
 const INFO = {
   feed: "Las últimas visitas y eventos, lo más nuevo arriba. Lo verde es alto valor (CV/contacto). Se actualiza al recargar.",
-  visitors: "Personas únicas que entraron en el período. Sin cookies, con un hash que se renueva cada día (si vuelven otro día, cuentan como nuevo).",
-  pageviews: "Total de páginas vistas. Una misma persona puede sumar varias.",
-  avgTime: "Tiempo promedio que la gente pasa de verdad en cada página (solo cuando la pestaña está visible).",
-  bounce: "Porcentaje de visitas que vieron una sola página y se fueron. Más bajo es mejor.",
+  visitors:
+    "Personas únicas (humanas) que entraron en el período. Solo cuenta visitantes que engancharon o interactuaron; los bots/crawlers que solo cargan el HTML quedan afuera. Sin cookies, con un hash que se renueva cada día (si vuelven otro día, cuentan como nuevo).",
+  pageviews: "Total de páginas vistas por humanos. Una misma persona puede sumar varias.",
+  avgTime:
+    "Tiempo promedio que la gente pasa de verdad en cada página (solo cuando la pestaña está visible).",
+  bounce:
+    "Porcentaje de visitas humanas que vieron una sola página y se fueron. Más bajo es mejor.",
+  audience:
+    "Humanos (engancharon o interactuaron) vs tráfico automatizado (bots/crawlers que solo cargan el HTML). Los KPIs de arriba ya cuentan solo humanos; acá ves cuánto del total es ruido.",
   traffic: "Pageviews (área) y visitantes únicos (línea) en el tiempo. El punto marca el pico.",
   topProjects: "Tus proyectos por interés: vistas de su página + clics en su card, demo o repo.",
   funnel: "El embudo: visitas → vieron un proyecto → exploraron a fondo → CV/contacto.",
   topPages: "Las páginas más vistas del sitio.",
   landing: "Por qué página ENTRAN al sitio (primera vista de cada visitante).",
   avgTimePage: "Tiempo promedio (solo visible) que pasan en cada página.",
-  readingDepth: "Qué tan profundo leen cada case study (25/50/75/100% del scroll). Cuenta solo lectores reales (que engancharon o scrollearon), no bots que solo cargan el HTML. Ves dónde abandonan.",
+  readingDepth:
+    "Qué tan profundo leen cada case study (25/50/75/100% del scroll). Cuenta solo lectores reales (que engancharon o scrollearon), no bots que solo cargan el HTML. Ves dónde abandonan.",
   clicks: "Todos los clics registrados, por tipo (cards, nav, social, demo, CV, contacto...).",
   outbound: "A qué links externos hacen clic (GitHub, LinkedIn, demos, repos).",
   channels: "De qué tipo de fuente vienen: Search (buscadores), Social, Direct o Referral.",
   sources: "El sitio exacto de origen. 'Direct' = entraron directo, sin referente.",
   campaigns: "Tráfico de tus links taggeados con UTM (GitHub/LinkedIn/CV).",
-  countries: "Países de tus visitantes (por IP, sin guardarla). Clic en un país para ver sus ciudades.",
+  countries:
+    "Países de tus visitantes (por IP, sin guardarla). Clic en un país para ver sus ciudades.",
   cities: "Ciudades dentro del país elegido.",
   languages: "Visitantes por idioma del sitio (EN/ES).",
   devices: "Tipo de dispositivo: mobile, desktop o tablet.",
   browsers: "Navegador que usan (Chrome, Safari, Firefox...).",
   os: "Sistema operativo (macOS, Windows, iOS, Android, Linux...).",
   heatmap: "Cuándo te visitan, por día y hora (hora de Buenos Aires). Más oscuro = más vistas.",
-  vitals: "Rendimiento real de Google medido en tus visitantes. p75 = el valor que cumplen el 75% de las cargas.",
+  vitals:
+    "Rendimiento real de Google medido en tus visitantes. p75 = el valor que cumplen el 75% de las cargas.",
   vitalsDevice: "Core Web Vitals comparados entre mobile y desktop (p75).",
 } as const;
 
-const wrap: CSSProperties = { minHeight: "100vh", background: "var(--bg)", color: "var(--text)", fontFamily: "var(--font-sans)" };
+const wrap: CSSProperties = {
+  minHeight: "100vh",
+  background: "var(--bg)",
+  color: "var(--text)",
+  fontFamily: "var(--font-sans)",
+};
 const container: CSSProperties = {
   maxWidth: "1200px",
   margin: "0 auto",
@@ -100,18 +134,84 @@ const container: CSSProperties = {
   gap: "var(--space-8)",
   boxSizing: "border-box",
 };
-const header: CSSProperties = { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-6)", flexWrap: "wrap" };
-const titleGroup: CSSProperties = { display: "flex", alignItems: "center", gap: "var(--space-4)", flexWrap: "wrap" };
-const titleStyle: CSSProperties = { fontSize: "var(--text-section)", fontWeight: "var(--weight-semibold)", letterSpacing: "-0.015em", margin: 0 };
-const activeBadge: CSSProperties = { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", fontFamily: "var(--font-mono)", fontSize: "var(--text-caption)", color: "var(--text-muted)", whiteSpace: "nowrap" };
-const activeDot: CSSProperties = { width: "8px", height: "8px", borderRadius: "9999px", background: "var(--accent)", display: "inline-block" };
-const controls: CSSProperties = { display: "flex", alignItems: "center", gap: "var(--space-4)", flexWrap: "wrap" };
-const logoutBtn: CSSProperties = { background: "transparent", border: "var(--elevation-hairline)", borderRadius: "var(--radius-sm)", color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontSize: "var(--text-caption)", padding: "var(--space-2) var(--space-3)", cursor: "pointer", whiteSpace: "nowrap" };
-const errorCard: CSSProperties = { background: "var(--surface)", border: "var(--elevation-hairline)", borderRadius: "var(--radius-md)", padding: "var(--space-8)", color: "var(--text-muted)", fontSize: "var(--text-body)", lineHeight: "var(--leading-body)" };
+const header: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: "var(--space-6)",
+  flexWrap: "wrap",
+};
+const titleGroup: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: "var(--space-4)",
+  flexWrap: "wrap",
+};
+const titleStyle: CSSProperties = {
+  fontSize: "var(--text-section)",
+  fontWeight: "var(--weight-semibold)",
+  letterSpacing: "-0.015em",
+  margin: 0,
+};
+const activeBadge: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "var(--space-2)",
+  fontFamily: "var(--font-mono)",
+  fontSize: "var(--text-caption)",
+  color: "var(--text-muted)",
+  whiteSpace: "nowrap",
+};
+const activeDot: CSSProperties = {
+  width: "8px",
+  height: "8px",
+  borderRadius: "9999px",
+  background: "var(--accent)",
+  display: "inline-block",
+};
+const controls: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: "var(--space-4)",
+  flexWrap: "wrap",
+};
+const logoutBtn: CSSProperties = {
+  background: "transparent",
+  border: "var(--elevation-hairline)",
+  borderRadius: "var(--radius-sm)",
+  color: "var(--text-muted)",
+  fontFamily: "var(--font-mono)",
+  fontSize: "var(--text-caption)",
+  padding: "var(--space-2) var(--space-3)",
+  cursor: "pointer",
+  whiteSpace: "nowrap",
+};
+const errorCard: CSSProperties = {
+  background: "var(--surface)",
+  border: "var(--elevation-hairline)",
+  borderRadius: "var(--radius-md)",
+  padding: "var(--space-8)",
+  color: "var(--text-muted)",
+  fontSize: "var(--text-body)",
+  lineHeight: "var(--leading-body)",
+};
 const mono: CSSProperties = { fontFamily: "var(--font-mono)", color: "var(--text)" };
-const smallStat: CSSProperties = { fontFamily: "var(--font-mono)", fontSize: "var(--text-caption)", color: "var(--text-muted)" };
-const backLink: CSSProperties = { fontFamily: "var(--font-mono)", fontSize: "var(--text-caption)", color: "var(--accent)", textDecoration: "none" };
-const vitalsEmpty: CSSProperties = { fontFamily: "var(--font-mono)", fontSize: "var(--text-caption)", color: "var(--text-muted)" };
+const smallStat: CSSProperties = {
+  fontFamily: "var(--font-mono)",
+  fontSize: "var(--text-caption)",
+  color: "var(--text-muted)",
+};
+const backLink: CSSProperties = {
+  fontFamily: "var(--font-mono)",
+  fontSize: "var(--text-caption)",
+  color: "var(--accent)",
+  textDecoration: "none",
+};
+const vitalsEmpty: CSSProperties = {
+  fontFamily: "var(--font-mono)",
+  fontSize: "var(--text-caption)",
+  color: "var(--text-muted)",
+};
 
 export default async function DashboardPage({
   searchParams,
@@ -163,7 +263,9 @@ export default async function DashboardPage({
               the schema is pushed (<span style={mono}>pnpm db:push</span>).
             </p>
             {errorMsg ? (
-              <p style={{ margin: "var(--space-3) 0 0", ...mono, fontSize: "var(--text-caption)" }}>{errorMsg}</p>
+              <p style={{ margin: "var(--space-3) 0 0", ...mono, fontSize: "var(--text-caption)" }}>
+                {errorMsg}
+              </p>
             ) : null}
           </div>
         ) : (
@@ -177,11 +279,26 @@ export default async function DashboardPage({
 function DashboardBody({ stats }: { stats: Stats }) {
   const showDelta = stats.range !== "all";
   const deltaSub = showDelta ? "vs prev" : "all time";
-  const clickItems = stats.clicks.map((c) => ({ label: CLICK_LABELS[c.label] ?? c.label, value: c.value }));
-  const languageItems = stats.languages.map((l) => ({ label: LANG_LABELS[l.label] ?? l.label, value: l.value }));
+  const clickItems = stats.clicks.map((c) => ({
+    label: CLICK_LABELS[c.label] ?? c.label,
+    value: c.value,
+  }));
+  const languageItems = stats.languages.map((l) => ({
+    label: LANG_LABELS[l.label] ?? l.label,
+    value: l.value,
+  }));
   const pageItems = stats.topPages.map((p) => ({ label: prettyPath(p.label), value: p.value }));
   const landingItems = stats.landing.map((p) => ({ label: prettyPath(p.label), value: p.value }));
-  const avgTimeItems = stats.avgTimePerPage.map((p) => ({ label: prettyPath(p.label), value: p.value }));
+  const avgTimeItems = stats.avgTimePerPage.map((p) => ({
+    label: prettyPath(p.label),
+    value: p.value,
+  }));
+  const automated = Math.max(0, stats.audience.total - stats.audience.human);
+  const audienceItems = [
+    { label: "Humans", value: stats.audience.human },
+    { label: "Automated", value: automated },
+  ];
+  const humanShare = stats.audience.total > 0 ? stats.audience.human / stats.audience.total : 0;
   const vitalTiles = VITAL_ORDER.map((name) => {
     const v = stats.vitals.find((x) => x.name === name);
     const cfg = VITALS[name];
@@ -199,11 +316,46 @@ function DashboardBody({ stats }: { stats: Stats }) {
       </Panel>
 
       <div style={kpiGrid} className="nm-dash-kpis">
-        <KpiCard label="Visitors" value={formatNumber(stats.kpis.visitors)} now={showDelta ? stats.kpis.visitors : undefined} prev={showDelta ? stats.kpis.visitorsPrev : undefined} sub={deltaSub} info={INFO.visitors} />
-        <KpiCard label="Pageviews" value={formatNumber(stats.kpis.pageviews)} now={showDelta ? stats.kpis.pageviews : undefined} prev={showDelta ? stats.kpis.pageviewsPrev : undefined} sub={deltaSub} info={INFO.pageviews} />
-        <KpiCard label="Avg. time" value={formatDuration(stats.kpis.avgEngagementMs)} now={showDelta ? stats.kpis.avgEngagementMs : undefined} prev={showDelta ? stats.kpis.avgEngagementPrevMs : undefined} sub={deltaSub} info={INFO.avgTime} />
-        <KpiCard label="Bounce rate" value={formatPercent(stats.kpis.bounceRate)} sub="single-page visits" info={INFO.bounce} />
+        <KpiCard
+          label="Visitors"
+          value={formatNumber(stats.kpis.visitors)}
+          now={showDelta ? stats.kpis.visitors : undefined}
+          prev={showDelta ? stats.kpis.visitorsPrev : undefined}
+          sub={deltaSub}
+          info={INFO.visitors}
+        />
+        <KpiCard
+          label="Pageviews"
+          value={formatNumber(stats.kpis.pageviews)}
+          now={showDelta ? stats.kpis.pageviews : undefined}
+          prev={showDelta ? stats.kpis.pageviewsPrev : undefined}
+          sub={deltaSub}
+          info={INFO.pageviews}
+        />
+        <KpiCard
+          label="Avg. time"
+          value={formatDuration(stats.kpis.avgEngagementMs)}
+          now={showDelta ? stats.kpis.avgEngagementMs : undefined}
+          prev={showDelta ? stats.kpis.avgEngagementPrevMs : undefined}
+          sub={deltaSub}
+          info={INFO.avgTime}
+        />
+        <KpiCard
+          label="Bounce rate"
+          value={formatPercent(stats.kpis.bounceRate)}
+          sub="single-page visits"
+          info={INFO.bounce}
+        />
       </div>
+
+      <Panel
+        title="Audience"
+        padded={false}
+        info={INFO.audience}
+        action={<span style={smallStat}>{formatPercent(humanShare)} human</span>}
+      >
+        <RankedBarList items={audienceItems} />
+      </Panel>
 
       <Panel title="Traffic" info={INFO.traffic}>
         <TimeSeriesChart series={stats.series} bucket={stats.bucket} />
@@ -269,7 +421,11 @@ function DashboardBody({ stats }: { stats: Stats }) {
             padded={false}
             info={INFO.cities}
             action={
-              <Link href={`/dashboard?range=${stats.range}`} style={backLink} className="nm-focusable">
+              <Link
+                href={`/dashboard?range=${stats.range}`}
+                style={backLink}
+                className="nm-focusable"
+              >
                 ← all countries
               </Link>
             }
@@ -311,7 +467,15 @@ function DashboardBody({ stats }: { stats: Stats }) {
         ) : (
           <div style={grid} className="nm-dash-3">
             {vitalTiles.map((v) => (
-              <WebVitalsTile key={v.name} name={v.name} value={v.value} unit={v.unit} thresholds={v.thresholds} max={v.max} info={v.info} />
+              <WebVitalsTile
+                key={v.name}
+                name={v.name}
+                value={v.value}
+                unit={v.unit}
+                thresholds={v.thresholds}
+                max={v.max}
+                info={v.info}
+              />
             ))}
           </div>
         )}

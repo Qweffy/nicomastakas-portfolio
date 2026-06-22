@@ -32,6 +32,7 @@ export type Stats = {
   country: string | null;
   activeNow: number;
   pagesPerVisit: number;
+  audience: { total: number; human: number };
   kpis: {
     visitors: number;
     visitorsPrev: number;
@@ -107,16 +108,34 @@ export async function getStats(
     bucket = Number(span[0]?.s ?? 0) <= 2 * 86_400 ? "hour" : "day";
   }
 
+  // A "human" visit = a visitor who engaged (visible time) or interacted (scroll /
+  // click). Bots that only fetch the HTML never do, so the headline numbers count
+  // people, not crawlers. Raw events are untouched, so the split stays visible in the
+  // Audience panel below.
   const kpiP = sql`
+    WITH hn AS (
+      SELECT DISTINCT visitor FROM events
+      WHERE ts >= ${since} AND visitor IS NOT NULL AND type IN ('engagement', 'event')
+    ),
+    hp AS (
+      SELECT DISTINCT visitor FROM events
+      WHERE ts >= ${prev} AND ts < ${since} AND visitor IS NOT NULL AND type IN ('engagement', 'event')
+    )
     SELECT
-      count(*) FILTER (WHERE type = 'pageview' AND ts >= ${since})::int AS pv_now,
-      count(*) FILTER (WHERE type = 'pageview' AND ts >= ${prev} AND ts < ${since})::int AS pv_prev,
-      count(DISTINCT visitor) FILTER (WHERE ts >= ${since})::int AS v_now,
-      count(DISTINCT visitor) FILTER (WHERE ts >= ${prev} AND ts < ${since})::int AS v_prev
-    FROM events WHERE ts >= ${prev}
+      (SELECT count(*) FROM hn)::int AS v_now,
+      (SELECT count(*) FROM hp)::int AS v_prev,
+      (SELECT count(*) FROM events WHERE type = 'pageview' AND ts >= ${since} AND visitor IN (SELECT visitor FROM hn))::int AS pv_now,
+      (SELECT count(*) FROM events WHERE type = 'pageview' AND ts >= ${prev} AND ts < ${since} AND visitor IN (SELECT visitor FROM hp))::int AS pv_prev
   ` as unknown as Promise<
     Array<{ pv_now: number; pv_prev: number; v_now: number; v_prev: number }>
   >;
+
+  const qualityP = sql`
+    SELECT
+      count(DISTINCT visitor)::int AS total,
+      count(DISTINCT visitor) FILTER (WHERE type IN ('engagement', 'event'))::int AS human
+    FROM events WHERE ts >= ${since} AND visitor IS NOT NULL
+  ` as unknown as Promise<Array<{ total: number; human: number }>>;
 
   const engP = sql`
     SELECT
@@ -130,6 +149,10 @@ export async function getStats(
     FROM (
       SELECT visitor, count(*) FILTER (WHERE type = 'pageview') AS pv
       FROM events WHERE ts >= ${since} AND visitor IS NOT NULL
+        AND visitor IN (
+          SELECT DISTINCT visitor FROM events
+          WHERE ts >= ${since} AND type IN ('engagement', 'event')
+        )
       GROUP BY visitor
     ) s WHERE pv > 0
   ` as unknown as Promise<Array<{ rate: number }>>;
@@ -355,6 +378,7 @@ export async function getStats(
 
   const [
     kpi,
+    quality,
     eng,
     bounce,
     active,
@@ -384,6 +408,7 @@ export async function getStats(
     heatmap,
   ] = await Promise.all([
     kpiP,
+    qualityP,
     engP,
     bounceP,
     activeP,
@@ -430,6 +455,7 @@ export async function getStats(
     country,
     activeNow: active[0]?.n ?? 0,
     pagesPerVisit: ppv[0]?.ppv ?? 0,
+    audience: { total: quality[0]?.total ?? 0, human: quality[0]?.human ?? 0 },
     kpis: {
       visitors: k.v_now,
       visitorsPrev: k.v_prev,
