@@ -44,6 +44,18 @@ const time: CSSProperties = {
   whiteSpace: "nowrap",
   flexShrink: 0,
 };
+const botTag: CSSProperties = {
+  fontFamily: "var(--font-mono)",
+  fontSize: "10px",
+  letterSpacing: "var(--tracking-label)",
+  textTransform: "uppercase",
+  color: "var(--text-muted)",
+  border: "var(--elevation-hairline)",
+  borderRadius: "var(--radius-sm)",
+  padding: "0 var(--space-2)",
+  marginLeft: "var(--space-2)",
+  flexShrink: 0,
+};
 
 // ISO country code (from Vercel geo headers) to a full Spanish name, e.g. NL -> Países Bajos.
 const regionNames = new Intl.DisplayNames(["es"], { type: "region" });
@@ -109,14 +121,23 @@ export function ActivityFeed({ items }: { items: FeedItem[] }) {
               {a.highValue ? <span style={dot} aria-hidden="true" /> : null}
               {who ? (
                 <span style={place}>
-                  Alguien de <span style={placeAccent}>{who}</span>
+                  Alguien de <span style={item.bot ? place : placeAccent}>{who}</span>
                 </span>
               ) : (
                 <span style={place}>Alguien</span>
               )}{" "}
-              <span style={{ color: a.highValue ? "var(--success)" : "var(--text)" }}>
+              <span
+                style={{
+                  color: a.highValue
+                    ? "var(--success)"
+                    : item.bot
+                      ? "var(--text-muted)"
+                      : "var(--text)",
+                }}
+              >
                 {a.text}
               </span>
+              {item.bot ? <span style={botTag}>bot</span> : null}
             </span>
             <span style={time}>{formatRelativeTime(item.epoch)}</span>
           </div>

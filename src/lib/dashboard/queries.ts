@@ -14,6 +14,7 @@ export type FeedItem = {
   city: string | null;
   host: string | null;
   label: string | null;
+  bot: boolean;
 };
 export type HeatCell = { dow: number; hour: number; value: number };
 export type VitalByDevice = { name: string; mobile: number | null; desktop: number | null };
@@ -108,6 +109,15 @@ export async function getStats(
     bucket = Number(span[0]?.s ?? 0) <= 2 * 86_400 ? "hour" : "day";
   }
 
+  // Human visitors for the period (engaged or interacted = ran the JS). Reused as a
+  // filter so the audience breakdowns below count people, not crawlers. The sentinel
+  // keeps the array non-empty so `= ANY(...)` never hits an empty-array type error.
+  const humanRows = (await sql`
+    SELECT coalesce(array_agg(DISTINCT visitor), ARRAY[]::text[]) AS v
+    FROM events WHERE ts >= ${since} AND visitor IS NOT NULL AND type IN ('engagement', 'event')
+  `) as unknown as Array<{ v: string[] }>;
+  const humans = humanRows[0]?.v?.length ? humanRows[0].v : ["__none__"];
+
   // A "human" visit = a visitor who engaged (visible time) or interacted (scroll /
   // click). Bots that only fetch the HTML never do, so the headline numbers count
   // people, not crawlers. Raw events are untouched, so the split stays visible in the
@@ -167,12 +177,13 @@ export async function getStats(
       count(*) FILTER (WHERE type = 'pageview')::float
         / NULLIF(count(DISTINCT visitor) FILTER (WHERE type = 'pageview' AND visitor IS NOT NULL), 0)
     , 0)::float AS ppv
-    FROM events WHERE ts >= ${since}
+    FROM events WHERE ts >= ${since} AND visitor = ANY(${humans})
   ` as unknown as Promise<Array<{ ppv: number }>>;
 
   const feedP = sql`
     SELECT extract(epoch from ts)::float8 AS epoch, type, event_name AS "eventName",
-      path, country, city, props->>'host' AS host, props->>'label' AS label
+      path, country, city, props->>'host' AS host, props->>'label' AS label,
+      (NOT (visitor = ANY(${humans}))) AS bot
     FROM events
     WHERE ts >= ${since} AND type IN ('pageview', 'event')
       AND NOT (type = 'event' AND event_name = 'scroll')
@@ -183,13 +194,13 @@ export async function getStats(
     SELECT (date_trunc(${bucket}, ts AT TIME ZONE ${TZ}))::text AS bucket,
       count(*) FILTER (WHERE type = 'pageview')::int AS pageviews,
       count(DISTINCT visitor)::int AS visitors
-    FROM events WHERE ts >= ${since}
+    FROM events WHERE ts >= ${since} AND visitor = ANY(${humans})
     GROUP BY 1 ORDER BY 1
   ` as unknown as Promise<Array<{ bucket: string; pageviews: number; visitors: number }>>;
 
   const pagesP = sql`
     SELECT path AS label, count(*)::int AS value
-    FROM events WHERE type = 'pageview' AND ts >= ${since} AND path IS NOT NULL
+    FROM events WHERE type = 'pageview' AND ts >= ${since} AND path IS NOT NULL AND visitor = ANY(${humans})
     GROUP BY path ORDER BY value DESC LIMIT 10
   ` as unknown as Promise<RankItem[]>;
 
@@ -197,7 +208,7 @@ export async function getStats(
     SELECT slug AS label, count(*)::int AS value FROM (
       SELECT substring(path from '^/(?:es/)?(?:work|design)/([^/?#]+)') AS slug
       FROM events
-      WHERE type = 'pageview' AND ts >= ${since} AND path ~ '^/(?:es/)?(?:work|design)/'
+      WHERE type = 'pageview' AND ts >= ${since} AND path ~ '^/(?:es/)?(?:work|design)/' AND visitor = ANY(${humans})
       UNION ALL
       SELECT props->>'label' AS slug
       FROM events
@@ -213,13 +224,14 @@ export async function getStats(
       SELECT DISTINCT ON (visitor) visitor, path
       FROM events
       WHERE type = 'pageview' AND ts >= ${since} AND visitor IS NOT NULL AND path IS NOT NULL
+        AND visitor = ANY(${humans})
       ORDER BY visitor, ts ASC
     ) s GROUP BY path ORDER BY value DESC LIMIT 10
   ` as unknown as Promise<RankItem[]>;
 
   const refP = sql`
     SELECT coalesce(referrer_host, 'Direct') AS label, count(*)::int AS value
-    FROM events WHERE type = 'pageview' AND ts >= ${since}
+    FROM events WHERE type = 'pageview' AND ts >= ${since} AND visitor = ANY(${humans})
     GROUP BY 1 ORDER BY value DESC LIMIT 10
   ` as unknown as Promise<RankItem[]>;
 
@@ -230,13 +242,13 @@ export async function getStats(
       WHEN referrer_host = 'x.com' OR referrer_host ~ '(linkedin|twitter|t\.co|facebook|instagram|reddit|youtube)' THEN 'Social'
       ELSE 'Referral'
     END AS label, count(*)::int AS value
-    FROM events WHERE type = 'pageview' AND ts >= ${since}
+    FROM events WHERE type = 'pageview' AND ts >= ${since} AND visitor = ANY(${humans})
     GROUP BY 1 ORDER BY value DESC
   ` as unknown as Promise<RankItem[]>;
 
   const campaignsP = sql`
     SELECT utm_source AS label, count(*)::int AS value
-    FROM events WHERE type = 'pageview' AND ts >= ${since} AND utm_source IS NOT NULL AND utm_source <> ''
+    FROM events WHERE type = 'pageview' AND ts >= ${since} AND utm_source IS NOT NULL AND utm_source <> '' AND visitor = ANY(${humans})
     GROUP BY utm_source ORDER BY value DESC LIMIT 10
   ` as unknown as Promise<RankItem[]>;
 
@@ -256,37 +268,37 @@ export async function getStats(
 
   const countriesP = sql`
     SELECT country AS label, count(DISTINCT visitor)::int AS value
-    FROM events WHERE ts >= ${since} AND country IS NOT NULL
+    FROM events WHERE ts >= ${since} AND country IS NOT NULL AND visitor = ANY(${humans})
     GROUP BY country ORDER BY value DESC LIMIT 10
   ` as unknown as Promise<RankItem[]>;
 
   const citiesP = sql`
     SELECT city AS label, count(DISTINCT visitor)::int AS value
-    FROM events WHERE ts >= ${since} AND country = ${country} AND city IS NOT NULL AND city <> ''
+    FROM events WHERE ts >= ${since} AND country = ${country} AND city IS NOT NULL AND city <> '' AND visitor = ANY(${humans})
     GROUP BY city ORDER BY value DESC LIMIT 12
   ` as unknown as Promise<RankItem[]>;
 
   const languagesP = sql`
     SELECT locale AS label, count(DISTINCT visitor)::int AS value
-    FROM events WHERE ts >= ${since} AND locale IS NOT NULL AND locale <> ''
+    FROM events WHERE ts >= ${since} AND locale IS NOT NULL AND locale <> '' AND visitor = ANY(${humans})
     GROUP BY locale ORDER BY value DESC
   ` as unknown as Promise<RankItem[]>;
 
   const devicesP = sql`
     SELECT device AS label, count(DISTINCT visitor)::int AS value
-    FROM events WHERE ts >= ${since} AND device IS NOT NULL
+    FROM events WHERE ts >= ${since} AND device IS NOT NULL AND visitor = ANY(${humans})
     GROUP BY device ORDER BY value DESC
   ` as unknown as Promise<RankItem[]>;
 
   const browsersP = sql`
     SELECT browser AS label, count(DISTINCT visitor)::int AS value
-    FROM events WHERE ts >= ${since} AND browser IS NOT NULL
+    FROM events WHERE ts >= ${since} AND browser IS NOT NULL AND visitor = ANY(${humans})
     GROUP BY browser ORDER BY value DESC LIMIT 10
   ` as unknown as Promise<RankItem[]>;
 
   const osP = sql`
     SELECT os AS label, count(DISTINCT visitor)::int AS value
-    FROM events WHERE ts >= ${since} AND os IS NOT NULL
+    FROM events WHERE ts >= ${since} AND os IS NOT NULL AND visitor = ANY(${humans})
     GROUP BY os ORDER BY value DESC LIMIT 10
   ` as unknown as Promise<RankItem[]>;
 
@@ -347,7 +359,7 @@ export async function getStats(
       count(DISTINCT visitor) FILTER (
         WHERE type = 'event' AND event_name = ANY(${["cv_download", "contact"]})
       )::int AS converted
-    FROM events WHERE ts >= ${since}
+    FROM events WHERE ts >= ${since} AND visitor = ANY(${humans})
   ` as unknown as Promise<
     Array<{ visited: number; viewed_project: number; explored: number; converted: number }>
   >;
@@ -372,7 +384,7 @@ export async function getStats(
     SELECT extract(dow from ts AT TIME ZONE ${TZ})::int AS dow,
       extract(hour from ts AT TIME ZONE ${TZ})::int AS hour,
       count(*)::int AS value
-    FROM events WHERE type = 'pageview' AND ts >= ${since}
+    FROM events WHERE type = 'pageview' AND ts >= ${since} AND visitor = ANY(${humans})
     GROUP BY 1, 2
   ` as unknown as Promise<HeatCell[]>;
 

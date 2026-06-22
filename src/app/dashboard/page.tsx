@@ -83,7 +83,7 @@ const VITALS: Record<
 const VITAL_ORDER = ["LCP", "INP", "CLS", "FCP", "TTFB"];
 
 const INFO = {
-  feed: "Las últimas visitas y eventos, lo más nuevo arriba. Lo verde es alto valor (CV/contacto). Se actualiza al recargar.",
+  feed: "Las últimas visitas y eventos, lo más nuevo arriba. Lo verde es alto valor (CV/contacto). Los bots (visitas sin engagement, normalmente de datacenters) van con un tag 'bot' y atenuados. Se actualiza al recargar.",
   visitors:
     "Personas únicas (humanas) que entraron en el período. Solo cuenta visitantes que engancharon o interactuaron; los bots/crawlers que solo cargan el HTML quedan afuera. Sin cookies, con un hash que se renueva cada día (si vuelven otro día, cuentan como nuevo).",
   pageviews: "Total de páginas vistas por humanos. Una misma persona puede sumar varias.",
