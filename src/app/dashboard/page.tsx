@@ -73,7 +73,7 @@ const INFO = {
   topPages: "Las páginas más vistas del sitio.",
   landing: "Por qué página ENTRAN al sitio (primera vista de cada visitante).",
   avgTimePage: "Tiempo promedio (solo visible) que pasan en cada página.",
-  readingDepth: "Qué tan profundo leen cada case study (25/50/75/100% del scroll). Ves dónde abandonan.",
+  readingDepth: "Qué tan profundo leen cada case study (25/50/75/100% del scroll). Cuenta solo lectores reales (que engancharon o scrollearon), no bots que solo cargan el HTML. Ves dónde abandonan.",
   clicks: "Todos los clics registrados, por tipo (cards, nav, social, demo, CV, contacto...).",
   outbound: "A qué links externos hacen clic (GitHub, LinkedIn, demos, repos).",
   channels: "De qué tipo de fuente vienen: Search (buscadores), Social, Direct o Referral.",

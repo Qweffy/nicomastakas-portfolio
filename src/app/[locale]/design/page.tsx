@@ -24,10 +24,10 @@ const kicker: CSSProperties = {
 };
 const dot: CSSProperties = { color: "var(--accent)" };
 const h1: CSSProperties = {
-  fontSize: "var(--text-hero)",
-  lineHeight: "var(--leading-hero)",
-  fontWeight: "var(--weight-bold)",
-  letterSpacing: "-0.025em",
+  fontSize: "var(--text-section)",
+  lineHeight: "var(--leading-section)",
+  fontWeight: "var(--weight-semibold)",
+  letterSpacing: "-0.01em",
   margin: 0,
   color: "var(--text)",
 };

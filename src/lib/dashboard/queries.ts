@@ -284,7 +284,7 @@ export async function getStats(
     SELECT label, round(100.0 * finishers / NULLIF(viewers, 0))::int AS value FROM (
       SELECT
         substring(path from '^/(?:es/)?work/([^/?#]+)') AS label,
-        count(DISTINCT visitor) FILTER (WHERE type = 'pageview') AS viewers,
+        count(DISTINCT visitor) FILTER (WHERE type = 'engagement' OR (type = 'event' AND event_name = 'scroll')) AS viewers,
         count(DISTINCT visitor) FILTER (
           WHERE type = 'event' AND event_name = 'scroll' AND props->>'depth' = '100'
         ) AS finishers
@@ -299,7 +299,7 @@ export async function getStats(
     SELECT slug, viewers::int, d25::int, d50::int, d75::int, d100::int FROM (
       SELECT
         substring(path from '^/(?:es/)?work/([^/?#]+)') AS slug,
-        count(DISTINCT visitor) FILTER (WHERE type = 'pageview') AS viewers,
+        count(DISTINCT visitor) FILTER (WHERE type = 'engagement' OR (type = 'event' AND event_name = 'scroll')) AS viewers,
         count(DISTINCT visitor) FILTER (WHERE type='event' AND event_name='scroll' AND props->>'depth'='25') AS d25,
         count(DISTINCT visitor) FILTER (WHERE type='event' AND event_name='scroll' AND props->>'depth'='50') AS d50,
         count(DISTINCT visitor) FILTER (WHERE type='event' AND event_name='scroll' AND props->>'depth'='75') AS d75,
