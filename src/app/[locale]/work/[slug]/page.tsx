@@ -134,8 +134,8 @@ export default async function WorkPage({
 function footerLinks() {
   return [
     { label: "Email", href: `mailto:${siteConfig.email}` },
-    { label: "GitHub", href: siteConfig.links.github },
-    { label: "LinkedIn", href: siteConfig.links.linkedin },
+    { label: "GitHub", href: siteConfig.links.github, analytics: "social:github" },
+    { label: "LinkedIn", href: siteConfig.links.linkedin, analytics: "social:linkedin" },
     { label: "Resume", href: siteConfig.resume },
   ];
 }

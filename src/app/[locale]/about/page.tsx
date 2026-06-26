@@ -192,10 +192,14 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <Button variant="primary" href={`mailto:${siteConfig.email}`}>
               Email
             </Button>
-            <Button variant="ghost" href={siteConfig.links.github}>
+            <Button variant="ghost" href={siteConfig.links.github} dataAnalytics="social:github">
               GitHub
             </Button>
-            <Button variant="ghost" href={siteConfig.links.linkedin}>
+            <Button
+              variant="ghost"
+              href={siteConfig.links.linkedin}
+              dataAnalytics="social:linkedin"
+            >
               LinkedIn
             </Button>
             <Button variant="ghost" href={siteConfig.resume}>
@@ -223,8 +227,8 @@ function navLinks(nav: Awaited<ReturnType<typeof getTranslations>>) {
 function footerLinks() {
   return [
     { label: "Email", href: `mailto:${siteConfig.email}` },
-    { label: "GitHub", href: siteConfig.links.github },
-    { label: "LinkedIn", href: siteConfig.links.linkedin },
+    { label: "GitHub", href: siteConfig.links.github, analytics: "social:github" },
+    { label: "LinkedIn", href: siteConfig.links.linkedin, analytics: "social:linkedin" },
     { label: "Resume", href: siteConfig.resume },
   ];
 }
