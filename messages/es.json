@@ -89,7 +89,7 @@
   "about": {
     "kicker": "Sobre mí",
     "title": "Ingeniero de producto, no de features, ahora llevando la capa de IA de punta a punta.",
-    "intro": "Soy ingeniero de producto, no de features. La mayoría cierra el ticket y sigue de largo; yo me quedo con cómo se siente la cosa: el timing, el caso borde, la línea que nadie lee. Esa fijación no es estética porque sí; es respeto por quien va a usar lo que hago. Llevo los problemas de ambiguos a producción, de punta a punta: modelo de datos y APIs, el frontend, la infra, los tests, y ahora la capa de IA (prompts, evals, retrieval y el producto que los rodea).",
+    "intro": "Soy Nicolás Mastakas (Nico), ingeniero de producto, no de features. La mayoría cierra el ticket y sigue de largo; yo me quedo con cómo se siente la cosa: el timing, el caso borde, la línea que nadie lee. Esa fijación no es estética porque sí; es respeto por quien va a usar lo que hago. Llevo los problemas de ambiguos a producción, de punta a punta: modelo de datos y APIs, el frontend, la infra, los tests, y ahora la capa de IA (prompts, evals, retrieval y el producto que los rodea).",
     "experienceKicker": "Experiencia",
     "howKicker": "Cómo trabajo",
     "howIntro": "Construyo la maquinaria que produce las features, no solo las features. Trabajo mejor como dueño técnico de una superficie, decidiendo dónde termina el código determinista y dónde empieza un modelo.",

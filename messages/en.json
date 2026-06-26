@@ -89,7 +89,7 @@
   "about": {
     "kicker": "About",
     "title": "Product engineer, not a feature engineer, now shipping the AI layer end to end.",
-    "intro": "I'm a product engineer, not a feature engineer. Most devs close the ticket and move on; I stay with how the thing actually feels: the timing, the edge case, the line nobody reads. That fixation isn't decoration. It's respect for whoever has to use what I ship. I take problems from ambiguous to in-production end to end: data model and APIs, the frontend, the infra, the tests, and now the AI layer (prompts, evals, retrieval, and the product around them).",
+    "intro": "I'm Nicolás Mastakas (Nico), a product engineer, not a feature engineer. Most devs close the ticket and move on; I stay with how the thing actually feels: the timing, the edge case, the line nobody reads. That fixation isn't decoration. It's respect for whoever has to use what I ship. I take problems from ambiguous to in-production end to end: data model and APIs, the frontend, the infra, the tests, and now the AI layer (prompts, evals, retrieval, and the product around them).",
     "experienceKicker": "Experience",
     "howKicker": "How I work",
     "howIntro": "I build the machinery that produces features, not just the features. I work best as the technical owner of a surface, deciding where deterministic code ends and a model begins.",
