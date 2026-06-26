@@ -8,6 +8,7 @@ export const siteConfig = {
   resume: "/nico-mastakas-resume.pdf",
   links: {
     github: "https://github.com/Qweffy",
+    repo: "https://github.com/Qweffy/nicomastakas-portfolio",
     linkedin: "https://www.linkedin.com/in/nicomastakas",
   },
 } as const;

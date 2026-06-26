@@ -1,6 +1,8 @@
 # nicomastakas.com
 
-Personal portfolio of **Nico Mastakas** — Senior Product Engineer building AI-native products end-to-end.
+Personal portfolio of **Nico Mastakas** (Nicolás Mastakas), Senior Product Engineer building AI-native products end-to-end.
+
+Notable: a from-scratch, first-party, cookieless analytics system (own collector → Neon Postgres → a private dashboard), built without any third-party tracker.
 
 ## Stack
 
@@ -35,5 +37,5 @@ content/
 
 ## Links
 
-- Live: https://nicomastakas.com _(soon)_
+- Live: https://nicomastakas.com
 - GitHub: https://github.com/Qweffy

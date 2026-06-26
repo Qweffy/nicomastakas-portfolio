@@ -230,5 +230,6 @@ function footerLinks() {
     { label: "GitHub", href: siteConfig.links.github, analytics: "social:github" },
     { label: "LinkedIn", href: siteConfig.links.linkedin, analytics: "social:linkedin" },
     { label: "Resume", href: siteConfig.resume },
+    { label: "Source", href: siteConfig.links.repo, analytics: "footer:source" },
   ];
 }
