@@ -4,7 +4,7 @@ export const siteConfig = {
   description:
     "Senior product engineer building AI-native products end-to-end. Case studies in LLM features, RAG, and full-stack TypeScript.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://nicomastakas.com",
-  email: "nico@nicomastakas.com",
+  email: "nicolasmastakas@gmail.com",
   resume: "/nico-mastakas-resume.pdf",
   links: {
     github: "https://github.com/Qweffy",
